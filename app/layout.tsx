@@ -28,7 +28,7 @@ export default function RootLayout({
         >
           <Navbar />
 
-          <main>{children}</main>
+          <main className="h-full">{children}</main>
         </ThemeProvider>
       </body>
     </html>
