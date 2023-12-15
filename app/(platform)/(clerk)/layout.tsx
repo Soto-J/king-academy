@@ -8,7 +8,9 @@ type ClerkLayoutProps = {
 const ClerkLayout = ({ children }: ClerkLayoutProps) => {
   return (
     <ClerkProvider>
-      <main>{children}</main>
+      <main className="flex h-full items-center justify-center">
+        {children}
+      </main>
     </ClerkProvider>
   );
 };
