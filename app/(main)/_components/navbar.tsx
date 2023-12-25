@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 
 import { Menu } from "lucide-react";
@@ -8,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Navbar = () => {
   return (
-    <nav className="h-18 border-b p-4">
+    <nav className="h-18 border-b p-4 shadow-lg">
       <div className="flex items-center justify-between sm:px-10">
         <Link href="/">LOGO</Link>
 
@@ -18,12 +19,15 @@ const Navbar = () => {
 
         <div className="flex gap-6">
           <div className="flex gap-2">
-            <Button>
-              <Link href="/">Sign up</Link>
-            </Button>
-            <Button variant="outline">
-              <Link href="/">Log in</Link>
-            </Button>
+            <Button asChild>{/* <SignOutButton /> */}</Button>
+            <>
+              <Button asChild>
+                <Link href="/signup">Sign up</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link href="/signin">Log in</Link>
+              </Button>
+            </>
 
             <div className="hidden md:block">
               <ModeToggle />
