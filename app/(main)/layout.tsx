@@ -2,12 +2,12 @@ type MainPageLayoutProps = {
   children: React.ReactNode;
 };
 
-const MainPageLayout = ({ children }: MainPageLayoutProps) => {
+const MainLayout = ({ children }: MainPageLayoutProps) => {
   return (
     <div className="h-full">
-      <main className="pb-20 pt-40">{children}</main>
+      <div className="pb-20 pt-40">{children}</div>
     </div>
   );
 };
 
-export default MainPageLayout;
+export default MainLayout;
