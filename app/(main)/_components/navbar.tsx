@@ -53,10 +53,12 @@ const Navbar = () => {
             </SheetTrigger>
 
             <SheetContent side="left">
-              <Link href="/">Home</Link>
-              <Link href="/roster">Roster</Link>
-              <Link href="/about-us">About Us</Link>
-              <Link href="/contact">Contact</Link>
+              <div className="flex flex-col gap-3">
+                <Link href="/">Home</Link>
+                <Link href="/roster">Roster</Link>
+                <Link href="/about-us">About Us</Link>
+                <Link href="/contact">Contact</Link>
+              </div>
               <div className="flex h-full items-end justify-end pb-4">
                 <ModeToggle />
               </div>
