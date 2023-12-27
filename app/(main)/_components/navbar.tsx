@@ -27,7 +27,7 @@ const Navbar = () => {
           <div className="flex items-center gap-2 gap-x-4">
             {isSignedIn ? (
               <Button asChild>
-                <UserButton />
+                <UserButton afterSignOutUrl="/" />
               </Button>
             ) : (
               <>
