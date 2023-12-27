@@ -7,7 +7,7 @@ const Mavbar = () => {
       <div className="flex justify-between">
         <div>LOGO</div>
         <div>
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
         </div>
       </div>
     </nav>
