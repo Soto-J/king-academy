@@ -3,7 +3,7 @@ type DashboardLayoutProps = {
 };
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  return <div>{children}</div>;
+  return <div className="h-full">{children}</div>;
 };
 
 export default DashboardLayout;
