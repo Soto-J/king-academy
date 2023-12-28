@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String      @id @map("_id")
+  firstName   String
+  lastName    String
+  dateOfBirth DateTime
+  age         Int
+  address     UserAddress
+  email       String      @unique
+  phoneNumber String
+  school      String
+  role        Role
+
+  position Position
+  batting  Batting
+  throwing Throwing
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum Batting {
+  RIGHT
+  LEFT
+  SWITCH
+}
+
+enum Throwing {
+  RIGHT
+  LEFT
+  SWITCH
+}
+
+enum Position {
+  PITCHER
+  CATCHER
+  FIRSTBASE
+  SECONDBASE
+  THIRDBASE
+  SHORTSTOP
+  LEFTFIELD
+  CENTERFIELD
+  RIGHTFIELD
+  DESIGNATEDHITTER
+  BENCH
+}
+
+type UserAddress {
+  street String
+  city   String
+  state  String
+  zip    String
+}
