@@ -85,9 +85,15 @@ const ProfileForm = () => {
     return null;
   }
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Submitted");
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      console.log("Submitted");
+      console.log(data);
+      //const response =  await axios.post("/api/profile", data);
+      form.reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -119,6 +125,7 @@ const ProfileForm = () => {
                     <FormLabel className="capitalize">{inputName}</FormLabel>
                     <FormControl>
                       <Input
+                        type={inputName === "zip" ? "number" : "text"}
                         placeholder={inputName}
                         {...field}
                         onChange={(e) =>
