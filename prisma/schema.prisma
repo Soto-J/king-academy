@@ -23,7 +23,7 @@ model User {
   school      String
   role        Role
 
-  position Position[]
+  positions Position[]
   batting  Batting
   throwing Throwing
 
