@@ -27,36 +27,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
-  school: z.string().min(1),
+  school: z.string({ required_error: "School is required" }).min(2),
   address: z.object({
-    street: z.string().min(1),
-    city: z.string().min(1),
-    state: z.string().min(1),
-    zip: z.string().min(4),
+    street: z.string({ required_error: "Street is required" }).min(1),
+    city: z.string({ required_error: "City is required" }).min(1),
+    state: z.string({ required_error: "State is required" }).min(1),
+    zip: z.string({ required_error: "Zip is required" }).min(4),
   }),
-  batting: z.enum([Batting.RIGHT, Batting.LEFT, Batting.SWITCH]),
-  bio: z.string(),
-  throwing: z.enum([Throwing.RIGHT, Throwing.LEFT, Throwing.SWITCH]),
   position: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: "At least one position is required",
   }),
-  // position: z.array(
-  //   z.enum([
-  //     Position.PITCHER,
-  //     Position.CATCHER,
-  //     Position.FIRSTBASE,
-  //     Position.SECONDBASE,
-  //     Position.THIRDBASE,
-  //     Position.SHORTSTOP,
-  //     Position.LEFTFIELD,
-  //     Position.CENTERFIELD,
-  //     Position.RIGHTFIELD,
-  //     Position.DESIGNATEDHITTER,
-  //     Position.BENCH,
-  //   ]),
-  // ),
+  batting: z.enum([Batting.RIGHT, Batting.LEFT, Batting.SWITCH]),
+  throwing: z.enum([Throwing.RIGHT, Throwing.LEFT, Throwing.SWITCH]),
+  bio: z.string(),
 });
 
 const POSITION_OPTIONS = [
@@ -79,6 +65,7 @@ const ProfileForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      school: "",
       address: {
         street: "",
         city: "",
@@ -86,6 +73,7 @@ const ProfileForm = () => {
         zip: "",
       },
       position: [],
+      bio: "",
     },
   });
 
@@ -113,7 +101,7 @@ const ProfileForm = () => {
               <FormItem className="p-3">
                 <FormLabel>School</FormLabel>
                 <FormControl>
-                  <Input type="textarea" placeholder="School" {...field} />
+                  <Input type="text" placeholder="School" {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -251,7 +239,7 @@ const ProfileForm = () => {
               <FormItem className="p-3">
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
-                  <Input type="textarea" placeholder="Bio" {...field} />
+                  <Textarea placeholder="Bio" {...field} />
                 </FormControl>
 
                 <FormMessage />
