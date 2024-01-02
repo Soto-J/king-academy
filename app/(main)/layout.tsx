@@ -5,7 +5,7 @@ type MainPageLayoutProps = {
 const MainLayout = ({ children }: MainPageLayoutProps) => {
   return (
     <div className="h-full">
-      <div className="pb-20 pt-32">{children}</div>
+      <div className="mx-auto w-[95%] pb-16 pt-28">{children}</div>
     </div>
   );
 };
