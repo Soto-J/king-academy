@@ -1,25 +1,20 @@
 import prisma from "@/lib/prismadb";
 
-export async function getUser(userId: string | null) {
+export async function getUser(userId?: string) {
   try {
     if (!userId) {
       return null;
     }
 
-    const member = await prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-      include: {
-        memberProfile: true,
-      },
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
     });
 
-    if (!member) {
+    if (!user) {
       return null;
     }
 
-    return member;
+    return user;
   } catch (error) {
     console.error("Get Users:", error);
     return null;
