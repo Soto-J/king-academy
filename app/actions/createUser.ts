@@ -1,33 +1,31 @@
+import { type UserJSON } from "@clerk/nextjs/server";
+
 import prisma from "@/lib/prismadb";
-import { type AuthObject } from "@clerk/nextjs/server";
+import { Role } from "@prisma/client";
 
-export async function createUser(auth: AuthObject) {
+export async function createUser(user: UserJSON) {
   try {
-    if (!auth.user) {
-      throw new Error("No user provided");
+    const { id, first_name, last_name, phone_numbers, email_addresses } = user;
+
+    const phoneNumbers = phone_numbers.map((number) => number.phone_number);
+    const emails = email_addresses.map((email) => email.email_address);
+
+    const newUser = await prisma.user.create({
+      data: {
+        id,
+        firstName: first_name,
+        lastName: last_name,
+        phoneNumbers,
+        emails,
+        role: Role.MEMBER,
+      },
+    });
+
+    if (!newUser) {
+      throw new Error("User not created");
     }
 
-    const { userId } = auth;
-    if (!userId) {
-      throw new Error("No user ID provided");
-    }
-
-    const { firstName, lastName, phoneNumbers, emailAddresses } = auth.user;
-
-    console.log(auth);
-    console.log({ emailAddresses });
-
-    // const newUser = await prisma.user.create({
-    //   data: {
-    //     id: userId,
-    //     firstName: firstName || "",
-    //     lastName: lastName || "",
-    //     phoneNumber: phoneNumbers[0].toString(),
-    //     email: emailAddresses[0],
-    //   },
-    // });
-
-    return null;
+    return { message: "User created", newUser };
   } catch (error) {
     console.error("Create User:", error);
     return null;
