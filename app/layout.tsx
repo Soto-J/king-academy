@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import Navbar from "@/components/navbar/navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           >
             <Navbar />
             <main className="h-full">{children}</main>
+            <Footer />
           </ThemeProvider>
         </body>
       </html>
