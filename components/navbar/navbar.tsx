@@ -1,69 +1,38 @@
 "use client";
 import Link from "next/link";
 
-import { Menu } from "lucide-react";
+import NavbarButtons from "./navbar-buttons";
+import MobileMenu from "./mobile-menu";
 
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { UserButton, useUser } from "@clerk/nextjs";
 
 const Navbar = () => {
-  const { isSignedIn } = useUser();
+  const NAV_LINKS = (
+    <>
+      <Link href="/">Home</Link>
+      <Link href="/players">Players</Link>
+      <Link href="/about-us">About Us</Link>
+      <Link href="/contact">Contact</Link>
+    </>
+  );
 
   return (
     <nav className="h-18 border-b p-4 shadow-lg">
       <div className="flex items-center justify-between sm:px-10">
         <Link href="/">LOGO</Link>
 
-        <div className="hidden gap-x-4 text-lg md:flex">
-          <Link href="/">Home</Link>
-          <Link href="/roster">Roster</Link>
-          <Link href="/about-us">About Us</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
+        <div className="hidden gap-x-4 text-lg md:flex">{NAV_LINKS}</div>
 
         <div className="flex gap-6">
           <div className="flex items-center gap-2 gap-x-4">
-            {isSignedIn ? (
-              <Button asChild>
-                <UserButton afterSignOutUrl="/" />
-              </Button>
-            ) : (
-              <>
-                <Button asChild>
-                  <Link href="/sign-up">Sign up</Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link href="/sign-in">Log in</Link>
-                </Button>
-              </>
-            )}
+            <NavbarButtons />
 
             <div className="hidden md:block">
               <ModeToggle />
             </div>
           </div>
 
-          <Sheet>
-            <SheetTrigger className="md:hidden" asChild>
-              <Button variant="outline" size="icon">
-                <Menu />
-              </Button>
-            </SheetTrigger>
-
-            <SheetContent side="left">
-              <div className="flex flex-col gap-3">
-                <Link href="/">Home</Link>
-                <Link href="/roster">Roster</Link>
-                <Link href="/about-us">About Us</Link>
-                <Link href="/contact">Contact</Link>
-              </div>
-              <div className="flex h-full items-end justify-end pb-4">
-                <ModeToggle />
-              </div>
-            </SheetContent>
-          </Sheet>
+          <MobileMenu NAV_LINKS={NAV_LINKS} />
         </div>
       </div>
     </nav>
