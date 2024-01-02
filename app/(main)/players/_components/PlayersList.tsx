@@ -1,6 +1,7 @@
 "use client";
 
 import { User } from "@prisma/client";
+
 import {
   Dialog,
   DialogContent,
@@ -20,6 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 type PlayersListProps = {
   players: User[];
@@ -27,6 +29,8 @@ type PlayersListProps = {
 
 const PlayersList = ({ players }: PlayersListProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
+
+  const { user } = useUser();
 
   useEffect(() => {
     setIsHydrated(true);
@@ -36,14 +40,14 @@ const PlayersList = ({ players }: PlayersListProps) => {
     return null;
   }
 
+  const userPrimaryPhoneNumber = user?.primaryPhoneNumber?.phoneNumber || "";
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead>First Name</TableHead>
           <TableHead>Last Name</TableHead>
-          <TableHead>School</TableHead>
-          <TableHead>Age</TableHead>
           <TableHead>Active</TableHead>
           <TableHead>Player Card</TableHead>
         </TableRow>
@@ -55,24 +59,35 @@ const PlayersList = ({ players }: PlayersListProps) => {
             <TableRow>
               <TableCell>{player.firstName}</TableCell>
               <TableCell>{player.lastName}</TableCell>
-              <TableCell>{player.school}</TableCell>
-              <TableCell>{player.school}</TableCell>
               <TableCell>Yes</TableCell>
               <DialogTrigger asChild>
-                <TableCell>More Info</TableCell>
+                <TableCell>
+                  {player.phoneNumbers.includes(userPrimaryPhoneNumber)
+                    ? "Edit"
+                    : "More Info"}
+                </TableCell>
               </DialogTrigger>
             </TableRow>
 
-            <DialogContent>
+            <DialogContent className="w-[95%]">
               <DialogHeader>
-                <DialogTitle>Hello World</DialogTitle>
-                <DialogDescription>Description</DialogDescription>
+                <DialogTitle>{`${player.firstName} ${player.lastName}`}</DialogTitle>
+                <DialogDescription>Player Card</DialogDescription>
               </DialogHeader>
 
-              <div>
+              <div className="space-y-3 py-4">
                 <div>School:</div>
                 <div>Age:</div>
+                <div>Address:</div>
+                <div>
+                  Email:{" "}
+                  {player.emails.map((email) => (
+                    <div key={player.id}>{email}</div>
+                  ))}
+                </div>
                 <div>Active:</div>
+                <div>Batting:</div>
+                <div>Throwing:</div>
                 <div>
                   Positions:
                   {player.positions.map((position) => (
