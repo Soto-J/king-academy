@@ -19,7 +19,7 @@ const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
 
       <SheetContent side="left">
         <div className="flex flex-col gap-3">{NAV_LINKS}</div>
-        <div className="flex h-full items-end justify-end pb-4">
+        <div className="flex h-[80%] items-end justify-end pb-4">
           <ModeToggle />
         </div>
       </SheetContent>
