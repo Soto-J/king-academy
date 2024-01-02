@@ -2,9 +2,8 @@ import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 
-import { createUser } from "@/app/actions/createUser";
-import { updateUser } from "@/app/actions/updateUser";
 import { deleteUser } from "@/app/actions/deleteUser";
+import { insertUserToDB } from "@/app/actions/insertUserToDB";
 
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET as string;
 
@@ -17,33 +16,16 @@ export async function POST(req: Request) {
 
   const { id } = evt.data;
   const eventType = evt.type;
+  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
 
-  switch (eventType) {
-    case "user.created": {
-      console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
+  if (eventType === "user.created" || eventType === "user.updated") {
+    console.log("Inserting user to DB");
+    await insertUserToDB(evt.data);
+  }
 
-      console.log("User Created:", evt);
-      await createUser(evt.data);
-      break;
-    }
-    case "user.updated": {
-      console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-
-      await updateUser(evt.data);
-      break;
-    }
-    case "user.deleted": {
-      console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-      await deleteUser(evt.data.id);
-      break;
-    }
-    case "session.created": {
-      console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-      break;
-    }
-    default: {
-      break;
-    }
+  if (eventType === "user.deleted") {
+    console.log("Deleting user from DB");
+    await deleteUser(evt.data.id);
   }
 
   return new Response("Received", { status: 200 });
