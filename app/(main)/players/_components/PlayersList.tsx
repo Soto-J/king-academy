@@ -52,7 +52,7 @@ const PlayersList = ({ players }: PlayersListProps) => {
       <TableBody>
         {players.map((player) => (
           <Dialog key={player.id}>
-            <TableRow key={player.id}>
+            <TableRow>
               <TableCell>{player.firstName}</TableCell>
               <TableCell>{player.lastName}</TableCell>
               <TableCell>{player.school}</TableCell>
@@ -76,7 +76,7 @@ const PlayersList = ({ players }: PlayersListProps) => {
                 <div>
                   Positions:
                   {player.positions.map((position) => (
-                    <div>{position}</div>
+                    <div key={player.id}>{position}</div>
                   ))}
                 </div>
               </div>
