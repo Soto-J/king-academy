@@ -4,7 +4,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { User } from "@prisma/client";
-import React from "react";
 
 type PlayerCardProps = {
   player: User;
