@@ -15,11 +15,13 @@ model User {
   firstName    String
   lastName     String
   dateOfBirth  String?
-  age          Int?
-  address      UserAddress?
+  school       String?
+  bio          String?
   emails       String[]
   phoneNumbers String[]
-  school       String?
+  age          Int?
+  isActive     Boolean?     @default(true)
+  address      UserAddress?
   role         Role
 
   positions Position[]
