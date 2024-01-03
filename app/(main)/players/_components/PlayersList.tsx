@@ -1,27 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+
 import { User } from "@prisma/client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+import EditProfileForm from "@/app/(main)/players/_components/edit-profile-form";
+import PlayerCard from "./player-card";
 
 type PlayersListProps = {
   players: User[];
@@ -61,7 +57,7 @@ const PlayersList = ({ players }: PlayersListProps) => {
               <TableCell>{player.lastName}</TableCell>
               <TableCell>Yes</TableCell>
               <DialogTrigger asChild>
-                <TableCell>
+                <TableCell className="cursor-pointer">
                   {player.phoneNumbers.includes(userPrimaryPhoneNumber)
                     ? "Edit"
                     : "More Info"}
@@ -69,33 +65,19 @@ const PlayersList = ({ players }: PlayersListProps) => {
               </DialogTrigger>
             </TableRow>
 
-            <DialogContent className="w-[95%]">
-              <DialogHeader>
-                <DialogTitle>{`${player.firstName} ${player.lastName}`}</DialogTitle>
-                <DialogDescription>Player Card</DialogDescription>
-              </DialogHeader>
-
-              <div className="space-y-3 py-4">
-                <div>School:</div>
-                <div>Age:</div>
-                <div>Address:</div>
-                <div>
-                  Email:{" "}
-                  {player.emails.map((email) => (
-                    <div key={player.id}>{email}</div>
-                  ))}
-                </div>
-                <div>Active:</div>
-                <div>Batting:</div>
-                <div>Throwing:</div>
-                <div>
-                  Positions:
-                  {player.positions.map((position) => (
-                    <div key={player.id}>{position}</div>
-                  ))}
-                </div>
-              </div>
-            </DialogContent>
+            {player.phoneNumbers.includes(userPrimaryPhoneNumber) ? (
+              <DialogContent>
+                <ScrollArea className="h-96">
+                  <EditProfileForm />
+                </ScrollArea>
+              </DialogContent>
+            ) : (
+              <DialogContent className="w-[95%]">
+                <ScrollArea className="h-96">
+                  <PlayerCard player={player} />
+                </ScrollArea>
+              </DialogContent>
+            )}
           </Dialog>
         ))}
       </TableBody>
