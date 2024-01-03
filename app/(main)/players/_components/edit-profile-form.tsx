@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 import { Batting, Position, Throwing } from "@prisma/client";
+import axios from "axios";
 
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -27,8 +29,6 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { editUser } from "@/app/actions/editUser";
-import { useUser } from "@clerk/nextjs";
 
 const formSchema = z.object({
   school: z.string({ required_error: "School is required" }).min(2),
@@ -36,7 +36,7 @@ const formSchema = z.object({
     street: z.string({ required_error: "Street is required" }).min(1),
     city: z.string({ required_error: "City is required" }).min(1),
     state: z.string({ required_error: "State is required" }).min(1),
-    zip: z.string({ required_error: "Zip is required" }).min(4),
+    zip: z.string({ required_error: "Zip is required" }).min(5).max(5),
   }),
   position: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: "At least one position is required",
@@ -65,10 +65,6 @@ export type EditFormSchema = z.infer<typeof formSchema>;
 const EditProfileForm = () => {
   const [isHydrated, setIsHydrated] = useState(false);
 
-  const { user } = useUser();
-
-  const userPrimaryPhoneNumber = user?.primaryPhoneNumber?.phoneNumber || "";
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -94,9 +90,7 @@ const EditProfileForm = () => {
 
   const onSubmit = async (data: EditFormSchema) => {
     try {
-      console.log("Submitted");
-      console.log(data);
-      await editUser(data, userPrimaryPhoneNumber);
+      await axios.patch("/api/user", data);
 
       form.reset();
     } catch (error) {
@@ -108,7 +102,7 @@ const EditProfileForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto min-h-full w-[95%] max-w-xl  p-4"
+        className="mx-auto w-[95%] max-w-xl"
       >
         <FormField
           control={form.control}
