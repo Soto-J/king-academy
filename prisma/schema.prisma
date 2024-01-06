@@ -19,6 +19,7 @@ model User {
   image         String?
   password      String?
 
+  role     UserRole  @default(USER)
   accounts Account[]
   profile  Profile?
 }
@@ -55,7 +56,6 @@ model Profile {
   isActive     Boolean? @default(true)
 
   address UserAddress?
-  role    Role
 
   positions Position[]
   batting   Batting?
@@ -78,9 +78,9 @@ model UserAddress {
   profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 }
 
-enum Role {
+enum UserRole {
   ADMIN
-  MEMBER
+  USER
 }
 
 enum Batting {
