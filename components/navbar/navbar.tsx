@@ -1,12 +1,14 @@
-"use client";
 import Link from "next/link";
 
 import NavbarButtons from "./navbar-buttons";
 import MobileMenu from "./mobile-menu";
 
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { auth } from "@/auth";
 
-const Navbar = () => {
+const Navbar = async () => {
+  
+
   const NAV_LINKS = [
     <Link href="/">Home</Link>,
     <Link href="/players">Players</Link>,

@@ -3,7 +3,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 
 type PlayerCardProps = {
   player: User;

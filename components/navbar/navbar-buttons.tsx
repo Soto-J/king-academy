@@ -1,27 +1,33 @@
-import { UserButton, useUser } from "@clerk/nextjs";
-import { Button } from "../ui/button";
 import Link from "next/link";
+import { auth, signOut } from "@/auth";
+import { Button } from "../ui/button";
 
-const NavbarButtons = () => {
-  const { isSignedIn } = useUser();
+const NavbarButtons = async () => {
+  const session = await auth();
 
-  if (!isSignedIn) {
+  if (!session) {
     return (
       <>
         <Button asChild>
-          <Link href="/sign-up">Sign up</Link>
+          <Link href="/auth/register">Sign up</Link>
         </Button>
         <Button variant="outline" asChild>
-          <Link href="/sign-in">Log in</Link>
+          <Link href="/auth/login">Log in</Link>
         </Button>
       </>
     );
   }
 
   return (
-    <Button asChild>
-      <UserButton afterSignOutUrl="/" />
-    </Button>
+    <form
+      action={async () => {
+        "use server";
+
+        await signOut({ redirectTo: "/" });
+      }}
+    >
+      <Button type="submit">Sign out</Button>
+    </form>
   );
 };
 

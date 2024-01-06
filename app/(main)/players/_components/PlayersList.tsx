@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
 
 import { User } from "@prisma/client";
 
@@ -16,17 +15,16 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import EditProfileForm from "@/app/(main)/players/_components/edit-profile-form";
+import EditProfileForm from "@/app/(main)/players/_components/form/edit-profile-form";
 import PlayerCard from "./player-card";
 
 type PlayersListProps = {
   players: User[];
+  user: User | null
 };
 
-const PlayersList = ({ players }: PlayersListProps) => {
+const PlayersList = ({ players, user }: PlayersListProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
-
-  const { user } = useUser();
 
   useEffect(() => {
     setIsHydrated(true);
@@ -66,8 +64,8 @@ const PlayersList = ({ players }: PlayersListProps) => {
             </TableRow>
 
             {player.phoneNumbers.includes(userPrimaryPhoneNumber) ? (
-              <DialogContent>
-                <ScrollArea className="h-96">
+              <DialogContent className="w-[95%]">
+                <ScrollArea className="h-[80vh]">
                   <EditProfileForm />
                 </ScrollArea>
               </DialogContent>
