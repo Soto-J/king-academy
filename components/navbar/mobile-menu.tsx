@@ -26,7 +26,9 @@ const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
         <ul className="flex flex-col gap-3">
           {NAV_LINKS.map((link, i) => (
             <li key={i}>
-              <SheetClose asChild>{link}</SheetClose>
+              <SheetClose asChild key={i}>
+                {link}
+              </SheetClose>
             </li>
           ))}
         </ul>
