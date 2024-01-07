@@ -4,7 +4,7 @@ import Link from "next/link";
 const Logo = () => {
   return (
     <Link href="/" className="overflow-hidden rounded-full">
-      <Image src="/logo.jpg" alt="King-Academy" width={55} height={55} />
+      <Image src="/logo.jpg" alt="King-Academy" width={50} height={50} />
     </Link>
   );
 };
