@@ -9,10 +9,10 @@ import Logo from "../logo";
 
 const Navbar = async () => {
   const NAV_LINKS = [
-    <Link href="/">Home</Link>,
-    <Link href="/players">Players</Link>,
-    <Link href="/about-us">About Us</Link>,
-    <Link href="/contact">Contact</Link>,
+    { label: "Home", href: "/" },
+    { label: "Players", href: "/players" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Contact", href: "/contact" },
   ];
 
   return (
@@ -22,7 +22,9 @@ const Navbar = async () => {
 
         <ul className="hidden gap-x-4 text-lg md:flex">
           {NAV_LINKS.map((link, i) => (
-            <li key={i}>{link}</li>
+            <li key={i}>
+              <Link href={link.href}>{link.label}</Link>
+            </li>
           ))}
         </ul>
 

@@ -8,9 +8,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type MobileMenuProps = {
-  NAV_LINKS: JSX.Element[];
+  NAV_LINKS: {
+    label: string;
+    href: string;
+  }[];
 };
 
 const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
@@ -27,7 +31,7 @@ const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
           {NAV_LINKS.map((link, i) => (
             <li key={i}>
               <SheetClose asChild key={i}>
-                {link}
+                <Link href={link.href}>{link.label}</Link>
               </SheetClose>
             </li>
           ))}
