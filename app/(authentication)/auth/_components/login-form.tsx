@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { login } from "@/actions/login";
 
@@ -19,8 +20,8 @@ import {
 } from "@/components/ui/form";
 import CardWrapper from "./form/card-wrapper";
 import { Button } from "@/components/ui/button";
-// import FormError from "@/components/form-error";
-// import FormSuccess from "@/components/form-success";
+import FormError from "./form/form-error";
+import FormSuccess from "./form/form-success";
 
 const LoginForm = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -30,9 +31,12 @@ const LoginForm = () => {
 
   const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const searchParams = useSearchParams();
+
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use."
+      : undefined;
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -41,6 +45,10 @@ const LoginForm = () => {
       password: "",
     },
   });
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   if (!isMounted) {
     return null;
@@ -52,8 +60,8 @@ const LoginForm = () => {
 
     startTransition(() => {
       login(data).then((value) => {
-        setError(value.error);
-        setSuccess(value.success);
+        setError(value?.error);
+        // setSuccess(value.success);
       });
     });
   };
@@ -110,8 +118,8 @@ const LoginForm = () => {
             />
           </div>
 
-          {/* <FormError message={error} />
-          <FormSuccess message={success} /> */}
+          <FormError message={error || urlError} />
+          <FormSuccess message={success} />
 
           <Button type="submit" disabled={isPending} className="w-full">
             Login
