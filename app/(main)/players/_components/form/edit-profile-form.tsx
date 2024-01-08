@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
 
 import { Batting, Position, Throwing } from "@prisma/client";
 import axios from "axios";
