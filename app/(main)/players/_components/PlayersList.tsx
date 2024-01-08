@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-import { User } from "@prisma/client";
+import { type UserWithProfile } from "@/data/user";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
@@ -19,8 +18,8 @@ import EditProfileForm from "@/app/(main)/players/_components/form/edit-profile-
 import PlayerCard from "./player-card";
 
 type PlayersListProps = {
-  players: User[];
-  user: User | null
+  players: UserWithProfile[];
+  user: UserWithProfile | null;
 };
 
 const PlayersList = ({ players, user }: PlayersListProps) => {
@@ -34,7 +33,9 @@ const PlayersList = ({ players, user }: PlayersListProps) => {
     return null;
   }
 
-  const userPrimaryPhoneNumber = user?.primaryPhoneNumber?.phoneNumber || "";
+  if (!players.length) {
+    return <p>No players found</p>;
+  }
 
   return (
     <Table>
@@ -51,19 +52,17 @@ const PlayersList = ({ players, user }: PlayersListProps) => {
         {players.map((player) => (
           <Dialog key={player.id}>
             <TableRow>
-              <TableCell>{player.firstName}</TableCell>
-              <TableCell>{player.lastName}</TableCell>
+              <TableCell>{player.profile?.firstName}</TableCell>
+              <TableCell>{player.profile?.lastName}</TableCell>
               <TableCell>Yes</TableCell>
               <DialogTrigger asChild>
                 <TableCell className="cursor-pointer">
-                  {player.phoneNumbers.includes(userPrimaryPhoneNumber)
-                    ? "Edit"
-                    : "More Info"}
+                  {player.id === user?.id ? "Edit" : "More Info"}
                 </TableCell>
               </DialogTrigger>
             </TableRow>
 
-            {player.phoneNumbers.includes(userPrimaryPhoneNumber) ? (
+            {player.id === user?.id ? (
               <DialogContent className="w-[95%]">
                 <ScrollArea className="h-[80vh]">
                   <EditProfileForm />

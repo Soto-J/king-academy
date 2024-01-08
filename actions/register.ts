@@ -2,7 +2,7 @@
 
 import db from "@/lib/prismadb";
 
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import * as z from "zod";
 
 import { RegisterSchema } from "@/schemas";
@@ -27,7 +27,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
   const newUser = await db.user.create({
     data: {
-      userName,
+      name: userName,
       email,
       password: hashedPassword,
     },
