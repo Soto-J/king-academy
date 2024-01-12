@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 
 const POSITION_OPTIONS = [
   { position: Position.PITCHER, label: "Pitcher" },
@@ -53,12 +54,12 @@ type EditProfileFormProps = {
 
 const EditProfileForm = ({ user }: EditProfileFormProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
-
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
   const [isPending, startTransition] = useTransition();
 
+  const router = useRouter();
   const form = useForm<EditFormSchema>({
     resolver: zodResolver(editFormSchema),
     defaultValues: {
@@ -303,7 +304,9 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
         />
 
         <div className="ml-auto mt-8 max-w-fit">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={isPending}>
+            Submit
+          </Button>
         </div>
       </form>
     </Form>
