@@ -48,6 +48,7 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
   const [success, setSuccess] = useState<string | undefined>("");
 
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<EditFormSchema>({
     resolver: zodResolver(editFormSchema),
@@ -78,8 +79,6 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
     return null;
   }
 
-  const router = useRouter();
-  
   const onSubmit = async (data: EditFormSchema) => {
     setError("");
     setSuccess("");
