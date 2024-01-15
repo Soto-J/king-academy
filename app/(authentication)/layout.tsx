@@ -1,7 +1,9 @@
 import React from "react";
 
 const AuthenticationLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>;
+  return (
+    <div className="flex h-full items-center justify-center">{children}</div>
+  );
 };
 
 export default AuthenticationLayout;

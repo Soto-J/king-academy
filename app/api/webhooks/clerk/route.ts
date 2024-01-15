@@ -1,6 +1,5 @@
 import { createOrUpdateUser, deleteUser, getUserProfile } from "@/data/user";
 import { verifyWebhook } from "@/lib/webhook";
-import { clerkClient } from "@clerk/nextjs";
 
 export async function POST(request: Request) {
   const evt = await verifyWebhook(request);
@@ -18,13 +17,8 @@ export async function POST(request: Request) {
   if (evt.type === "session.created") {
     console.log("Session created:", { evt });
 
-    // const profile = await getUserProfile(evt.data.id);
-
-    // const hasProfile = !!profile?.id;
-
-    // await clerkClient.users.updateUserMetadata(evt.data.user_id, {
-    //   publicMetadata: { hasProfile },
-    // });
+    const user = await getUserProfile(evt.data.id);
+    console.log("User:", { user });
   }
 
   return new Response("Recieved", { status: 200 });

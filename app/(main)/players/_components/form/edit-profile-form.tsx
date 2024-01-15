@@ -33,6 +33,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import { DialogClose } from "@/components/ui/dialog";
 
 const POSITION_OPTIONS = [
   { position: Position.PITCHER, label: "Pitcher" },
@@ -50,9 +51,10 @@ const POSITION_OPTIONS = [
 
 type EditProfileFormProps = {
   user: UserWithProfileAndAddress;
+  setIsOpen: (isOpen: boolean) => void;
 };
 
-const EditProfileForm = ({ user }: EditProfileFormProps) => {
+const EditProfileForm = ({ user, setIsOpen }: EditProfileFormProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -65,6 +67,7 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
     defaultValues: {
       firstName: user.profile?.firstName || "",
       lastName: user.profile?.lastName || "",
+      phoneNumber: user.profile?.phoneNumber || "",
       dateOfBirth: user.profile?.dateOfBirth || "",
       school: user.profile?.school || "",
       address: {
@@ -92,19 +95,26 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
     setError("");
     setSuccess("");
     console.log(data);
-    return startTransition(() => {
+
+    startTransition(() => {
       createOrUpdateProfile(user?.id, data).then((value) => {
         setError(value?.error);
         setSuccess(value.success);
       });
     });
+
+    if (error) {
+      return;
+    }
+
+    setIsOpen(false);
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto w-[95%] max-w-xl"
+        className="mx-auto w-[95%] max-w-xl py-4"
       >
         <FormField
           control={form.control}
@@ -138,12 +148,27 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
 
         <FormField
           control={form.control}
+          name="phoneNumber"
+          render={({ field }) => (
+            <FormItem className="p-3">
+              <FormLabel>Phone:</FormLabel>
+              <FormControl>
+                <Input type="tel" placeholder="000 - 000 - 0000" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="dateOfBirth"
           render={({ field }) => (
             <FormItem className="p-3">
               <FormLabel>Date of Birth:</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="DOB" {...field} />
+                <Input type="date" placeholder="Month/Day/Year" {...field} />
               </FormControl>
 
               <FormMessage />
@@ -303,8 +328,18 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
           )}
         />
 
-        <div className="ml-auto mt-8 max-w-fit">
-          <Button type="submit" disabled={isPending}>
+        <div className="mt-8 flex w-full justify-end gap-x-4">
+          <DialogClose asChild>
+            <Button size="lg" disabled={isPending} variant="secondary">
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button
+            type="submit"
+            size="lg"
+            disabled={isPending}
+            className="font-semibold"
+          >
             Submit
           </Button>
         </div>

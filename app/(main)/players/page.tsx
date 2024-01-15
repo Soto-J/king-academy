@@ -6,7 +6,7 @@ import EditProfileButton from "./_components/form/edit-profile-button";
 
 const PlayerPage = async () => {
   const session = auth();
-
+  console.log(session.userId);
   const user = await getUserById(session.userId);
   const players = await getAllUsers();
 
@@ -17,6 +17,7 @@ const PlayerPage = async () => {
       <div className="mb-4 ml-auto mt-12 max-w-fit">
         <EditProfileButton user={user} />
       </div>
+      
       <PlayersList players={players || []} />
     </div>
   );
