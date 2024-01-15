@@ -12,48 +12,54 @@ datasource db {
 }
 
 model User {
-  id          String  @id @default(cuid())
-  externalId  String  @unique
-  username    String?
-  email       String  @unique
-  phoneNumber String?
+  id         String @id @default(cuid())
+  externalId String @unique
+  username   String @unique
+  email      String @unique
+  imageUrl   String @db.Text
 
   role    UserRole @default(USER)
   profile Profile?
-}
-
-model Profile {
-  id          String   @id @default(cuid())
-  userId      String   @unique
-  firstName   String
-  lastName    String
-  dateOfBirth String?
-  school      String?
-  bio         String?
-  age         Int?
-  isActive    Boolean? @default(false)
-
-  address UserAddress?
-
-  positions Position[]
-  batting   Batting?
-  throwing  Throwing?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+model Profile {
+  id          String   @id @default(cuid())
+  profileId   String   @unique
+  firstName   String
+  lastName    String
+  phoneNumber String   @unique
+  dateOfBirth String
+  school      String
+  bio         String?  @db.Text
+  age         Int
+  isActive    Boolean? @default(false)
+
+  address UserAddress?
+
+  positions Position[]
+  batting   Batting
+  throwing  Throwing
+
+  user User @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+}
+
 model UserAddress {
   id        String @id @default(cuid())
-  profileId String @unique
+  addressId String @unique
   street    String
   city      String
   state     String
   zip       String
 
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile Profile @relation(fields: [addressId], references: [id], onDelete: Cascade)
 }
 
 enum UserRole {
