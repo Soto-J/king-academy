@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
+import { type UserWithProfileAndAddress } from "@/data/user";
+
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
@@ -13,8 +17,6 @@ import {
 } from "@/components/ui/table";
 
 import { PlayerCard } from "./player-card";
-import { type UserWithProfileAndAddress } from "@/data/user";
-import { Button } from "@/components/ui/button";
 
 type PlayersListProps = {
   players: UserWithProfileAndAddress[];
