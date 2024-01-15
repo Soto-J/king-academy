@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { Batting, Position } from "@prisma/client";
+import { Batting } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
 import * as z from "zod";
