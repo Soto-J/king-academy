@@ -1,6 +1,6 @@
 "use client";
 
-import EditProfileForm from "./edit-profile-form";
+import { EditForm } from "./edit-form";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -12,7 +12,7 @@ type EditProfileButtonProps = {
   user: UserWithProfileAndAddress | null;
 };
 
-const EditProfileButton = ({ user }: EditProfileButtonProps) => {
+export const EditButton = ({ user }: EditProfileButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   if (!user?.id) {
@@ -27,11 +27,9 @@ const EditProfileButton = ({ user }: EditProfileButtonProps) => {
 
       <DialogContent className="w-[95%]">
         <ScrollArea className="h-[80vh]">
-          <EditProfileForm user={user} setIsOpen={setIsOpen} />
+          <EditForm user={user} setIsOpen={setIsOpen} />
         </ScrollArea>
       </DialogContent>
     </Dialog>
   );
 };
-
-export default EditProfileButton;

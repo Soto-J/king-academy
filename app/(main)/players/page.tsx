@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { getAllUsers, getUserById } from "@/data/user";
 
 import PlayersList from "./_components/PlayersList";
-import EditProfileButton from "./_components/form/edit-profile-button";
+import EditProfileButton from "./_components/form/edit-button";
 
 const PlayerPage = async () => {
   const session = auth();

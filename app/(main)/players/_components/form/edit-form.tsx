@@ -2,16 +2,18 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { Batting, Position } from "@prisma/client";
-
 import { useForm } from "react-hook-form";
+
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type EditFormSchema, editFormSchema } from "@/schemas";
-
 import {
-  type UserWithProfileAndAddress,
-  createOrUpdateProfile,
-} from "@/data/user";
+  type EditFormSchema,
+  editFormSchema,
+  POSITION_OPTIONS,
+} from "@/schemas";
+
+import { type UserWithProfileAndAddress } from "@/data/user";
+import { createOrUpdateProfile } from "@/data/profile";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,36 +34,20 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { useRouter } from "next/navigation";
 import { DialogClose } from "@/components/ui/dialog";
-
-const POSITION_OPTIONS = [
-  { position: Position.PITCHER, label: "Pitcher" },
-  { position: Position.CATCHER, label: "Catcher" },
-  { position: Position.FIRSTBASE, label: "First Base" },
-  { position: Position.SECONDBASE, label: "Second Base" },
-  { position: Position.THIRDBASE, label: "Third Base" },
-  { position: Position.SHORTSTOP, label: "Shortstop" },
-  { position: Position.LEFTFIELD, label: "Left Field" },
-  { position: Position.CENTERFIELD, label: "Center Field" },
-  { position: Position.RIGHTFIELD, label: "Right Field" },
-  { position: Position.DESIGNATEDHITTER, label: "Designated Hitter" },
-  { position: Position.BENCH, label: "Bench" },
-] as const;
 
 type EditProfileFormProps = {
   user: UserWithProfileAndAddress;
   setIsOpen: (isOpen: boolean) => void;
 };
 
-const EditProfileForm = ({ user, setIsOpen }: EditProfileFormProps) => {
+export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
   const [isPending, startTransition] = useTransition();
 
-  const router = useRouter();
   const form = useForm<EditFormSchema>({
     resolver: zodResolver(editFormSchema),
     defaultValues: {
@@ -347,5 +333,3 @@ const EditProfileForm = ({ user, setIsOpen }: EditProfileFormProps) => {
     </Form>
   );
 };
-
-export default EditProfileForm;

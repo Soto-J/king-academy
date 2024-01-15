@@ -3,16 +3,14 @@
 import { Position, Prisma } from "@prisma/client";
 import db from "@/lib/prismadb";
 
-import { UserJSON } from "@clerk/nextjs/server";
+import { UserJSON, currentUser } from "@clerk/nextjs/server";
 
 import { type EditFormSchema } from "@/schemas";
 
 const userWithProfileAndAddress = Prisma.validator<Prisma.UserDefaultArgs>()({
   include: {
     profile: {
-      include: {
-        address: true,
-      },
+      include: { address: true },
     },
   },
 });
@@ -20,6 +18,27 @@ const userWithProfileAndAddress = Prisma.validator<Prisma.UserDefaultArgs>()({
 export type UserWithProfileAndAddress = Prisma.UserGetPayload<
   typeof userWithProfileAndAddress
 >;
+
+export const getCurrentUser = async () => {
+  try {
+    const clerkUser = await currentUser();
+
+    if (!clerkUser) return null;
+
+    const user = await db.user.findUnique({
+      where: { externalId: clerkUser.id },
+      include: {
+        profile: {
+          include: { address: true },
+        },
+      },
+    });
+
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
 
 export const getUserById = async (id?: string | null) => {
   try {
@@ -58,19 +77,6 @@ export const getAllUsers = async () => {
   }
 };
 
-export const getUserProfile = async (userId: string) => {
-  try {
-    // TODO: Create a getSelf()
-    const profile = await db.profile.findUnique({
-      where: { profileId: userId },
-    });
-
-    return profile;
-  } catch (error) {
-    return null;
-  }
-};
-
 export const createOrUpdateUser = async (data: UserJSON) => {
   try {
     console.log("id", data.id);
@@ -96,64 +102,6 @@ export const createOrUpdateUser = async (data: UserJSON) => {
   } catch (error) {
     console.log(error);
     return null;
-  }
-};
-
-export const createOrUpdateProfile = async (
-  userId: string,
-  data: EditFormSchema,
-) => {
-  try {
-    console.log("data", data);
-
-    const school = data.school
-      .split(" ")
-      .map((word) => word[0].toUpperCase() + word.slice(1))
-      .join(" ");
-
-    const today = new Date();
-    const birthDate = new Date(data.dateOfBirth);
-
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-
-    const profileData = {
-      ...data,
-      firstName: data.firstName[0].toUpperCase() + data.firstName.slice(1),
-      lastName: data.lastName[0].toUpperCase() + data.lastName.slice(1),
-      school,
-      age,
-      positions: data.positions as Position[],
-    };
-
-    await db.profile.upsert({
-      where: { profileId: userId },
-      create: {
-        profileId: userId,
-        ...profileData,
-        address: {
-          create: { ...data.address },
-        },
-      },
-      update: {
-        ...profileData,
-        address: {
-          update: { ...data.address },
-        },
-      },
-    });
-
-    return { success: "User profile updated successfully!" };
-  } catch (error) {
-    console.log(error);
-    return { error: "Error updating user profile!" };
   }
 };
 
