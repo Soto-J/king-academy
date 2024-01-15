@@ -4,7 +4,6 @@ import { useEffect, useState, useTransition } from "react";
 import { Batting } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   type EditFormSchema,
@@ -36,6 +35,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogClose } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type EditProfileFormProps = {
   user: UserWithProfileAndAddress;
@@ -78,7 +78,9 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
     return null;
   }
 
-  const onSubmit = async (data: z.infer<typeof editFormSchema>) => {
+  const router = useRouter();
+  
+  const onSubmit = async (data: EditFormSchema) => {
     setError("");
     setSuccess("");
     console.log(data);
@@ -91,6 +93,7 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
           return;
         }
 
+        router.refresh();
         setSuccess(value.success);
         toast.success(value.success);
         setIsOpen(false);
