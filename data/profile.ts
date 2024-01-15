@@ -45,15 +45,11 @@ export const createOrUpdateProfile = async (
       create: {
         profileId: userId,
         ...profileData,
-        address: {
-          create: { ...data.address },
-        },
+        address: { create: data.address },
       },
       update: {
         ...profileData,
-        address: {
-          update: { ...data.address },
-        },
+        address: { update: data.address },
       },
     });
 

@@ -35,6 +35,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogClose } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 type EditProfileFormProps = {
   user: UserWithProfileAndAddress;
@@ -84,16 +85,17 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
 
     startTransition(() => {
       createOrUpdateProfile(user?.id, data).then((value) => {
-        setError(value?.error);
+        if (value?.error) {
+          setError(value?.error);
+          toast.error(value?.error);
+          return;
+        }
+
         setSuccess(value.success);
+        toast.success(value.success);
+        setIsOpen(false);
       });
     });
-
-    if (error) {
-      return;
-    }
-
-    setIsOpen(false);
   };
 
   return (
