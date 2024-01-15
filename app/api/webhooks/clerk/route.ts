@@ -1,4 +1,4 @@
-import { createOrUpdateUser, deleteUser, getUserProfile } from "@/data/user";
+import { createOrUpdateUser, deleteUser } from "@/data/user";
 import { verifyWebhook } from "@/lib/webhook";
 
 export async function POST(request: Request) {
@@ -15,10 +15,7 @@ export async function POST(request: Request) {
   }
 
   if (evt.type === "session.created") {
-    console.log("Session created:", { evt });
-
-    const user = await getUserProfile(evt.data.id);
-    console.log("User:", { user });
+    console.log("Session created:", { evt })
   }
 
   return new Response("Recieved", { status: 200 });
