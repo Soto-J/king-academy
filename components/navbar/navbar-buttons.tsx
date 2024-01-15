@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
 
+import { getCurrentUser } from "@/data/user";
+
+import { UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import { currentUser } from "@clerk/nextjs/server";
 
 export const NavbarButtons = async () => {
-  const user = await currentUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     return (
