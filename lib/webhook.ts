@@ -18,6 +18,13 @@ export const verifyWebhook = async (request: Request) => {
   const body = JSON.stringify(payload);
 
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || "";
+
+  if (!WEBHOOK_SECRET) {
+    return new Response("Error occured -- no webhook secret", {
+      status: 400,
+    });
+  }
+
   const wh = new Webhook(WEBHOOK_SECRET);
 
   let evt: WebhookEvent;
