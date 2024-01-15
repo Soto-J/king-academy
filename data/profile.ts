@@ -1,3 +1,5 @@
+"use server";
+
 import db from "@/lib/prismadb";
 import { Position } from "@prisma/client";
 import { EditFormSchema } from "@/schemas";
