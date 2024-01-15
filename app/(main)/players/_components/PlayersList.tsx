@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import PlayerCard from "./player-card";
+import { PlayerCard } from "./player-card";
 import { type UserWithProfileAndAddress } from "@/data/user";
 import { Button } from "@/components/ui/button";
 
@@ -20,7 +20,7 @@ type PlayersListProps = {
   players: UserWithProfileAndAddress[];
 };
 
-const PlayersList = ({ players }: PlayersListProps) => {
+export const PlayersList = ({ players }: PlayersListProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -73,5 +73,3 @@ const PlayersList = ({ players }: PlayersListProps) => {
     </Table>
   );
 };
-
-export default PlayersList;

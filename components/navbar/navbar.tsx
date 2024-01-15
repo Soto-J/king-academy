@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-import NavbarButtons from "./navbar-buttons";
+import { NavbarButtons } from "./navbar-buttons";
 import MobileMenu from "./mobile-menu";
 
 import { ModeToggle } from "@/components/mode-toggle";
-import Logo from "../logo";
+import { Logo } from "@/components/logo";
 
-const Navbar = async () => {
+export const Navbar = async () => {
   const NAV_LINKS = [
     { label: "Home", href: "/" },
     { label: "Players", href: "/players" },
@@ -42,5 +42,3 @@ const Navbar = async () => {
     </nav>
   );
 };
-
-export default Navbar;

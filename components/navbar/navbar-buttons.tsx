@@ -4,7 +4,7 @@ import { UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { currentUser } from "@clerk/nextjs/server";
 
-const NavbarButtons = async () => {
+export const NavbarButtons = async () => {
   const user = await currentUser();
 
   if (!user) {
@@ -22,5 +22,3 @@ const NavbarButtons = async () => {
 
   return <UserButton afterSignOutUrl="/" />;
 };
-
-export default NavbarButtons;

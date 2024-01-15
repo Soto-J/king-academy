@@ -9,7 +9,7 @@ type PlayerCardProps = {
   player: UserWithProfileAndAddress;
 };
 
-const PlayerCard = ({ player }: PlayerCardProps) => {
+export const PlayerCard = ({ player }: PlayerCardProps) => {
   if (!player.profile) {
     return <div>Player has no profile.</div>;
   }
@@ -45,5 +45,3 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
     </>
   );
 };
-
-export default PlayerCard;
