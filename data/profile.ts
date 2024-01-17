@@ -62,6 +62,12 @@ export const createOrUpdateProfile = async (
 
     return { success: "User profile updated successfully!" };
   } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return { error: "Phone number already in use!" };
+      }
+    }
+    
     console.log(error);
     return { error: "Error updating user profile!" };
   }
