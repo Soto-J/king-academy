@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Batting } from "@prisma/client";
 import { useForm } from "react-hook-form";
 
@@ -45,7 +45,6 @@ type EditProfileFormProps = {
 export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
   const router = useRouter();
 
-  const [isHydrated, setIsHydrated] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
@@ -71,14 +70,6 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
       bio: user.profile?.bio || "",
     },
   });
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  if (!isHydrated) {
-    return null;
-  }
 
   const onSubmit = async (data: EditFormSchema) => {
     setError("");

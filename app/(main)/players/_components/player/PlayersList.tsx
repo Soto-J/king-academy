@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { type UserWithProfileAndAddress } from "@/data/user";
 
 import { Button } from "@/components/ui/button";
@@ -23,15 +21,6 @@ type PlayersListProps = {
 };
 
 export const PlayersList = ({ players }: PlayersListProps) => {
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  if (!isHydrated) {
-    return null;
-  }
 
   if (!players.length) {
     return <p>No players found</p>;
