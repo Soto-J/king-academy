@@ -43,12 +43,13 @@ type EditProfileFormProps = {
 };
 
 export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
+  const router = useRouter();
+
   const [isHydrated, setIsHydrated] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   const form = useForm<EditFormSchema>({
     resolver: zodResolver(editFormSchema),
@@ -91,10 +92,13 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
           return;
         }
 
-        router.refresh();
-        setSuccess(value.success);
-        toast.success(value.success);
-        setIsOpen(false);
+        if (value?.success) {
+          router.refresh();
+          setSuccess(value.success);
+          toast.success(value.success);
+          setIsOpen(false);
+          return;
+        }
       });
     });
   };
