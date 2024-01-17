@@ -82,7 +82,6 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
   const onSubmit = async (data: EditFormSchema) => {
     setError("");
     setSuccess("");
-    console.log(data);
 
     startTransition(() => {
       createOrUpdateProfile(user?.id, data).then((value) => {

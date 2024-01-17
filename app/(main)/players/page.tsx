@@ -1,6 +1,6 @@
 import { getAllUsers, getCurrentUser } from "@/data/user";
 
-import { PlayersList } from "./_components/PlayersList";
+import { PlayersList } from "./_components/player/PlayersList";
 import { EditButton } from "./_components/form/edit-button";
 
 const PlayerPage = async () => {

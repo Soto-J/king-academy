@@ -1,10 +1,17 @@
 "use server";
 
 import db from "@/lib/prismadb";
-import { Position } from "@prisma/client";
+import { Position, Prisma } from "@prisma/client";
 import { EditFormSchema } from "@/schemas";
 
 import { getCurrentUser } from "./user";
+
+const profileWithAddress = Prisma.validator<Prisma.ProfileDefaultArgs>()({
+  include: { address: true },
+});
+export type ProfileWithAddress = Prisma.ProfileGetPayload<
+  typeof profileWithAddress
+>;
 
 export const createOrUpdateProfile = async (
   userId: string,
