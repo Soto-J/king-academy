@@ -1,6 +1,7 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import "@tanstack/react-table";
+import { ColumnDef, RowData, ColumnMeta } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -12,12 +13,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserWithProfileAndAddress } from "@/data/user";
+import { type UserWithProfileAndAddress } from "@/data/user";
 import { PlayerCard } from "../player-card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CheckHydration } from "@/components/check-hydration";
-import dynamic from "next/dynamic";
 
 type Column = {
   id: string;
@@ -27,9 +27,19 @@ type Column = {
   lastName: string;
 };
 
+declare module "@tanstack/react-table" {
+  // interface ColumnMeta<TData extends RowData, TValue> {
+  //   currentUser: UserWithProfileAndAddress;
+  // }
+
+  interface CellContext<TData extends RowData, TValue> {
+    currentUser: UserWithProfileAndAddress | null;
+  }
+}
+
 export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
   {
-    accessorKey: "profile?.isActive",
+    accessorKey: "profile.isActive",
     header: "Status",
     cell: ({ row }) => {
       const player = row.original;
@@ -66,8 +76,8 @@ export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => {
-      const payment = row.original;
+    cell: ({ row, currentUser }) => {
+      const isUser = row.original.id === currentUser?.id;
 
       return (
         <DropdownMenu>
@@ -92,6 +102,13 @@ export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
                 </ScrollArea>
               </DialogContent>
             </Dialog>
+
+            {isUser && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Edit</DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       );
