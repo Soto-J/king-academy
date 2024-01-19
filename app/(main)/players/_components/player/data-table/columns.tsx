@@ -39,7 +39,9 @@ export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
           <div className="flex items-center justify-center">
             <div
               className={`h-3 w-3 rounded-full ${
-                player.profile?.isActive ? "bg-green-500" : "bg-red-500"
+                player.profile?.isActive || player.profile
+                  ? "bg-green-500"
+                  : "bg-red-500"
               }`}
             />
           </div>
