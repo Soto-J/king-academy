@@ -15,15 +15,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { UserWithProfileAndAddress } from "@/data/user";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  currentUser: UserWithProfileAndAddress | null;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  currentUser,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -61,7 +64,10 @@ export function DataTable<TData, TValue>({
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="text-center">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {flexRender(cell.column.columnDef.cell, {
+                      ...cell.getContext(),
+                      currentUser,
+                    })}
                   </TableCell>
                 ))}
               </TableRow>
