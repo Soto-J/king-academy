@@ -1,3 +1,5 @@
+"use client";
+
 import {
   DialogDescription,
   DialogHeader,
@@ -12,6 +14,7 @@ import { GiThrowingBall } from "react-icons/gi";
 import { CiMail } from "react-icons/ci";
 import { FaSchool } from "react-icons/fa";
 import { FaBirthdayCake } from "react-icons/fa";
+
 type PlayerCardProps = {
   player: UserWithProfileAndAddress;
 };
@@ -70,9 +73,7 @@ export const PlayerCard = ({ player }: PlayerCardProps) => {
           <span>
             <GiThrowingBall className="h-6 w-6" />
           </span>
-          <p className="capitalize">
-            {player.profile.throwing.toLocaleLowerCase()}
-          </p>
+          <p className="capitalize">{player.profile.throwing.toLowerCase()}</p>
         </div>
 
         <div>

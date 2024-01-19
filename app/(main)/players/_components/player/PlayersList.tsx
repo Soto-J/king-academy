@@ -1,5 +1,3 @@
-"use client";
-
 import { type UserWithProfileAndAddress } from "@/data/user";
 
 import { Button } from "@/components/ui/button";
@@ -21,7 +19,6 @@ type PlayersListProps = {
 };
 
 export const PlayersList = ({ players }: PlayersListProps) => {
-
   if (!players.length) {
     return <p>No players found</p>;
   }
@@ -44,6 +41,7 @@ export const PlayersList = ({ players }: PlayersListProps) => {
               <TableCell>{player.profile?.firstName}</TableCell>
               <TableCell>{player.profile?.lastName}</TableCell>
               <TableCell>Yes</TableCell>
+
               <DialogTrigger asChild>
                 <TableCell className="cursor-pointer">
                   <Button size="sm" variant="link" className="text-sm">

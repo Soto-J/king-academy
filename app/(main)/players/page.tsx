@@ -1,7 +1,8 @@
 import { getAllUsers, getCurrentUser } from "@/data/user";
 
-import { PlayersList } from "./_components/player/PlayersList";
 import { EditButton } from "./_components/form/edit-button";
+import { DataTable } from "./_components/player/data-table/data-table";
+import { columns } from "./_components/player/data-table/columns";
 
 const PlayerPage = async () => {
   const user = await getCurrentUser();
@@ -15,7 +16,7 @@ const PlayerPage = async () => {
         <EditButton user={user} />
       </div>
 
-      <PlayersList players={players || []} />
+      <DataTable columns={columns} data={players || []} />
     </>
   );
 };
