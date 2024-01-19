@@ -29,8 +29,23 @@ type Column = {
 
 export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
   {
-    accessorKey: "profile.isActive" || false,
+    accessorKey: "profile?.isActive",
     header: "Status",
+    cell: ({ row }) => {
+      const player = row.original;
+
+      return (
+        <CheckHydration>
+          <div className="flex items-center justify-center">
+            <div
+              className={`h-3 w-3 rounded-full ${
+                player.profile?.isActive ? "bg-green-500" : "bg-red-500"
+              }`}
+            />
+          </div>
+        </CheckHydration>
+      );
+    },
   },
   {
     accessorKey: "username",
@@ -39,13 +54,16 @@ export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
   {
     accessorKey: "profile.firstName",
     header: "First Name",
+    cell: ({ row }) => row.original.profile?.firstName || "",
   },
   {
     accessorKey: "profile.lastName",
     header: "Last Name",
+    cell: ({ row }) => row.original.profile?.lastName || "",
   },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => {
       const payment = row.original;
 
