@@ -16,7 +16,7 @@ const PlayerPage = async () => {
         <EditButton user={user} />
       </div>
 
-      <DataTable columns={columns} data={players || []} />
+      <DataTable columns={columns} currentUser={user} data={players || []} />
     </>
   );
 };
