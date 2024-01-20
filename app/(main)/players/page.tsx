@@ -1,8 +1,7 @@
 import { getAllUsers, getCurrentUser } from "@/data/user";
 
-import { EditButton } from "./_components/form/edit-button";
-import { DataTable } from "./_components/player/data-table/data-table";
-import { columns } from "./_components/player/data-table/columns";
+import { DataTable } from "./_components/data-table/data-table";
+import { columns } from "./_components/data-table/columns";
 
 const PlayerPage = async () => {
   const user = await getCurrentUser();
@@ -11,10 +10,6 @@ const PlayerPage = async () => {
   return (
     <>
       <h1 className="mb-12 text-center text-3xl font-bold">Players</h1>
-
-      <div className="mb-4 ml-auto mt-12 max-w-fit">
-        <EditButton user={user} />
-      </div>
 
       <DataTable columns={columns} currentUser={user} data={players || []} />
     </>

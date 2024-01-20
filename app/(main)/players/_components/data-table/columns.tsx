@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
 import "@tanstack/react-table";
-import { ColumnDef, RowData, ColumnMeta } from "@tanstack/react-table";
+import { ColumnDef, RowData } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
+import { type UserWithProfileAndAddress } from "@/data/user";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +16,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { type UserWithProfileAndAddress } from "@/data/user";
-import { PlayerCard } from "../player-card";
+import { PlayerCard } from "../player/player-card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CheckHydration } from "@/components/check-hydration";
+import { EditForm } from "@/app/(main)/players/_components/form/edit-form";
 
 type Column = {
   id: string;
@@ -45,17 +47,15 @@ export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
       const player = row.original;
 
       return (
-        <CheckHydration>
-          <div className="flex items-center justify-center">
-            <div
-              className={`h-3 w-3 rounded-full ${
-                player.profile?.isActive || player.profile
-                  ? "bg-green-500"
-                  : "bg-red-500"
-              }`}
-            />
-          </div>
-        </CheckHydration>
+        <div className="flex items-center justify-center">
+          <div
+            className={`h-3 w-3 rounded-full ${
+              player.profile?.isActive || player.profile
+                ? "bg-green-500"
+                : "bg-red-500"
+            }`}
+          />
+        </div>
       );
     },
   },
@@ -77,10 +77,15 @@ export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row, currentUser }) => {
-      const isUser = row.original.id === currentUser?.id;
+      const [isOpen, setIsOpen] = useState(false);
+      const player = row.original;
+      const isUser = player.id === currentUser?.id;
 
       return (
-        <DropdownMenu>
+        <DropdownMenu
+          open={isOpen}
+          onOpenChange={(isOpen) => setIsOpen(isOpen)}
+        >
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
@@ -89,7 +94,7 @@ export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <Dialog>
+            <Dialog onOpenChange={(isOpen) => setIsOpen(isOpen)}>
               <DialogTrigger asChild>
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   View profile
@@ -104,10 +109,20 @@ export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
             </Dialog>
 
             {isUser && (
-              <>
+              <Dialog onOpenChange={(isOpen) => setIsOpen(isOpen)}>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-              </>
+                <DialogTrigger asChild>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    Edit
+                  </DropdownMenuItem>
+                </DialogTrigger>
+
+                <DialogContent>
+                  <ScrollArea className="h-[80vh]">
+                    <EditForm user={row.original} setIsOpen={setIsOpen} />
+                  </ScrollArea>
+                </DialogContent>
+              </Dialog>
             )}
           </DropdownMenuContent>
         </DropdownMenu>
