@@ -39,7 +39,7 @@ declare module "@tanstack/react-table" {
   }
 }
 
-export const columns: ColumnDef<UserWithProfileAndAddress>[] = [
+export const Columns: ColumnDef<UserWithProfileAndAddress>[] = [
   {
     accessorKey: "profile.isActive",
     header: "Status",
