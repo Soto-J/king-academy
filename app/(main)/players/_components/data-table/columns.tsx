@@ -20,6 +20,7 @@ import { PlayerCard } from "../player/player-card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { EditForm } from "@/app/(main)/players/_components/form/edit-form";
+import { Actions } from "./actions";
 
 type Column = {
   id: string;
@@ -77,55 +78,53 @@ export const Columns: ColumnDef<UserWithProfileAndAddress>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row, currentUser }) => {
-      const [isOpen, setIsOpen] = useState(false);
-      const player = row.original;
-      const isUser = player.id === currentUser?.id;
 
       return (
-        <DropdownMenu
-          open={isOpen}
-          onOpenChange={(isOpen) => setIsOpen(isOpen)}
-        >
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
+        <Actions currentUser={currentUser} player={row.original} />
+        // <DropdownMenu
+        //   open={isOpen}
+        //   onOpenChange={(isOpen) => setIsOpen(isOpen)}
+        // >
+        //   <DropdownMenuTrigger asChild>
+        //     <Button variant="ghost" className="h-8 w-8 p-0">
+        //       <span className="sr-only">Open menu</span>
+        //       <MoreHorizontal className="h-4 w-4" />
+        //     </Button>
+        //   </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end">
-            <Dialog onOpenChange={(isOpen) => setIsOpen(isOpen)}>
-              <DialogTrigger asChild>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  View profile
-                </DropdownMenuItem>
-              </DialogTrigger>
+        //   <DropdownMenuContent align="end">
+        //     <Dialog onOpenChange={(isOpen) => setIsOpen(isOpen)}>
+        //       <DialogTrigger asChild>
+        //         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+        //           View profile
+        //         </DropdownMenuItem>
+        //       </DialogTrigger>
 
-              <DialogContent className="w-[95%]">
-                <ScrollArea className="h-96">
-                  <PlayerCard player={row.original} />
-                </ScrollArea>
-              </DialogContent>
-            </Dialog>
+        //       <DialogContent className="w-[95%]">
+        //         <ScrollArea className="h-96">
+        //           <PlayerCard player={row.original} />
+        //         </ScrollArea>
+        //       </DialogContent>
+        //     </Dialog>
 
-            {isUser && (
-              <Dialog onOpenChange={(isOpen) => setIsOpen(isOpen)}>
-                <DropdownMenuSeparator />
-                <DialogTrigger asChild>
-                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    Edit
-                  </DropdownMenuItem>
-                </DialogTrigger>
+        //     {isUser && (
+        //       <Dialog onOpenChange={(isOpen) => setIsOpen(isOpen)}>
+        //         <DropdownMenuSeparator />
+        //         <DialogTrigger asChild>
+        //           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+        //             Edit
+        //           </DropdownMenuItem>
+        //         </DialogTrigger>
 
-                <DialogContent>
-                  <ScrollArea className="h-[80vh]">
-                    <EditForm user={row.original} setIsOpen={setIsOpen} />
-                  </ScrollArea>
-                </DialogContent>
-              </Dialog>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        //         <DialogContent>
+        //           <ScrollArea className="h-[80vh]">
+        //             <EditForm user={row.original} setIsOpen={setIsOpen} />
+        //           </ScrollArea>
+        //         </DialogContent>
+        //       </Dialog>
+        //     )}
+        //   </DropdownMenuContent>
+        // </DropdownMenu>
       );
     },
   },
