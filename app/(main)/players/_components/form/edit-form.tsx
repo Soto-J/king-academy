@@ -36,6 +36,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { DialogClose } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { ActionButtons } from "./action-buttons";
+import { onCreateOrUpdateProfile } from "@/actions/edit-profile";
 
 type EditProfileFormProps = {
   user: UserWithProfileAndAddress;
@@ -71,27 +73,42 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
     },
   });
 
-  const onSubmit = async (data: EditFormSchema) => {
+  const onSubmit = (data: EditFormSchema) => {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      createOrUpdateProfile(user?.id, data).then((value) => {
-        if (value?.error) {
-          setError(value?.error);
-          toast.error(value?.error);
-          return;
-        }
+      onCreateOrUpdateProfile(user?.id, data)
+        .then((data) => {
+          setSuccess(data?.success);
+          toast.success(data?.success);
+        })
+        .catch((error) => {
+          setError(error);
+          toast.error(error);
+        });
 
-        if (value?.success) {
-          router.refresh();
-          setSuccess(value.success);
-          toast.success(value.success);
-          setIsOpen(false);
-          return;
-        }
-      });
+      // createOrUpdateProfile(user?.id, data)
+      //   .then((value) => {
+      // if (value?.error) {
+      // setSuccess(value?.success);
+      // toast.error(value?.success);
+      //   return;
+      // }
+
+      // if (value?.success) {
+      //   router.refresh();
+      //   setSuccess(value.success);
+      //   toast.success(value.success);
+      //   setIsOpen(false);
+      //   return;
+      // }
     });
+    // .catch((error) => {
+    //   setError(error);
+    //   toast.error(error);
+    // });
+    // });
   };
 
   return (
@@ -318,6 +335,7 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
               Cancel
             </Button>
           </DialogClose>
+
           <Button
             type="submit"
             size="lg"
@@ -327,6 +345,8 @@ export const EditForm = ({ user, setIsOpen }: EditProfileFormProps) => {
             Submit
           </Button>
         </div>
+
+        <ActionButtons disabled={isPending} />
       </form>
     </Form>
   );

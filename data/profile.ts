@@ -2,9 +2,11 @@
 
 import db from "@/lib/prismadb";
 import { Position, Prisma } from "@prisma/client";
+
 import { EditFormSchema } from "@/schemas";
 
 import { getCurrentUser } from "./user";
+import { capitalize, getAge } from "./helper";
 
 const profileWithAddress = Prisma.validator<Prisma.ProfileDefaultArgs>()({
   include: { address: true },
@@ -20,28 +22,15 @@ export const createOrUpdateProfile = async (
   try {
     console.log("data", data);
 
-    const school = data.school
-      .split(" ")
-      .map((word) => word[0].toUpperCase() + word.slice(1))
-      .join(" ");
-
-    const today = new Date();
-    const birthDate = new Date(data.dateOfBirth);
-
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
+    const school = capitalize(data.school);
+    const firstName = capitalize(data.firstName);
+    const lastName = capitalize(data.lastName);
+    const age = getAge(data.dateOfBirth);
 
     const profileData = {
       ...data,
-      firstName: data.firstName[0].toUpperCase() + data.firstName.slice(1),
-      lastName: data.lastName[0].toUpperCase() + data.lastName.slice(1),
+      firstName,
+      lastName,
       school,
       age,
       positions: data.positions as Position[],
@@ -65,11 +54,13 @@ export const createOrUpdateProfile = async (
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
         return { error: "Phone number already in use!" };
+        throw new Error("Phone number already in use!");
       }
     }
-    
+
     console.log(error);
     return { error: "Error updating user profile!" };
+    throw new Error("Error updating user profile!");
   }
 };
 

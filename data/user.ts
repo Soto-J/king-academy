@@ -1,11 +1,8 @@
-"use server";
-
-import { Position, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import db from "@/lib/prismadb";
 
 import { UserJSON, currentUser } from "@clerk/nextjs/server";
-
-import { type EditFormSchema } from "@/schemas";
+import { capitalize } from "./helper";
 
 const userWithProfileAndAddress = Prisma.validator<Prisma.UserDefaultArgs>()({
   include: {
@@ -14,7 +11,6 @@ const userWithProfileAndAddress = Prisma.validator<Prisma.UserDefaultArgs>()({
     },
   },
 });
-
 export type UserWithProfileAndAddress = Prisma.UserGetPayload<
   typeof userWithProfileAndAddress
 >;
@@ -23,7 +19,9 @@ export const getCurrentUser = async () => {
   try {
     const clerkUser = await currentUser();
 
-    if (!clerkUser) return null;
+    if (!clerkUser || !clerkUser.id) {
+      return null;
+    }
 
     const user = await db.user.findUnique({
       where: { externalId: clerkUser.id },
@@ -34,15 +32,21 @@ export const getCurrentUser = async () => {
       },
     });
 
+    if (!user) {
+      throw new Error("User not found!");
+    }
+
     return user;
   } catch (error) {
-    return null;
+    throw error;
   }
 };
 
 export const getUserById = async (id?: string | null) => {
   try {
-    if (!id) return null;
+    if (!id) {
+      throw new Error("No ID!");
+    }
 
     const user = await db.user.findUnique({
       where: { externalId: id },
@@ -55,9 +59,13 @@ export const getUserById = async (id?: string | null) => {
       },
     });
 
+    if (!user) {
+      throw new Error("User not found!");
+    }
+
     return user;
   } catch (error) {
-    return null;
+    throw error;
   }
 };
 
@@ -73,7 +81,7 @@ export const getAllUsers = async () => {
 
     return users;
   } catch (error) {
-    return null;
+    return [];
   }
 };
 
@@ -82,9 +90,7 @@ export const createOrUpdateUser = async (data: UserJSON) => {
     console.log("id", data.id);
     console.log("clerkData", data);
 
-    const username = data.username
-      ? data.username[0].toUpperCase() + data.username.slice(1)
-      : "";
+    const username = capitalize(data.username);
 
     const user = {
       username,
@@ -92,13 +98,11 @@ export const createOrUpdateUser = async (data: UserJSON) => {
       imageUrl: data.image_url,
     };
 
-    const createdOrUpdatedUser = await db.user.upsert({
+    return await db.user.upsert({
       where: { externalId: data.id },
       create: { externalId: data.id, ...user },
       update: user,
     });
-
-    return createdOrUpdatedUser;
   } catch (error) {
     console.log(error);
     return null;
@@ -107,12 +111,22 @@ export const createOrUpdateUser = async (data: UserJSON) => {
 
 export const deleteUser = async (id?: string) => {
   try {
-    await db.user.delete({
+    if (!id) {
+      throw new Error("No ID!");
+    }
+
+    const userToDelete = await db.user.findUnique({
       where: { externalId: id },
     });
 
-    return null;
+    if (!userToDelete) {
+      throw new Error("User not found!");
+    }
+
+    return await db.user.delete({
+      where: { externalId: id },
+    });
   } catch (error) {
-    return null;
+    throw error;
   }
 };
