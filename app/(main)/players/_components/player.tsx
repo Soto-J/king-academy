@@ -30,7 +30,7 @@ export const Player = ({ player, currentUser }: PlayerProps) => {
       <DialogContent className={isCurrentPlayer ? "" : `w-[95%]`}>
         <ScrollArea className="h-96">
           {isCurrentPlayer ? (
-            <EditProfileForm />
+            <EditProfileForm userId={currentUser.id} />
           ) : (
             <PlayerCard player={player} />
           )}

@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import { startTransition, useEffect, useState, useTransition } from "react";
 
 import { Batting, Position, Throwing } from "@prisma/client";
 import axios from "axios";
@@ -29,6 +28,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { editUser } from "@/actions/editUser";
 
 const formSchema = z.object({
   school: z.string({ required_error: "School is required" }).min(2),
@@ -62,8 +62,13 @@ const POSITION_OPTIONS = [
 
 export type EditFormSchema = z.infer<typeof formSchema>;
 
-const EditProfileForm = () => {
+type EditProfileFormProps = {
+  userId: string;
+};
+
+const EditProfileForm = ({ userId }: EditProfileFormProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -89,13 +94,13 @@ const EditProfileForm = () => {
   }
 
   const onSubmit = async (data: EditFormSchema) => {
-    try {
-      await axios.patch("/api/user", data);
-
-      form.reset();
-    } catch (error) {
-      console.log(error);
-    }
+    startTransition(() => {
+      editUser(data, userId)
+        .then(() => {
+          console.log("Edit successful");
+        })
+        .catch((error) => console.log(error));
+    });
   };
 
   return (
