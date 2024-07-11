@@ -2,9 +2,7 @@ import prisma from "@/lib/prismadb";
 
 export async function getAllPlayers() {
   try {
-    const players = await prisma.user.findMany();
-
-    return players;
+    return await prisma.user.findMany();
   } catch (error) {
     console.error(error);
     return Promise.reject(error);

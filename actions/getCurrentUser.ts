@@ -1,13 +1,18 @@
 import prisma from "@/lib/prismadb";
+import { currentUser } from "@clerk/nextjs";
 
-export async function getUser(userId?: string) {
+export async function getCurrentUser() {
   try {
-    if (!userId) {
-      return null;
+    const clerkUser = await currentUser();
+
+    if (!clerkUser?.id) {
+      throw new Error("Unathorized");
     }
 
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: {
+        externalId: clerkUser?.id,
+      },
     });
 
     if (!user) {
