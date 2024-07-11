@@ -6,30 +6,66 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String       @id @map("_id")
-  firstName    String
-  lastName     String
-  dateOfBirth  String?
-  school       String?
-  bio          String?
-  emails       String[]
-  phoneNumbers String[]
-  age          Int?
-  isActive     Boolean?     @default(true)
-  address      UserAddress?
-  role         Role
+  id          String       @id @default(uuid()) 
+  externalId  String       @unique
+  firstName   String
+  lastName    String
+  username    String
+  dateOfBirth String?
+  school      String?
+  bio         String?
+  imageUrl    String?      @db.Text
+  email       String       @unique
+  phoneNumber String?
+  address     UserAddress?
+  age         Int?
+  isActive    Boolean?     @default(true)
+  role        Role         @default(MEMBER)
 
-  positions Position[]
+  positions UserPosition[]
   batting   Batting?
   throwing  Throwing?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model UserAddress {
+  id     String @id @default(uuid())
+  street String
+  city   String
+  state  String
+  zip    String @db.Char(5)
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model UserPosition {
+  id       String   @id @default(uuid())
+  position Position
+
+  userId String?
+  User   User?   @relation(fields: [userId], references: [id])
+}
+
+enum Position {
+  PITCHER
+  CATCHER
+  FIRSTBASE
+  SECONDBASE
+  THIRDBASE
+  SHORTSTOP
+  LEFTFIELD
+  CENTERFIELD
+  RIGHTFIELD
+  DESIGNATEDHITTER
+  BENCH
 }
 
 enum Role {
@@ -47,25 +83,4 @@ enum Throwing {
   RIGHT
   LEFT
   SWITCH
-}
-
-enum Position {
-  PITCHER
-  CATCHER
-  FIRSTBASE
-  SECONDBASE
-  THIRDBASE
-  SHORTSTOP
-  LEFTFIELD
-  CENTERFIELD
-  RIGHTFIELD
-  DESIGNATEDHITTER
-  BENCH
-}
-
-type UserAddress {
-  street String
-  city   String
-  state  String
-  zip    String
 }

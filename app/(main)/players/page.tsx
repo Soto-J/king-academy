@@ -1,4 +1,4 @@
-import { getAllPlayers } from "@/app/actions/getAllPlayers";
+import { getAllPlayers } from "@/actions/getAllPlayers";
 import { Button } from "@/components/ui/button";
 import PlayersList from "./_components/PlayersList";
 

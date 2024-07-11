@@ -1,5 +1,5 @@
 import { Position } from "@prisma/client";
-import { EditFormSchema } from "../(main)/players/_components/edit-profile-form";
+import { EditFormSchema } from "../app/(main)/players/_components/edit-profile-form";
 import prisma from "@/lib/prismadb";
 
 export async function editUser(

@@ -28,6 +28,6 @@ export async function createUser(user: UserJSON) {
     return { message: "User created", newUser };
   } catch (error) {
     console.error("Create User:", error);
-    return null;
+    throw error;
   }
 }

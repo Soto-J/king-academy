@@ -2,8 +2,8 @@ import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 
-import { deleteUser } from "@/app/actions/deleteUser";
-import { insertUserToDB } from "@/app/actions/insertUserToDB";
+import { deleteUser } from "@/actions/deleteUser";
+import { upsertUserData } from "@/actions/insertUserToDB";
 
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET as string;
 
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
   if (eventType === "user.created" || eventType === "user.updated") {
     console.log("Inserting user to DB");
-    await insertUserToDB(evt.data);
+    await upsertUserData(evt.data);
   }
 
   if (eventType === "user.deleted") {
@@ -33,9 +33,8 @@ export async function POST(req: Request) {
 
 async function validateRequest(req: Request) {
   try {
+    // Get headers
     const headerPayload = headers();
-    const wh = new Webhook(WEBHOOK_SECRET);
-
     const svixId = headerPayload.get("svix-id");
     const svixTimestamp = headerPayload.get("svix-timestamp");
     const svixSignature = headerPayload.get("svix-signature");
@@ -44,8 +43,11 @@ async function validateRequest(req: Request) {
       throw new Error("Missing svix headers");
     }
 
+    // Get body
     const payload = await req.json();
     const body = JSON.stringify(payload);
+
+    const wh = new Webhook(WEBHOOK_SECRET);
 
     return wh.verify(body, {
       "svix-id": svixId,
@@ -54,10 +56,15 @@ async function validateRequest(req: Request) {
     }) as WebhookEvent;
   } catch (error) {
     console.log("Error verifying webhook:", error);
+    throw error;
   }
 }
 
 export async function GET() {
-  console.log("Api Test");
-  return Response.json({ message: "Api Test" });
+  try {
+    console.log("Api Test");
+    return Response.json({ message: "Api Test" });
+  } catch (error) {
+    return error;
+  }
 }
