@@ -1,5 +1,9 @@
 import prisma from "@/lib/prismadb";
+import { Prisma } from "@prisma/client";
+
 import { currentUser } from "@clerk/nextjs";
+
+
 
 export async function getCurrentUser() {
   try {
@@ -11,8 +15,9 @@ export async function getCurrentUser() {
 
     const user = await prisma.user.findUnique({
       where: {
-        externalId: clerkUser?.id,
+        externalId: clerkUser.id,
       },
+      include: { positions: true, address: true },
     });
 
     if (!user) {

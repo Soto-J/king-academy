@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User } from "@/actions/getAllPlayers";
 
 import {
   DialogDescription,
@@ -28,9 +28,9 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
         <div>Throwing: {player.throwing}</div>
         <div>
           Positions:
-          {/* {player.positions.map((position) => (
-            <div key={player.id}>{position}</div>
-          ))} */}
+          {player.positions.map((position) => (
+            <div key={player.id}>{position.position}</div>
+          ))}
         </div>
       </div>
     </>

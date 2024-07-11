@@ -1,7 +1,7 @@
-import { User } from "@prisma/client";
-
 import EditProfileForm from "./edit-profile-form";
 import PlayerCard from "./player-card";
+
+import { User } from "@/actions/getAllPlayers";
 
 import { DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { TableRow, TableCell } from "@/components/ui/table";
@@ -13,8 +13,8 @@ type PlayerProps = {
 };
 
 export const Player = ({ player, currentUser }: PlayerProps) => {
-  const isPlayer = player.id == currentUser.id;
-  const action = isPlayer ? "Edit" : "More Info";
+  const isCurrentPlayer = player.id == currentUser.id;
+  const action = isCurrentPlayer ? "Edit" : "More Info";
 
   return (
     <>
@@ -27,9 +27,13 @@ export const Player = ({ player, currentUser }: PlayerProps) => {
         </DialogTrigger>
       </TableRow>
 
-      <DialogContent className={isPlayer ? "" : `w-[95%]`}>
+      <DialogContent className={isCurrentPlayer ? "" : `w-[95%]`}>
         <ScrollArea className="h-96">
-          {isPlayer ? <EditProfileForm /> : <PlayerCard player={player} />}
+          {isCurrentPlayer ? (
+            <EditProfileForm />
+          ) : (
+            <PlayerCard player={player} />
+          )}
         </ScrollArea>
       </DialogContent>
     </>

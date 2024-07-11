@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
-
-import { User } from "@prisma/client";
 
 import { Player } from "./player";
 
@@ -15,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { User } from "@/actions/getAllPlayers";
 
 type PlayersListProps = {
   players: User[];
@@ -23,8 +21,6 @@ type PlayersListProps = {
 
 const PlayersList = ({ players, currentUser }: PlayersListProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
-
-  const { user } = useUser();
 
   useEffect(() => {
     setIsHydrated(true);
