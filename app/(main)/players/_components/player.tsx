@@ -6,6 +6,7 @@ import { User } from "@/actions/getAllPlayers";
 import { DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 
 type PlayerProps = {
   player: User;
@@ -27,8 +28,10 @@ export const Player = ({ player, currentUser }: PlayerProps) => {
         </DialogTrigger>
       </TableRow>
 
-      <DialogContent className={isCurrentPlayer ? "" : `w-[95%]`}>
-        <ScrollArea className="h-96">
+      <DialogContent
+        className={cn("h-[75%]", isCurrentPlayer ? "" : `w-[95%]`)}
+      >
+        <ScrollArea>
           {isCurrentPlayer ? (
             <EditProfileForm userId={currentUser.id} />
           ) : (

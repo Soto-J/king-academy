@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "start next dev & lt --port 3000 --subdomain king-academy",
+    "local-dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
     "postinstall": "prisma generate",

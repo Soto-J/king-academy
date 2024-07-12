@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 
-import { Batting, Position, Throwing } from "@prisma/client";
+import { Batting, Position } from "@prisma/client";
 
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -29,22 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const formSchema = z.object({
-  school: z.string({ required_error: "School is required" }).min(2),
-  address: z.object({
-    street: z.string({ required_error: "Street is required" }).min(1),
-    city: z.string({ required_error: "City is required" }).min(1),
-    state: z.string({ required_error: "State is required" }).min(1),
-    zip: z.string({ required_error: "Zip is required" }).min(5).max(5),
-  }),
-  positions: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "At least one position is required",
-  }),
-  batting: z.enum([Batting.RIGHT, Batting.LEFT, Batting.SWITCH]),
-  throwing: z.enum([Throwing.RIGHT, Throwing.LEFT, Throwing.SWITCH]),
-  bio: z.string(),
-});
+import { formSchema } from "@/schemas";
 
 const POSITION_OPTIONS = [
   { position: Position.PITCHER, label: "Pitcher" },
@@ -74,12 +59,12 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       // school: "",
-      // address: {
-      //   street: "",
-      //   city: "",
-      //   state: "",
-      //   zip: "",
-      // },
+      address: {
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+      },
       // bio: "",
     },
   });
@@ -106,8 +91,9 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto w-[95%] max-w-xl"
+        className="mx-auto max-w-xl p-6"
       >
+        {/* School */}
         <FormField
           control={form.control}
           name="school"
@@ -123,6 +109,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
           )}
         />
 
+        {/* Address */}
         <FormField
           control={form.control}
           name="address"
@@ -154,6 +141,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
           )}
         />
 
+        {/* Positions */}
         <FormField
           name="positions"
           control={form.control}
@@ -195,6 +183,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
           )}
         />
 
+        {/* Batting */}
         <FormField
           control={form.control}
           name="batting"
@@ -220,6 +209,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
           )}
         />
 
+        {/* Throwing */}
         <FormField
           control={form.control}
           name="throwing"
@@ -245,6 +235,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
           )}
         />
 
+        {/* Bio */}
         <FormField
           control={form.control}
           name="bio"

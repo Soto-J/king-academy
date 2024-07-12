@@ -1,4 +1,4 @@
-import { Batting, Throwing, UserPosition } from "@prisma/client";
+import { Batting, Throwing } from "@prisma/client";
 import * as z from "zod";
 
 export const formSchema = z.object({
