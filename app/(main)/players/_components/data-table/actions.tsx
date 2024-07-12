@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ElementRef, useRef, useState } from "react";
 
 import { User } from "@/actions/getAllPlayers";
 
@@ -25,7 +25,8 @@ type ActionsProps = {
 
 export const Actions = ({currentUser, player}: ActionsProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const closeRef = useRef<ElementRef<"button">>(null);
+  
   const isCurrentUser = currentUser.id === player.id;
 
   return (
