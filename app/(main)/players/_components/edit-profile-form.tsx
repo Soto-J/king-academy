@@ -89,10 +89,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto max-w-xl p-6"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto p-4">
         {/* School */}
         <FormField
           control={form.control}
@@ -115,21 +112,22 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
           name="address"
           render={({ field }) => (
             <div className="md:grid md:grid-cols-2">
-              {["street", "city", "state", "zip"].map((inputName) => (
-                <FormItem key={inputName} className="p-3">
-                  <FormLabel className="capitalize">{inputName}</FormLabel>
+              {["street", "city", "state", "zip"].map((label) => (
+                <FormItem key={label} className="h-24 p-3">
+                  <FormLabel className="capitalize">{label}</FormLabel>
+
                   <FormControl>
                     <Input
-                      type={inputName === "zip" ? "number" : "text"}
-                      placeholder={inputName}
+                      type={label === "zip" ? "number" : "text"}
+                      placeholder={label}
                       {...field}
                       onChange={(e) =>
                         field.onChange({
                           ...field.value,
-                          [inputName]: e.target.value,
+                          [label]: e.target.value,
                         })
                       }
-                      value={field.value[inputName as keyof typeof field.value]}
+                      value={field.value[label as keyof typeof field.value]}
                       className="capitalize"
                     />
                   </FormControl>
@@ -160,15 +158,20 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
                         <FormControl>
                           <Checkbox
                             checked={field.value?.includes(position)}
-                            onCheckedChange={(checked) =>
-                              checked
-                                ? field.onChange([...field.value, position])
-                                : field.onChange(
-                                    field.value.filter(
-                                      (item) => item !== position,
-                                    ),
-                                  )
-                            }
+                            onCheckedChange={(isChecked) => {
+                              if (isChecked) {
+                                field.onChange([
+                                  ...(field?.value || []),
+                                  position,
+                                ]);
+                              } else {
+                                field.onChange(
+                                  (field?.value || []).filter(
+                                    (item) => item !== position,
+                                  ),
+                                );
+                              }
+                            }}
                           />
                         </FormControl>
 
@@ -178,6 +181,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
                   />
                 ))}
               </div>
+
               <FormMessage />
             </FormItem>
           )}

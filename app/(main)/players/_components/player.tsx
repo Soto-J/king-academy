@@ -29,7 +29,10 @@ export const Player = ({ player, currentUser }: PlayerProps) => {
       </TableRow>
 
       <DialogContent
-        className={cn("h-[75%]", isCurrentPlayer ? "" : `w-[95%]`)}
+        className={cn(
+          "h-[75%] w-[95%] max-w-xl",
+          isCurrentPlayer ? "" : `w-[95%]`,
+        )}
       >
         <ScrollArea>
           {isCurrentPlayer ? (
