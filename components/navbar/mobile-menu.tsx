@@ -1,16 +1,17 @@
+import Link from "next/link";
 import { Menu } from "lucide-react";
 
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 
 type MobileMenuProps = {
-  NAV_LINKS: JSX.Element[];
+  NAV_LINKS: { label: string; href: string }[];
 };
 
 const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
@@ -24,12 +25,15 @@ const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
 
       <SheetContent side="left">
         <ul className="flex flex-col gap-3">
-          {NAV_LINKS.map((link, i) => (
-            <li key={i}>
-              <SheetClose asChild>{link}</SheetClose>
+          {NAV_LINKS.map(({ label, href }) => (
+            <li key={label}>
+              <SheetClose asChild>
+                <Link href={href}>{label}</Link>
+              </SheetClose>
             </li>
           ))}
         </ul>
+
         <div className="flex h-[80%] items-end justify-end pb-4">
           <ModeToggle />
         </div>

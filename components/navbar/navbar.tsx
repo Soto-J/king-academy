@@ -7,21 +7,28 @@ import MobileMenu from "./mobile-menu";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const Navbar = () => {
+  // const NAV_LINKS = [
+  //   <Link href="/">Home</Link>,
+  //   <Link href="/players">Players</Link>,
+  //   <Link href="/about-us">About Us</Link>,
+  //   <Link href="/contact">Contact</Link>,
+  // ];
   const NAV_LINKS = [
-    <Link href="/">Home</Link>,
-    <Link href="/players">Players</Link>,
-    <Link href="/about-us">About Us</Link>,
-    <Link href="/contact">Contact</Link>,
+    { label: "Home", href: "/" },
+    { label: "Players", href: "/players" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Contact", href: "/contact" },
   ];
-
   return (
     <nav className="h-18 border-b p-4 shadow-lg">
       <div className="flex items-center justify-between sm:px-10">
         <Link href="/">LOGO</Link>
 
         <ul className="hidden gap-x-4 text-lg md:flex">
-          {NAV_LINKS.map((link, i) => (
-            <li key={i}>{link}</li>
+          {NAV_LINKS.map(({ label, href }) => (
+            <li key={label}>
+              <Link href={href}>{label}</Link>
+            </li>
           ))}
         </ul>
 
