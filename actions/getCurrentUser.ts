@@ -1,9 +1,6 @@
 import prisma from "@/lib/prismadb";
-import { Prisma } from "@prisma/client";
 
 import { currentUser } from "@clerk/nextjs";
-
-
 
 export async function getCurrentUser() {
   try {
