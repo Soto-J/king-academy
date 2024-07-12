@@ -92,7 +92,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
     return null;
   }
 
-  const onSubmit = async (data: EditFormSchema) => {
+  const onSubmit = (data: EditFormSchema) => {
     startTransition(() => {
       editUser(data, userId)
         .then(() => {

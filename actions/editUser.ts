@@ -10,12 +10,11 @@ export async function editUser(data: EditFormSchema, userId: string) {
     });
 
     if (!user) {
-      return "Unathorized - User not found";
+      throw new Error("Unathorized - User not found");
     }
 
-    //
     const updatedUser = await prisma.user.update({
-      where: { id: user.id },
+      where: { externalId: userId },
       data: {
         school: data.school,
         batting: data.batting,
@@ -37,6 +36,10 @@ export async function editUser(data: EditFormSchema, userId: string) {
         },
       },
     });
+
+    if (!updatedUser) {
+      throw new Error("Problem editing user data.");
+    }
 
     return updatedUser;
   } catch (error) {
