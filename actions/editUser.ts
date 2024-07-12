@@ -1,6 +1,7 @@
+import prisma from "@/lib/prismadb";
+
 import { Position } from "@prisma/client";
 import { EditFormSchema } from "../app/(main)/players/_components/edit-profile-form";
-import prisma from "@/lib/prismadb";
 
 export async function editUser(data: EditFormSchema, userId: string) {
   try {
@@ -11,11 +12,15 @@ export async function editUser(data: EditFormSchema, userId: string) {
     if (!user) {
       return "Unathorized - User not found";
     }
-    data.address;
+
+    //
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
         school: data.school,
+        batting: data.batting,
+        throwing: data.throwing,
+        bio: data.bio,
         address: {
           update: {
             street: data.address.street,
@@ -24,11 +29,12 @@ export async function editUser(data: EditFormSchema, userId: string) {
             zip: data.address.zip,
           },
         },
-        // TODO
-        positions: {},
-        batting: data.batting,
-        throwing: data.throwing,
-        bio: data.bio,
+        positions: {
+          deleteMany: {}, // Remove existing positions
+          create: data.positions.map((position) => ({
+            position: position as Position,
+          })),
+        },
       },
     });
 

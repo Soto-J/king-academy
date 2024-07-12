@@ -1,15 +1,18 @@
 "use client";
 
-import { startTransition, useEffect, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 import { Batting, Position, Throwing } from "@prisma/client";
-import axios from "axios";
 
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { editUser } from "@/actions/editUser";
+
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -26,9 +29,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
-import { editUser } from "@/actions/editUser";
 
 const formSchema = z.object({
   school: z.string({ required_error: "School is required" }).min(2),
@@ -38,7 +38,7 @@ const formSchema = z.object({
     state: z.string({ required_error: "State is required" }).min(1),
     zip: z.string({ required_error: "Zip is required" }).min(5).max(5),
   }),
-  position: z.array(z.string()).refine((value) => value.some((item) => item), {
+  positions: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: "At least one position is required",
   }),
   batting: z.enum([Batting.RIGHT, Batting.LEFT, Batting.SWITCH]),
@@ -73,15 +73,14 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      school: "",
-      address: {
-        street: "",
-        city: "",
-        state: "",
-        zip: "",
-      },
-      position: [],
-      bio: "",
+      // school: "",
+      // address: {
+      //   street: "",
+      //   city: "",
+      //   state: "",
+      //   zip: "",
+      // },
+      // bio: "",
     },
   });
 
@@ -156,7 +155,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
         />
 
         <FormField
-          name="position"
+          name="positions"
           control={form.control}
           render={({ field }) => (
             <FormItem className="p-3">
@@ -165,7 +164,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
               <div className="grid grid-cols-2 md:grid-cols-3">
                 {POSITION_OPTIONS.map(({ position, label }) => (
                   <FormField
-                    name="position"
+                    name="positions"
                     key={position}
                     control={form.control}
                     render={({ field }) => (
