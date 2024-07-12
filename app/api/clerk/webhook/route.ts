@@ -65,6 +65,6 @@ export async function GET() {
     console.log("Api Test");
     return Response.json({ message: "Api Test" });
   } catch (error) {
-    return Response.error;
+    return Response.error();
   }
 }
