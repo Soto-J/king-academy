@@ -14,7 +14,7 @@ type PlayerProps = {
 };
 
 export const Player = ({ player, currentUser }: PlayerProps) => {
-  const isCurrentPlayer = player.id == currentUser.id;
+  const isCurrentPlayer = player.id !== currentUser.id;
   const action = isCurrentPlayer ? "Edit" : "More Info";
 
   return (
