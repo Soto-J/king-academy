@@ -10,6 +10,8 @@ export async function getCurrentUser() {
       throw new Error("Unathorized");
     }
 
+    console.log(clerkUser.id);
+
     const user = await prisma.user.findUnique({
       where: {
         externalId: clerkUser.id,

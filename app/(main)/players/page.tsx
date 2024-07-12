@@ -8,9 +8,10 @@ import PlayersList from "./_components/PlayersList";
 const PlayerPage = async () => {
   const players = await getAllPlayers();
   const currentUser = await getCurrentUser();
+
   console.log({ currentUser });
   if (!currentUser) {
-    return <div>HEloo</div>;
+    return redirect("/");
   }
 
   return (
