@@ -18,21 +18,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  currentUser: User;
-}
-
 // Allows us to pass currentUser as props
 declare module "@tanstack/react-table" {
   // interface ColumnMeta<TData extends RowData, TValue> {
   //   currentUser: User;
   // }
-
   interface CellContext<TData extends RowData, TValue> {
     currentUser: User;
   }
+}
+
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  currentUser: User;
 }
 
 export function DataTable<TData, TValue>({
@@ -67,6 +66,7 @@ export function DataTable<TData, TValue>({
             </TableRow>
           ))}
         </TableHeader>
+
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (

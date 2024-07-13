@@ -5,11 +5,10 @@ import "@tanstack/react-table";
 import { ColumnDef, RowData } from "@tanstack/react-table";
 
 import { User } from "@/actions/getAllPlayers";
+
 import { Actions } from "./actions";
 
-export type Column = User;
-
-export const columns: ColumnDef<Column>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "isActive",
     header: "Status",

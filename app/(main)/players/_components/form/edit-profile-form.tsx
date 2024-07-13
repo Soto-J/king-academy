@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { ElementRef, useEffect, useRef, useState, useTransition } from "react";
 
 import { Batting, Position } from "@prisma/client";
 
@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { formSchema } from "@/schemas";
 import { editUser } from "@/actions/editUser";
 
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { formSchema } from "@/schemas";
+import { DialogClose } from "@/components/ui/dialog";
 
 const POSITION_OPTIONS = [
   { position: Position.PITCHER, label: "Pitcher" },
@@ -54,6 +55,7 @@ type EditProfileFormProps = {
 const EditProfileForm = ({ userId }: EditProfileFormProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const closeRef = useRef<ElementRef<"button">>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -82,6 +84,7 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
       editUser(data, userId)
         .then(() => {
           console.log("Edit successful");
+          closeRef.current?.click();
         })
         .catch((error) => console.log(error));
     });
@@ -255,9 +258,9 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
           )}
         />
 
-        <div className="ml-auto mt-8 max-w-fit">
+        <DialogClose asChild ref={closeRef} className="ml-auto mt-8 max-w-fit">
           <Button type="submit">Submit</Button>
-        </div>
+        </DialogClose>
       </form>
     </Form>
   );

@@ -19,6 +19,25 @@ type PlayerCardProps = {
 };
 
 const PlayerCard = ({ player }: PlayerCardProps) => {
+  const infoItems = [
+    { icon: <FaSchool className="h-6 w-6" />, label: player.school },
+    {
+      icon: <FaBirthdayCake className="h-6 w-6" />,
+      label: `${player.age}, ${player.dateOfBirth}`,
+    },
+    { icon: <CiMail className="h-6 w-6" />, label: player.email },
+    {
+      icon: <FaBaseballBatBall className="h-6 w-6" />,
+      label: player.batting?.toLowerCase(),
+      className: "capitalize",
+    },
+    {
+      icon: <GiThrowingBall className="h-6 w-6" />,
+      label: player.throwing?.toLowerCase(),
+      className: "capitalize",
+    },
+  ];
+
   return (
     <>
       <DialogHeader>
@@ -33,53 +52,21 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
         <DialogDescription>{player.username}</DialogDescription>
       </DialogHeader>
 
-      <div className="space-y-5 py-4 [&>div>p]:font-light [&>div>span]:font-bold [&>div>span]:text-primary [&>div]:flex [&>div]:items-center [&>div]:gap-x-4">
-        <div>
-          <span>
-            <FaSchool className="h-6 w-6" />
-          </span>
-          <p>{player.school}</p>
-        </div>
+      <div className="space-y-5 py-4">
+        {infoItems.map(({ icon, label, className = "" }) => (
+          <div key={label} className="flex items-center gap-x-4">
+            <span className="font-bold text-primary">{icon}</span>
+            <p className={className}>{label}</p>
+          </div>
+        ))}
 
-        <div>
-          <span className="font-bold text-primary">
-            <FaBirthdayCake className="h-6 w-6" />
-          </span>
-          <p>
-            {player.age}, {player.dateOfBirth}
-          </p>
-        </div>
-
-        <div>
-          <span>
-            <CiMail className="h-6 w-6" />
-          </span>
-          <p>{player.email}</p>
-        </div>
-
-        <div>
-          <span>
-            <FaBaseballBatBall className="h-6 w-6" />
-          </span>
-          <p className="capitalize">{player.batting?.toLowerCase()}</p>
-        </div>
-
-        <div>
-          <span>
-            <GiThrowingBall className="h-6 w-6" />
-          </span>
-          <p className="capitalize">{player.throwing?.toLowerCase()}</p>
-        </div>
-
-        <div>
+        <div className="flex items-center gap-x-4">
           <span>Positions:</span>
           <ul className="flex flex-wrap gap-x-2">
             {player.positions.map((position, i) => (
               <li key={position.id} className="capitalize">
                 {position.position.toLowerCase() +
-                  (i !== player.positions.length - 1
-                    ? ","
-                    : "")}
+                  (i !== player.positions.length - 1 ? "," : "")}
               </li>
             ))}
           </ul>
