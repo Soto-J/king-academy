@@ -3,7 +3,6 @@
 import { User } from "@/actions/getAllPlayers";
 
 import PlayerCard from "../player-card";
-import EditProfileForm from "../form/edit-profile-form";
 
 import { MoreHorizontal } from "lucide-react";
 
@@ -17,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import EditProfileForm from "../edit-profile-form";
 
 type ActionsProps = {
   currentUser: User;

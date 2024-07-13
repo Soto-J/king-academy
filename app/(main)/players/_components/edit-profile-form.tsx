@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { DialogClose } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -30,7 +31,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DialogClose } from "@/components/ui/dialog";
 
 const POSITION_OPTIONS = [
   { position: Position.PITCHER, label: "Pitcher" },
@@ -163,17 +163,17 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
                             checked={field.value?.includes(position)}
                             onCheckedChange={(isChecked) => {
                               if (isChecked) {
-                                field.onChange([
+                                return field.onChange([
                                   ...(field?.value || []),
                                   position,
                                 ]);
-                              } else {
-                                field.onChange(
-                                  (field?.value || []).filter(
-                                    (item) => item !== position,
-                                  ),
-                                );
                               }
+
+                              field.onChange(
+                                (field?.value || []).filter(
+                                  (item) => item !== position,
+                                ),
+                              );
                             }}
                           />
                         </FormControl>
@@ -258,9 +258,11 @@ const EditProfileForm = ({ userId }: EditProfileFormProps) => {
           )}
         />
 
-        <DialogClose asChild ref={closeRef} className="ml-auto mt-8 max-w-fit">
-          <Button type="submit">Submit</Button>
-        </DialogClose>
+        {/* <DialogClose asChild ref={closeRef}> */}
+          <Button type="submit" className="ml-auto mt-8 max-w-fit">
+            Submit
+          </Button>
+        {/* </DialogClose> */}
       </form>
     </Form>
   );

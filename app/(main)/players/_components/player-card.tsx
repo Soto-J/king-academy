@@ -20,19 +20,19 @@ type PlayerCardProps = {
 
 const PlayerCard = ({ player }: PlayerCardProps) => {
   const infoItems = [
-    { icon: <FaSchool className="h-6 w-6" />, label: player.school },
+    { icon: FaSchool, label: player.school },
     {
-      icon: <FaBirthdayCake className="h-6 w-6" />,
+      icon: FaBirthdayCake,
       label: `${player.age}, ${player.dateOfBirth}`,
     },
-    { icon: <CiMail className="h-6 w-6" />, label: player.email },
+    { icon: CiMail, label: player.email },
     {
-      icon: <FaBaseballBatBall className="h-6 w-6" />,
+      icon: FaBaseballBatBall,
       label: player.batting?.toLowerCase(),
       className: "capitalize",
     },
     {
-      icon: <GiThrowingBall className="h-6 w-6" />,
+      icon: GiThrowingBall,
       label: player.throwing?.toLowerCase(),
       className: "capitalize",
     },
@@ -53,9 +53,11 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
       </DialogHeader>
 
       <div className="space-y-5 py-4">
-        {infoItems.map(({ icon, label, className = "" }) => (
-          <div key={label} className="flex items-center gap-x-4">
-            <span className="font-bold text-primary">{icon}</span>
+        {infoItems.map(({ icon: Icon, label, className = "" }, idx) => (
+          <div key={idx} className="flex items-center gap-x-4">
+            <span className="font-bold text-primary">
+              <Icon className="h-6 w-6" />
+            </span>
             <p className={className}>{label}</p>
           </div>
         ))}

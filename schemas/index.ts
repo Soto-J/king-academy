@@ -2,12 +2,12 @@ import { Batting, Throwing } from "@prisma/client";
 import * as z from "zod";
 
 export const formSchema = z.object({
-  school: z.string().min(2, { message: "School is required" }),
+  school: z.string({ required_error: "School is required" }),
   address: z.object({
-    street: z.string().min(1, { message: "Street is required" }),
-    city: z.string().min(1, { message: "City is required" }),
-    state: z.string().min(1, { message: "State is required" }),
-    zip: z.string().min(5).max(5),
+    street: z.string({ required_error: "Street is required" }),
+    city: z.string({ required_error: "City is required" }),
+    state: z.string({ required_error: "State is required" }),
+    zip: z.string({ required_error: "zip is required" }).min(5).max(5),
   }),
   positions: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: "At least one position is required",
@@ -18,7 +18,7 @@ export const formSchema = z.object({
 });
 
 export const LoginSchema = z.object({
-  email: z.string().min(6, { message: "Email required" }).email(),
+  email: z.string({required_error: "Email required"}).email(),
   password: z.string().min(1, { message: "Password required" }),
 });
 
