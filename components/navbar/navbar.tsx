@@ -5,6 +5,7 @@ import NavbarButtons from "./navbar-buttons";
 import MobileMenu from "./mobile-menu";
 
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { KingAcademyLogo } from "../king-academy-logo";
 
 const Navbar = () => {
   // const NAV_LINKS = [
@@ -22,7 +23,7 @@ const Navbar = () => {
   return (
     <nav className="h-18 border-b p-4 shadow-lg">
       <div className="flex items-center justify-between sm:px-10">
-        <Link href="/">LOGO</Link>
+        <KingAcademyLogo />
 
         <ul className="hidden gap-x-4 text-lg md:flex">
           {NAV_LINKS.map(({ label, href }) => (
