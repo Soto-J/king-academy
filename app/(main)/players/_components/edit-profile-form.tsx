@@ -57,7 +57,7 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
         state: user.address?.state ?? "",
         zip: user.address?.zip ?? "",
       },
-      positions: user?.positions.map((position) => position.position) ?? [],
+      positions: user.positions?.map((position) => position.position) ?? [],
       batting: user?.batting ?? undefined,
       throwing: user?.throwing ?? undefined,
       bio: user?.bio ?? "",
@@ -213,6 +213,7 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
           render={({ field }) => (
             <FormItem className="p-3">
               <FormLabel>Batting</FormLabel>
+
               <Select onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
@@ -220,7 +221,7 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
                   </SelectTrigger>
                 </FormControl>
 
-                <SelectContent aria-required>
+                <SelectContent>
                   <SelectItem value={Batting.LEFT}>Left</SelectItem>
                   <SelectItem value={Batting.RIGHT}>Right</SelectItem>
                   <SelectItem value={Batting.SWITCH}>Switch</SelectItem>
@@ -239,6 +240,7 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
           render={({ field }) => (
             <FormItem className="p-3">
               <FormLabel>Throwing</FormLabel>
+
               <Select onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>

@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { User } from "@/lib/action-helpers/user-service";
 
 import PlayerCard from "../player-card";
@@ -17,7 +19,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useRef, useState } from "react";
 
 type ActionsProps = {
   currentUser: User;
@@ -27,7 +28,6 @@ type ActionsProps = {
 export const Actions = ({ currentUser, player }: ActionsProps) => {
   const isCurrentUser = currentUser.id === player.id;
   const [isOpen, setIsOpen] = useState(false);
-  // const dropDownRef = useRef(second);
 
   const dropdownHandler = () => {
     setIsOpen(false);

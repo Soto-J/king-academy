@@ -1,6 +1,6 @@
 "use server";
 
-import { getCurrentUser } from "@/lib/actoin-helpers/user-service";
+import { getCurrentUser } from "@/lib/action-helpers/user-service";
 
 export async function onGetCurrentUser() {
   try {

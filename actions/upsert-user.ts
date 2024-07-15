@@ -1,7 +1,8 @@
 "use server";
 
-import { upsertUser } from "@/lib/actoin-helpers/user-service";
 import { UserJSON } from "@clerk/nextjs/server";
+
+import { upsertUser } from "@/lib/action-helpers/user-service";
 
 export async function onUpsertUser(user: UserJSON) {
   try {

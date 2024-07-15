@@ -1,6 +1,6 @@
 "use server";
 
-import { deleteUser } from "@/lib/actoin-helpers/user-service";
+import { deleteUser } from "@/lib/action-helpers/user-service";
 
 export async function onDeleteUser(userId: string) {
   try {
