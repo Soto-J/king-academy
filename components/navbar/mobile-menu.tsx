@@ -34,9 +34,7 @@ const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
           ))}
         </ul>
 
-        <div className="flex h-[80%] items-end justify-end pb-4">
-          <ModeToggle />
-        </div>
+        <ModeToggle className="absolute bottom-5 right-5" />
       </SheetContent>
     </Sheet>
   );

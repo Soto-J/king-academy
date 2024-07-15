@@ -1,19 +1,13 @@
 "use client";
-import Link from "next/link";
 
 import NavbarActions from "./navbar-buttons";
 import MobileMenu from "./mobile-menu";
 
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { KingAcademyLogo } from "../king-academy-logo";
+import NavbarRoutes from "./navbar-routes";
 
 const Navbar = () => {
-  // const NAV_LINKS = [
-  //   <Link href="/">Home</Link>,
-  //   <Link href="/players">Players</Link>,
-  //   <Link href="/about-us">About Us</Link>,
-  //   <Link href="/contact">Contact</Link>,
-  // ];
   const NAV_LINKS = [
     { label: "Home", href: "/" },
     { label: "Players", href: "/players" },
@@ -26,16 +20,10 @@ const Navbar = () => {
       <div className="flex items-center justify-between sm:px-10">
         <KingAcademyLogo />
 
-        <ul className="hidden gap-x-4 text-lg md:flex">
-          {NAV_LINKS.map(({ label, href }) => (
-            <li key={label}>
-              <Link href={href}>{label}</Link>
-            </li>
-          ))}
-        </ul>
+        <NavbarRoutes routes={NAV_LINKS} />
 
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 gap-x-4">
+          <div className="flex items-center gap-x-4">
             <NavbarActions />
 
             <ModeToggle className="hidden md:block" />
