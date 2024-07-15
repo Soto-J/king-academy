@@ -1,8 +1,9 @@
 "use client";
 
-import { User } from "@/actions/getAllPlayers";
+import { User } from "@/lib/action-helpers/user-service";
 
 import PlayerCard from "../player-card";
+import EditProfileForm from "../edit-profile-form";
 
 import { MoreHorizontal } from "lucide-react";
 
@@ -16,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import EditProfileForm from "../edit-profile-form";
+import { useRef, useState } from "react";
 
 type ActionsProps = {
   currentUser: User;
@@ -25,9 +26,15 @@ type ActionsProps = {
 
 export const Actions = ({ currentUser, player }: ActionsProps) => {
   const isCurrentUser = currentUser.id === player.id;
+  const [isOpen, setIsOpen] = useState(false);
+  // const dropDownRef = useRef(second);
+
+  const dropdownHandler = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       {/* Open Actions dropdown */}
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
@@ -67,7 +74,10 @@ export const Actions = ({ currentUser, player }: ActionsProps) => {
             {/* Displays Edit form content */}
             <DialogContent>
               <ScrollArea className="h-[80vh]">
-                <EditProfileForm userId={currentUser.id} />
+                <EditProfileForm
+                  user={currentUser}
+                  closeDropdown={dropdownHandler}
+                />
               </ScrollArea>
             </DialogContent>
           </Dialog>

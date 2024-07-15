@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "@/actions/getAllPlayers";
+import { User } from "@/lib/action-helpers/user-service";
 
 import {
   ColumnDef,

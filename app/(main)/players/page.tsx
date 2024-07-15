@@ -1,15 +1,15 @@
 import { redirect } from "next/navigation";
 
-import { getAllPlayers } from "@/actions/getAllPlayers";
-import { getCurrentUser } from "@/actions/getCurrentUser";
+import { getAllPlayers } from "@/actions/all-users";
+import { onGetCurrentUser } from "@/actions/current-user";
 
 import { DataTable } from "./_components/data-table/data-table";
 import { columns } from "./_components/data-table/columns";
 
 const PlayerPage = async () => {
   const players = await getAllPlayers();
-  const currentUser = await getCurrentUser();
-  
+  const currentUser = await onGetCurrentUser();
+
   if (!currentUser) {
     return redirect("/");
   }
@@ -18,7 +18,7 @@ const PlayerPage = async () => {
     <div className="">
       <h1 className="mb-12 text-center text-3xl font-bold">Players</h1>
 
-      <DataTable columns={columns} data={players} currentUser={currentUser}/>
+      <DataTable columns={columns} data={players} currentUser={currentUser} />
     </div>
   );
 };

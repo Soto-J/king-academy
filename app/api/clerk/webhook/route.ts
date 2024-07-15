@@ -2,8 +2,9 @@ import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 
-import { deleteUser } from "@/actions/deleteUser";
-import { upsertUserData } from "@/actions/insertUserToDB";
+import { deleteUser } from "@/lib/actoin-helpers/user-service";
+
+import { onUpsertUser } from "@/actions/upsert-user";
 
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET as string;
 
@@ -19,12 +20,10 @@ export async function POST(req: Request) {
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
 
   if (eventType === "user.created" || eventType === "user.updated") {
-    console.log("Inserting user to DB");
-    await upsertUserData(evt.data);
+    await onUpsertUser(evt.data);
   }
 
   if (eventType === "user.deleted") {
-    console.log("Deleting user from DB");
     await deleteUser(evt.data.id);
   }
 

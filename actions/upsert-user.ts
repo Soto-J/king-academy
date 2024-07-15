@@ -1,27 +1,13 @@
+"use server";
+
+import { upsertUser } from "@/lib/actoin-helpers/user-service";
 import { UserJSON } from "@clerk/nextjs/server";
 
-export async function upsertUserData(user: UserJSON) {
+export async function onUpsertUser(user: UserJSON) {
   try {
-    const upsertData = {
-      firstName: user.first_name,
-      lastName: user.last_name,
-      username: user?.username || "",
-      email: user.email_addresses[0].email_address,
-      imageUrl: user.image_url,
-    };
+    await upsertUser(user);
 
-    // Upsert: if user doesn't exists create else update
-    const insertedUser = await prisma?.user.upsert({
-      where: { externalId: user.id },
-      create: { externalId: user.id, ...upsertData },
-      update: { ...upsertData },
-    });
-
-    if (!insertedUser) {
-      throw new Error("Problem inserting user data");
-    }
-
-    return { message: "User upserted successfully", insertedUser };
+    return { message: "User upsert successful" };
   } catch (error) {
     console.error("Insert User:", error);
     return null;
@@ -29,7 +15,7 @@ export async function upsertUserData(user: UserJSON) {
 }
 
 /*
-Example
+User Example
 user: {
     backup_code_enabled: false,
     banned: false,

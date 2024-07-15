@@ -1,4 +1,4 @@
-import { User } from "@/actions/getAllPlayers";
+import { User } from "@/lib/action-helpers/user-service";
 
 import { FaBaseballBatBall } from "react-icons/fa6";
 import { GiThrowingBall } from "react-icons/gi";

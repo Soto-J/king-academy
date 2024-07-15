@@ -2,9 +2,9 @@
 
 import "@tanstack/react-table";
 
-import { ColumnDef, RowData } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 
-import { User } from "@/actions/getAllPlayers";
+import { User } from "@/lib/action-helpers/user-service";
 
 import { Actions } from "./actions";
 
