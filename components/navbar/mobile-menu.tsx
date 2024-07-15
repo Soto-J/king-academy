@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { Menu } from "lucide-react";
 
 import { ModeToggle } from "@/components/ui/mode-toggle";
@@ -23,8 +24,8 @@ const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left">
-        <ul className="flex flex-col gap-3">
+      <SheetContent side="left" className="max-w-[40%]">
+        <ul className="flex flex-col gap-6 pt-6 text-xl">
           {NAV_LINKS.map(({ label, href }) => (
             <li key={label}>
               <SheetClose asChild>

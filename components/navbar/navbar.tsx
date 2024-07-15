@@ -1,11 +1,13 @@
 "use client";
 
+import { ModeToggle } from "@/components/ui/mode-toggle";
+
+import { KingAcademyLogo } from "../king-academy-logo";
+
 import NavbarActions from "./navbar-buttons";
 import MobileMenu from "./mobile-menu";
-
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import { KingAcademyLogo } from "../king-academy-logo";
 import NavbarRoutes from "./navbar-routes";
+
 
 const Navbar = () => {
   const NAV_LINKS = [
