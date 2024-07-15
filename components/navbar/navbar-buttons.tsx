@@ -1,8 +1,10 @@
-import { UserButton, useUser } from "@clerk/nextjs";
-import { Button } from "../ui/button";
 import Link from "next/link";
 
-const NavbarButtons = () => {
+import { UserButton, useUser } from "@clerk/nextjs";
+
+import { Button } from "../ui/button";
+
+const NavbarActions = () => {
   const { isSignedIn } = useUser();
 
   if (!isSignedIn) {
@@ -19,10 +21,11 @@ const NavbarButtons = () => {
   }
 
   return (
-    <Button asChild>
-      <UserButton afterSignOutUrl="/" />
-    </Button>
+    <UserButton
+      afterSignOutUrl="/"
+      appearance={{ elements: { avatarBox: "w-10 h-10" } }}
+    />
   );
 };
 
-export default NavbarButtons;
+export default NavbarActions;

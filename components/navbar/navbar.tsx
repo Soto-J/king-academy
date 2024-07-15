@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import NavbarButtons from "./navbar-buttons";
+import NavbarActions from "./navbar-buttons";
 import MobileMenu from "./mobile-menu";
 
 import { ModeToggle } from "@/components/ui/mode-toggle";
@@ -20,6 +20,7 @@ const Navbar = () => {
     { label: "About Us", href: "/about-us" },
     { label: "Contact", href: "/contact" },
   ];
+
   return (
     <nav className="h-18 border-b p-4 shadow-lg">
       <div className="flex items-center justify-between sm:px-10">
@@ -33,13 +34,11 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div className="flex gap-6">
+        <div className="flex items-center gap-6">
           <div className="flex items-center gap-2 gap-x-4">
-            <NavbarButtons />
+            <NavbarActions />
 
-            <div className="hidden md:block">
-              <ModeToggle />
-            </div>
+            <ModeToggle className="hidden md:block" />
           </div>
 
           <MobileMenu NAV_LINKS={NAV_LINKS} />
