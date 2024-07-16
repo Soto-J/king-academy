@@ -11,9 +11,9 @@ export default async function Home() {
 
       <p className="py-12 leading-8 sm:text-xl">
         We are thrilled to provide a fun and engaging environment for young
-        athletes to learn, play, and grow in the sport of baseball. Our league
-        is dedicated to fostering teamwork, sportsmanship, and skill development
-        in a supportive and family-friendly atmosphere. Whether your child is a
+        athletes to learn, play, and grow in the sport of baseball. Our team is
+        dedicated to fostering teamwork, sportsmanship, and skill development in
+        a supportive and family-friendly atmosphere. Whether your child is a
         seasoned player or just starting out, we offer opportunities for
         everyone to participate and enjoy the great game of baseball. Join us
         for an exciting season filled with memorable experiences, new
