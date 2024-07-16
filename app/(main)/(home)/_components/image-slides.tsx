@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-import Autoplay from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -18,6 +18,9 @@ const ImageSlider = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+  const carouselPlugin = useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true }),
+  );
 
   useEffect(() => {
     if (!api) {
@@ -34,7 +37,11 @@ const ImageSlider = () => {
 
   return (
     <div>
-      <Carousel setApi={setApi} className="w-full max-w-xs">
+      <Carousel
+        plugins={[carouselPlugin.current]}
+        setApi={setApi}
+        className="w-full max-w-xs"
+      >
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
             <CarouselItem key={index}>
