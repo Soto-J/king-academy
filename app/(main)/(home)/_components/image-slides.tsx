@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 import Autoplay from "embla-carousel-autoplay";
 
@@ -23,9 +24,7 @@ const ImageSlider = () => {
   );
 
   useEffect(() => {
-    if (!api) {
-      return;
-    }
+    if (!api) return;
 
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
@@ -35,19 +34,21 @@ const ImageSlider = () => {
     });
   }, [api]);
 
+  const photoAlbum = ["/21.jpg", "/42.jpg", "/40.jpg"];
+
   return (
-    <div className="mx-auto max-w-fit py-8">
+    <div className="mx-auto max-w-sm">
       <Carousel
         plugins={[carouselPlugin.current]}
         setApi={setApi}
-        className="w-full max-w-xs md:max-w-sm"
+        className="w-[95%] max-w-sm md:max-w-sm"
       >
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {photoAlbum.map((src, index) => (
             <CarouselItem key={index}>
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
+                  <Image fill src={`/images${src}`} alt={src} />
                 </CardContent>
               </Card>
             </CarouselItem>
@@ -59,7 +60,7 @@ const ImageSlider = () => {
       </Carousel>
 
       <div className="py-2 text-center text-sm text-muted-foreground">
-        Slide {current} of {count}
+        {current} of {count}
       </div>
     </div>
   );
