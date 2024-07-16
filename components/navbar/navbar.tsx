@@ -8,13 +8,13 @@ import NavbarActions from "./navbar-buttons";
 import MobileMenu from "./mobile-menu";
 import NavbarRoutes from "./navbar-routes";
 
-
 const Navbar = () => {
   const NAV_LINKS = [
     { label: "Home", href: "/" },
-    { label: "Players", href: "/players" },
+    { label: "Galary", href: "/galary" },
     { label: "About Us", href: "/about-us" },
     { label: "Contact", href: "/contact" },
+    { label: "Players", href: "/players" },
   ];
 
   return (

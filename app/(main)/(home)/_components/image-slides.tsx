@@ -34,21 +34,28 @@ const ImageSlider = () => {
     });
   }, [api]);
 
-  const photoAlbum = ["/21.jpg", "/42.jpg", "/40.jpg"];
+  const photoAlbum = ["38", "39", "40"];
 
   return (
-    <div className="mx-auto max-w-sm">
+    <div>
       <Carousel
         plugins={[carouselPlugin.current]}
         setApi={setApi}
-        className="w-[95%] max-w-sm md:max-w-sm"
+        onMouseEnter={carouselPlugin.current.stop}
+        onMouseLeave={carouselPlugin.current.reset}
+        className="mx-auto w-[95%] max-w-full"
       >
         <CarouselContent>
           {photoAlbum.map((src, index) => (
             <CarouselItem key={index}>
               <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <Image fill src={`/images${src}`} alt={src} />
+                <CardContent className="relative flex aspect-square items-center justify-center p-6">
+                  <Image
+                    fill
+                    src={`/images/${src}.jpg`}
+                    alt={src}
+                    sizes="w-full h-full"
+                  />
                 </CardContent>
               </Card>
             </CarouselItem>
