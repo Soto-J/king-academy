@@ -4,7 +4,7 @@ export default async function Home() {
   return (
     <div className="mx-auto w-[95%] max-w-2xl text-center">
       <h1 className="pb-12 text-2xl font-bold sm:text-4xl">
-        Welcome to the King Academy Baseball League!
+        Welcome to Baseball King Academy!
       </h1>
 
       <ImageSlider />
