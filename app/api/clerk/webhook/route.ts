@@ -2,9 +2,8 @@ import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 
-import { deleteUser } from "@/lib/actoin-helpers/user-service";
-
 import { onUpsertUser } from "@/actions/upsert-user";
+import { deleteUser } from "@/lib/action-helpers/user-service";
 
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET as string;
 
