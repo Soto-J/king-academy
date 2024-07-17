@@ -12,9 +12,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "King Academy",
-  description: "King Academy League",
+  description:
+    "Welcome to King Academy, where young athletes learn, play, and excel in baseball. Join our league for a season of growth, teamwork, and unforgettable moments!",
   icons: [{ url: "/logo.jpg", href: "/logo.jpg" }],
 };
+
 export default async function RootLayout({
   children,
 }: {
@@ -36,6 +38,6 @@ export default async function RootLayout({
 }
 
 /*
-TODOS:
- -When user first signs up redirect to complete profile
+  TODOS:
+  -When user first signs up redirect to complete profile
 */

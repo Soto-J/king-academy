@@ -20,32 +20,34 @@ type PlayerCardProps = {
 
 const PlayerCard = ({ player }: PlayerCardProps) => {
   const infoItems = [
-    { icon: FaSchool, label: player.school },
+    { label: "School", icon: FaSchool, data: player.school },
     {
+      label: "Age",
       icon: FaBirthdayCake,
-      label: `${player.age}, ${player.dateOfBirth}`,
+      data: `${player.age}, ${player.dateOfBirth}`,
     },
-    { icon: CiMail, label: player.email },
+    { label: "Email", icon: CiMail, data: player.email },
     {
+      label: "Batting Orientation",
       icon: FaBaseballBatBall,
-      label: player.batting?.toLowerCase(),
+      data: player.batting?.toLowerCase(),
       className: "capitalize",
     },
     {
       icon: GiThrowingBall,
       label: player.throwing?.toLowerCase(),
       className: "capitalize",
+      data: "",
     },
   ];
 
   return (
     <>
-      <DialogHeader>
+      <DialogHeader className="items-center">
         <UserAvatar
           username={player.username}
           imageUrl={player.imageUrl || ""}
-          className="mx-auto"
-          size="lg"
+          className="h-20 w-20 md:h-24 md:w-24"
         />
 
         <DialogTitle className="pt-4">{`${player.firstName} ${player.lastName}`}</DialogTitle>
