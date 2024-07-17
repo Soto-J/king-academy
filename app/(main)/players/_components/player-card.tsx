@@ -52,7 +52,7 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
         <DialogDescription>{player.username}</DialogDescription>
       </DialogHeader>
 
-      <div className="space-y-5 py-4">
+      <div className="space-y-5 py-10">
         {infoItems.map(({ icon: Icon, label, className = "" }, idx) => (
           <div key={idx} className="flex items-center gap-x-4">
             <span className="font-bold text-primary">

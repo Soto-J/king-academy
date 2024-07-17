@@ -53,8 +53,8 @@ export const Actions = ({ currentUser, player }: ActionsProps) => {
           </DialogTrigger>
 
           {/* Displays user profile */}
-          <DialogContent className="w-[95%]">
-            <ScrollArea className="h-96">
+          <DialogContent className="h-[80vh] w-[90%]">
+            <ScrollArea className="h-full">
               <PlayerCard player={player} />
             </ScrollArea>
           </DialogContent>
@@ -72,7 +72,7 @@ export const Actions = ({ currentUser, player }: ActionsProps) => {
             </DialogTrigger>
 
             {/* Displays Edit form content */}
-            <DialogContent>
+            <DialogContent className="w-[90%]">
               <ScrollArea className="h-[80vh]">
                 <EditProfileForm
                   user={currentUser}

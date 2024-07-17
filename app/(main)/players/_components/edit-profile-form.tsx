@@ -78,7 +78,7 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto p-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto py-6">
         {/* School */}
         <FormField
           control={form.control}

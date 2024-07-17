@@ -35,6 +35,17 @@ export async function getCurrentUser() {
   }
 }
 
+export const getAlllUsers = async () => {
+  try {
+    return await prisma.user.findMany({
+      include: { address: true, positions: true },
+    });
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export async function upsertUser(user: UserJSON) {
   try {
     const upsertData = {
