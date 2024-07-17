@@ -10,7 +10,7 @@ const DesktopRoutes = async ({ routes }: DesktopRoutes) => {
   const currentUser = await onGetCurrentUser();
 
   return (
-    <ul className="hidden gap-x-4 text-lg md:flex lg:gap-x-10">
+    <ul className="hidden gap-x-4 text-lg lg:flex lg:gap-x-10">
       {routes.map(({ routeName, href }) => {
         if (routeName === "Players" && !currentUser) {
           return;

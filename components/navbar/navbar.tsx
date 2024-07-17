@@ -25,7 +25,7 @@ const Navbar = () => {
           <div className="flex items-center gap-x-4">
             <NavbarActions />
 
-            <ModeToggle className="hidden md:block" />
+            <ModeToggle className="hidden lg:block" />
           </div>
 
           <MobileRoutes NAV_LINKS={NAV_LINKS} />

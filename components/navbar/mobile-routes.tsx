@@ -18,7 +18,7 @@ type MobileMenuProps = {
 const MobileRoutes = ({ NAV_LINKS }: MobileMenuProps) => {
   return (
     <Sheet>
-      <SheetTrigger className="md:hidden" asChild>
+      <SheetTrigger className="lg:hidden" asChild>
         <Button variant="outline" size="icon">
           <Menu />
         </Button>
