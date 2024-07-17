@@ -15,7 +15,7 @@ type MobileMenuProps = {
   NAV_LINKS: { label: string; href: string }[];
 };
 
-const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
+const MobileRoutes = ({ NAV_LINKS }: MobileMenuProps) => {
   return (
     <Sheet>
       <SheetTrigger className="md:hidden" asChild>
@@ -41,4 +41,4 @@ const MobileMenu = ({ NAV_LINKS }: MobileMenuProps) => {
   );
 };
 
-export default MobileMenu;
+export default MobileRoutes;

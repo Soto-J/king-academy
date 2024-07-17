@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-type NavbarRoutes = {
+type DesktopRoutes = {
   routes: { label: string; href: string }[];
 };
 
-const NavbarRoutes = ({ routes }: NavbarRoutes) => {
+const DesktopRoutes = ({ routes }: DesktopRoutes) => {
   return (
     <ul className="hidden gap-x-6 text-lg md:flex">
       {routes.map(({ label, href }) => (
@@ -16,4 +16,4 @@ const NavbarRoutes = ({ routes }: NavbarRoutes) => {
   );
 };
 
-export default NavbarRoutes;
+export default DesktopRoutes;

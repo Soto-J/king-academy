@@ -4,9 +4,9 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 
 import { KingAcademyLogo } from "../king-academy-logo";
 
+import DesktopRoutes from "./desktop-routes";
+import MobileRoutes from "./mobile-routes";
 import NavbarActions from "./navbar-buttons";
-import MobileMenu from "./mobile-menu";
-import NavbarRoutes from "./navbar-routes";
 
 const Navbar = () => {
   const NAV_LINKS = [
@@ -22,7 +22,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between sm:px-10">
         <KingAcademyLogo />
 
-        <NavbarRoutes routes={NAV_LINKS} />
+        <DesktopRoutes routes={NAV_LINKS} />
 
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-x-4">
@@ -31,7 +31,7 @@ const Navbar = () => {
             <ModeToggle className="hidden md:block" />
           </div>
 
-          <MobileMenu NAV_LINKS={NAV_LINKS} />
+          <MobileRoutes NAV_LINKS={NAV_LINKS} />
         </div>
       </div>
     </nav>
