@@ -26,11 +26,16 @@ export default async function RootLayout({
         <body className={`${inter.className}`}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />
-            <main className="min-h-screen">{children}</main>
-            {/* <Footer /> */}
+            <main className="min-h-[84vh]">{children}</main>
+            <Footer />
           </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
   );
 }
+
+/*
+TODOS:
+ -When user first signs up redirect to complete profile
+*/
