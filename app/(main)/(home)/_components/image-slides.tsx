@@ -37,13 +37,13 @@ const ImageSlider = () => {
   const photoAlbum = ["38", "39", "40"];
 
   return (
-    <div>
+    <div className="mx-auto w-[90%]">
       <Carousel
         plugins={[carouselPlugin.current]}
         setApi={setApi}
         onMouseEnter={carouselPlugin.current.stop}
         onMouseLeave={carouselPlugin.current.reset}
-        className="mx-auto w-[95%] max-w-full"
+        className="mx-auto w-[95%] max-w-lg"
       >
         <CarouselContent>
           {photoAlbum.map((src, index) => (
@@ -55,6 +55,7 @@ const ImageSlider = () => {
                     src={`/images/${src}.jpg`}
                     alt={src}
                     sizes="w-full h-full"
+                    className="object-cover"
                   />
                 </CardContent>
               </Card>
