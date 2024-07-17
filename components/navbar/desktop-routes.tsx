@@ -1,17 +1,26 @@
+import { onGetCurrentUser } from "@/actions/current-user";
 import Link from "next/link";
 
 type DesktopRoutes = {
-  routes: { label: string; href: string }[];
+  routes: { routeName: string; href: string }[];
 };
 
-const DesktopRoutes = ({ routes }: DesktopRoutes) => {
+const DesktopRoutes = async ({ routes }: DesktopRoutes) => {
+  const currentUser = await onGetCurrentUser();
+
   return (
     <ul className="hidden gap-x-6 text-lg md:flex">
-      {routes.map(({ label, href }) => (
-        <li key={label}>
-          <Link href={href}>{label}</Link>
-        </li>
-      ))}
+      {routes.map(({ routeName, href }) => {
+        if (routeName === "Players" && !currentUser) {
+          return;
+        }
+
+        return (
+          <li key={routeName}>
+            <Link href={href}>{routeName}</Link>
+          </li>
+        );
+      })}
     </ul>
   );
 };

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: "King Academy League",
   icons: [{ url: "/logo.jpg", href: "/logo.jpg" }],
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -24,12 +24,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className}`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />
             <main className="min-h-screen">{children}</main>
             {/* <Footer /> */}

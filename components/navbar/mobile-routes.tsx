@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 
 type MobileMenuProps = {
-  NAV_LINKS: { label: string; href: string }[];
+  NAV_LINKS: { routeName: string; href: string }[];
 };
 
 const MobileRoutes = ({ NAV_LINKS }: MobileMenuProps) => {
@@ -26,10 +26,10 @@ const MobileRoutes = ({ NAV_LINKS }: MobileMenuProps) => {
 
       <SheetContent side="left" className="max-w-[40%]">
         <ul className="flex flex-col gap-6 pt-6 text-xl">
-          {NAV_LINKS.map(({ label, href }) => (
-            <li key={label}>
+          {NAV_LINKS.map(({ routeName, href }) => (
+            <li key={routeName}>
               <SheetClose asChild>
-                <Link href={href}>{label}</Link>
+                <Link href={href}>{routeName}</Link>
               </SheetClose>
             </li>
           ))}

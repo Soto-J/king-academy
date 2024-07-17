@@ -1,8 +1,5 @@
-"use client";
-
 import { ModeToggle } from "@/components/ui/mode-toggle";
-
-import { KingAcademyLogo } from "../king-academy-logo";
+import { KingAcademyLogo } from "@/components/king-academy-logo";
 
 import DesktopRoutes from "./desktop-routes";
 import MobileRoutes from "./mobile-routes";
@@ -10,11 +7,11 @@ import NavbarActions from "./navbar-buttons";
 
 const Navbar = () => {
   const NAV_LINKS = [
-    { label: "Home", href: "/" },
-    { label: "Galary", href: "/galary" },
-    { label: "About Us", href: "/about-us" },
-    { label: "Contact", href: "/contact" },
-    { label: "Players", href: "/players" },
+    { routeName: "Home", href: "/" },
+    { routeName: "Galary", href: "/galary" },
+    { routeName: "About Us", href: "/about-us" },
+    { routeName: "Contact", href: "/contact" },
+    { routeName: "Players", href: "/players" },
   ];
 
   return (
