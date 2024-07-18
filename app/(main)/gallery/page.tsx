@@ -1,5 +1,5 @@
 const GalleryPage = () => {
-  return <div>GalaryPage</div>;
+  return <div>GalleryPage</div>;
 };
 
 export default GalleryPage;
