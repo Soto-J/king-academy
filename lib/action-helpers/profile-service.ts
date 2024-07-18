@@ -10,28 +10,26 @@ export async function editProfile(data: EditFormSchema, userId: string) {
     const age = formatAge(data.dateOfBirth);
     const phoneNumber = formatPhoneNumber(data.phoneNumber);
 
-    const prismaData = {
-      ...data,
-      age,
-      school,
-      phoneNumber,
-      address: {
-        upsert: {
-          create: { ...data.address },
-          update: { ...data.address },
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        ...data,
+        age,
+        school,
+        phoneNumber,
+        address: {
+          upsert: {
+            create: { ...data.address },
+            update: { ...data.address },
+          },
+        },
+        positions: {
+          deleteMany: {}, // Remove existing positions
+          create: data.positions.map((position) => ({
+            position: position as Position,
+          })),
         },
       },
-      positions: {
-        deleteMany: {}, // Remove existing positions
-        create: data.positions.map((position) => ({
-          position: position as Position,
-        })),
-      },
-    };
-
-    await prisma.user.update({
-      where: { id: userId },
-      data: prismaData,
     });
   } catch (error) {
     console.log("Failed to update progile", error);
