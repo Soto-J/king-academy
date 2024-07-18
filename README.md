@@ -1,3 +1,17 @@
+# King Academy
+An app to keep roster information on the King Academy Baseball team (plz change this.)
+
+## Pre-Requisite: 
+- Node v(Please let me know which node version you're using.)
+- Make a copy of `.env.example` and create `.env`.
+- Get `.env` information from John.
+
+## Running the app:
+- `npm i`
+- `npm run local-dev`
+
+## Everything below is the old README version
+_____________
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
