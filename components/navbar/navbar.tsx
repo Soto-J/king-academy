@@ -21,12 +21,12 @@ const Navbar = () => {
 
         <DesktopRoutes routes={NAV_LINKS} />
 
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-x-4">
-            <NavbarActions />
+        <div className="flex items-center gap-x-4">
+          {/* <div className="flex items-center gap-x-4"> */}
+          <NavbarActions />
 
-            <ModeToggle className="hidden lg:block" />
-          </div>
+          <ModeToggle className="hidden lg:block" />
+          {/* </div> */}
 
           <MobileRoutes NAV_LINKS={NAV_LINKS} />
         </div>
