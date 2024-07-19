@@ -8,7 +8,7 @@ import NavbarActions from "./navbar-buttons";
 const Navbar = () => {
   const NAV_LINKS = [
     { routeName: "Home", href: "/" },
-    { routeName: "Gallery", href: "/gallery" },
+    { routeName: "Gallery", href: "/Gallery" },
     { routeName: "About Us", href: "/about-us" },
     { routeName: "Contact", href: "/contact" },
     { routeName: "Players", href: "/players" },
@@ -21,12 +21,12 @@ const Navbar = () => {
 
         <DesktopRoutes routes={NAV_LINKS} />
 
-        <div className="flex items-center gap-x-4">
-          {/* <div className="flex items-center gap-x-4"> */}
-          <NavbarActions />
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-x-4">
+            <NavbarActions />
 
-          <ModeToggle className="hidden lg:block" />
-          {/* </div> */}
+            <ModeToggle className="hidden lg:block" />
+          </div>
 
           <MobileRoutes NAV_LINKS={NAV_LINKS} />
         </div>
