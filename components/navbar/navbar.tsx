@@ -8,7 +8,7 @@ import NavbarActions from "./navbar-buttons";
 const Navbar = () => {
   const NAV_LINKS = [
     { routeName: "Home", href: "/" },
-    { routeName: "Gallery", href: "/Gallery" },
+    { routeName: "Gallery", href: "/gallery" },
     { routeName: "About Us", href: "/about-us" },
     { routeName: "Contact", href: "/contact" },
     { routeName: "Players", href: "/players" },
