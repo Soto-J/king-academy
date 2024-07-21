@@ -34,7 +34,12 @@ const ImageSlider = () => {
     });
   }, [api]);
 
-  const photoAlbum = ["38", "39", "40"];
+  const photoAlbum = [
+    "June 29, 2024--63",
+    "June 29, 2024--108",
+    "June 29, 2024--185",
+    "June 29, 2024--203",
+  ];
 
   return (
     <div className="mx-auto w-[90%]">
