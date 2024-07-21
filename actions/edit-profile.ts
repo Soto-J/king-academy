@@ -1,10 +1,11 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { EditFormSchema } from "@/app/(main)/players/_components/edit-profile-form";
 
 import { editProfile } from "@/lib/action-helpers/profile-service";
 import { getCurrentUser } from "@/lib/action-helpers/user-service";
-import { revalidatePath } from "next/cache";
 
 export async function onEditProfile(data: EditFormSchema, userId: string) {
   try {

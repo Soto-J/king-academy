@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(uuid()) 
+  id          String       @id @default(uuid())
   externalId  String       @unique
   firstName   String
   lastName    String
@@ -43,7 +43,7 @@ model UserAddress {
   zip    String @db.Char(5)
 
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UserPosition {
@@ -51,7 +51,7 @@ model UserPosition {
   position Position
 
   userId String?
-  User   User?   @relation(fields: [userId], references: [id])
+  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum Position {

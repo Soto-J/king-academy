@@ -33,12 +33,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DialogClose } from "@/components/ui/dialog";
+import SubmitButton from "./submit-button";
 
 export type EditFormSchema = z.infer<typeof formSchema>;
 
 type EditProfileFormProps = {
   user: User;
-  closeDropdown: () => void;
+  closeDropdown?: () => void;
 };
 
 const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
@@ -70,7 +71,7 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
         .then(() => {
           console.log("Edit successful");
 
-          closeDropdown();
+          closeDropdown?.();
         })
         .catch((error) => console.log(error));
     });
@@ -180,7 +181,7 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
             <FormItem className="p-3">
               <FormLabel>Position</FormLabel>
 
-              <div className="grid grid-cols-2 md:grid-cols-3">
+              <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                 {POSITION_OPTIONS.map(({ position, label }) => (
                   <FormItem key={position} className="flex items-center">
                     <FormControl>
@@ -197,7 +198,8 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
                         }}
                       />
                     </FormControl>
-                    <FormLabel className="pb-2 pl-2">{label}</FormLabel>
+
+                    <FormLabel className="pb-2 pl-4">{label}</FormLabel>
                   </FormItem>
                 ))}
               </div>
@@ -276,11 +278,7 @@ const EditProfileForm = ({ user, closeDropdown }: EditProfileFormProps) => {
           )}
         />
 
-        <DialogClose asChild>
-          <Button type="submit" className="ml-auto mt-8 max-w-fit">
-            Submit
-          </Button>
-        </DialogClose>
+        <SubmitButton closeDropdown={closeDropdown} />
       </form>
     </Form>
   );

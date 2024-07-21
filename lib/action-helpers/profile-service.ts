@@ -3,6 +3,25 @@ import prisma from "@/lib/prismadb";
 import { EditFormSchema } from "@/app/(main)/players/_components/edit-profile-form";
 
 import { Position } from "@prisma/client";
+import { getCurrentUser } from "./user-service";
+
+export async function hasProfile() {
+  try {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      return false;
+    }
+    const { school, age, address, firstName, lastName, phoneNumber } = user;
+
+    return [school, age, address, firstName, lastName, phoneNumber].every(
+      (val) => val,
+    );
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
 
 export async function editProfile(data: EditFormSchema, userId: string) {
   try {

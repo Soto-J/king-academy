@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { UserJSON } from "@clerk/nextjs/server";
 
 import { upsertUser } from "@/lib/action-helpers/user-service";
@@ -7,6 +9,8 @@ import { upsertUser } from "@/lib/action-helpers/user-service";
 export async function onUpsertUser(user: UserJSON) {
   try {
     await upsertUser(user);
+
+    revalidatePath("/");
 
     return { message: "User upsert successful" };
   } catch (error) {
