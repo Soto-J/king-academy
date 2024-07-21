@@ -39,6 +39,7 @@ const ImageSlider = () => {
     "June 29, 2024--108",
     "June 29, 2024--185",
     "June 29, 2024--203",
+    "June 29, 2024--119",
   ];
 
   return (
