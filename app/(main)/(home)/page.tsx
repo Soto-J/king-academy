@@ -3,8 +3,8 @@ import ImageSlider from "./_components/image-slides";
 export default async function Home() {
   return (
     <div className="mx-auto w-[95%] max-w-2xl text-center tracking-wide ">
-      <div className="pb-12">
-        <h1 className=" pb-2 text-2xl font-bold sm:text-5xl">King Academy</h1>
+      <div className="pb-14">
+        <h1 className="pb-2 text-2xl font-bold sm:text-5xl">King Academy</h1>
         <h4 className="font-light">Where Young Athletes Grow and Shine</h4>
       </div>
 

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+
 import Image from "next/image";
+import { sliderImages } from "./images";
 
 import Autoplay from "embla-carousel-autoplay";
 
@@ -34,14 +36,6 @@ const ImageSlider = () => {
     });
   }, [api]);
 
-  const photoAlbum = [
-    "June 29, 2024--63",
-    "June 29, 2024--108",
-    "June 29, 2024--185",
-    "June 29, 2024--203",
-    "June 29, 2024--119",
-  ];
-
   return (
     <div className="mx-auto w-[90%]">
       <Carousel
@@ -52,17 +46,11 @@ const ImageSlider = () => {
         className="mx-auto w-[95%] max-w-lg"
       >
         <CarouselContent>
-          {photoAlbum.map((src, index) => (
-            <CarouselItem key={index}>
+          {sliderImages.map(({ src, alt }, idx) => (
+            <CarouselItem key={idx}>
               <Card>
                 <CardContent className="relative flex aspect-square items-center justify-center p-6">
-                  <Image
-                    fill
-                    src={`/images/${src}.jpg`}
-                    alt={src}
-                    sizes="w-full h-full"
-                    className="object-cover"
-                  />
+                  <Image fill src={src} alt={alt} className="object-cover" />
                 </CardContent>
               </Card>
             </CarouselItem>
