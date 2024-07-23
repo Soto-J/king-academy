@@ -12,7 +12,13 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "isActive",
     header: "Status",
-    cell: ({ row }) => {},
+    cell: ({ row }) => {
+      if (row.original.isActive) {
+        return <div>Active</div>;
+      }
+
+      return <div>Inactive</div>;
+    },
   },
   {
     accessorKey: "username",
