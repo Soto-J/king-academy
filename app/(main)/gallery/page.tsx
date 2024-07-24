@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import image5 from "@/public/images/june 29, 2024--5.jpg";
+import image5 from "/public/images/June 29, 2024--5.jpg";
 
 import { galleryImages } from "./_components/images";
 
