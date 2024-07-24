@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import src from "@/public/images/June 29, 2024--192.jpg";
+import src from "/public/images/June 29, 2024--192.jpg";
 
 const AboutUsPage = () => {
   return (
