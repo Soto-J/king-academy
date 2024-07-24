@@ -1,8 +1,14 @@
-"user server";
+"use server";
 
-export async function onToggleActiveState() {
+import { toggleActiveState } from "@/lib/action-helpers/user-service";
+
+import { revalidatePath } from "next/cache";
+
+export async function onToggleActiveState(playerId: string) {
   try {
-    // return await toggleActiveState();
+    await toggleActiveState(playerId);
+
+    revalidatePath("/players");
   } catch (error) {
     throw error;
   }

@@ -13,7 +13,6 @@ import { User } from "@/lib/action-helpers/user-service";
 
 import { onEditProfile } from "@/actions/edit-profile";
 
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -32,7 +31,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DialogClose } from "@/components/ui/dialog";
 import SubmitButton from "./submit-button";
 
 export type EditFormSchema = z.infer<typeof formSchema>;

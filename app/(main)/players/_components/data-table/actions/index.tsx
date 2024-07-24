@@ -50,7 +50,11 @@ export const Actions = ({ currentUser, player }: ActionsProps) => {
           dropdownHandler={dropdownHandler}
         />
 
-        <ToggleActive isAdmin={isAdmin} />
+        <ToggleActive
+          playerId={player.id}
+          isAdmin={isAdmin}
+          isActive={player.isActive}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );

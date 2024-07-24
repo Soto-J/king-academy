@@ -7,7 +7,7 @@ import { galleryImages } from "./_components/images";
 const GalleryPage = () => {
   return (
     <div>
-      <h1 className="text-center text-3xl">Gallery</h1>
+      <h1 className="text-center text-4xl font-bold tracking-wide">Gallery</h1>
 
       <Image
         src={image5}

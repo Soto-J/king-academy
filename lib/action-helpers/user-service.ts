@@ -92,3 +92,24 @@ export async function deleteUser(userId?: string) {
     return null;
   }
 }
+
+export async function toggleActiveState(playerId: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: playerId },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await prisma.user.update({
+      where: { id: playerId },
+      data: {
+        isActive: !user.isActive,
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+}
