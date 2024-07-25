@@ -12,8 +12,8 @@ const AboutUsPage = () => {
           the fundamentals of baseball. Since the early 2000s, Baseball King
           Academy has been committed to this goal, supported by a dedicated
           staff with professional and collegiate playing experience. We have
-          positively impacted many kids' lives and will continue to do so every
-          day.
+          positively impacted many kids&apos; lives and will continue to do so
+          every day.
         </p>
 
         {/* <div className="relative h-full">
