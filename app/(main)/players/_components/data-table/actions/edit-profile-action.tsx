@@ -34,7 +34,6 @@ const EditProfileAction = ({
         </DropdownMenuItem>
       </DialogTrigger>
 
-      {/* Displays Edit form content */}
       <DialogContent className="w-[90%]">
         <ScrollArea className="h-[80vh]">
           <EditProfileForm user={currentUser} closeDropdown={dropdownHandler} />

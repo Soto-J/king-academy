@@ -15,7 +15,6 @@ const PlayerPage = async () => {
   const players = await onGetAllPlayers();
 
   if (!currentUser) {
-    console.log(currentUser);
     return redirect("/");
   }
 
