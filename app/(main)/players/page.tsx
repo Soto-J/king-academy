@@ -9,6 +9,7 @@ import HydrationCheck from "@/components/hydration-check";
 import { DataTable } from "./_components/data-table/data-table";
 import { columns } from "./_components/data-table/columns";
 import EditProfileForm from "./_components/edit-profile-form";
+import { Role } from "@prisma/client";
 
 const PlayerPage = async () => {
   const currentUser = await onGetCurrentUser();
@@ -19,8 +20,9 @@ const PlayerPage = async () => {
   }
 
   const hasProfile = await onHasProfile();
+  const isMember = currentUser.role === Role.MEMBER;
 
-  if (!hasProfile) {
+  if (!hasProfile && isMember) {
     return (
       <HydrationCheck className="mx-auto max-w-xl rounded border p-6">
         <h2 className="text-center text-lg">Complete your profile</h2>

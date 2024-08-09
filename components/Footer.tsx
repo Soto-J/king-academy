@@ -8,6 +8,7 @@ const Footer = () => {
       <p className="text-[.5rem] font-light">
         Copyright © 2024 King Academy - All Rights Reserved.
       </p>
+      
       <div className="ml-auto flex gap-x-6 sm:px-10">
         <Link
           href="https://www.instagram.com/baseballking_academy?igsh=MWFjaDg0dm9tZmZncA%3D%3D&utm_source=qr"
