@@ -20,7 +20,7 @@ const EditProfileAction = ({
   isCurrentUser,
   dropdownHandler,
 }: EditProfileActionProps) => {
-  if (isCurrentUser) {
+  if (!isCurrentUser) {
     return null;
   }
 

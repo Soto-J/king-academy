@@ -15,6 +15,7 @@ const PlayerPage = async () => {
   const players = await onGetAllPlayers();
 
   if (!currentUser) {
+    console.log(currentUser);
     return redirect("/");
   }
 
@@ -24,7 +25,7 @@ const PlayerPage = async () => {
     return (
       <HydrationCheck className="mx-auto max-w-xl rounded border p-6">
         <h2 className="text-center text-lg">Complete your profile</h2>
-        
+
         <EditProfileForm user={currentUser} />
       </HydrationCheck>
     );

@@ -33,6 +33,7 @@ export const Actions = ({ currentUser, player }: ActionsProps) => {
     setIsOpen(false);
   };
 
+  console.log(isCurrentUser);
   return (
     <DropdownMenu open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DropdownMenuTrigger asChild>

@@ -12,7 +12,7 @@ export type User = Prisma.UserGetPayload<typeof user>;
 export async function getCurrentUser() {
   try {
     const clerkUser = await currentUser();
-
+    console.log(clerkUser);
     if (!clerkUser?.id) {
       throw new Error("Unathorized - No current user.");
     }
