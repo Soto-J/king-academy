@@ -9,11 +9,14 @@ const Footer = () => {
         Copyright © 2024 King Academy - All Rights Reserved.
       </p>
       <div className="ml-auto flex gap-x-6 sm:px-10">
-        <Link href="/">
+        <Link
+          href="https://www.instagram.com/baseballking_academy?igsh=MWFjaDg0dm9tZmZncA%3D%3D&utm_source=qr"
+          target="_blank"
+        >
           <Instagram className="h-6 w-6" />
         </Link>
 
-        <Link href="/">
+        <Link href="/" target="_blank">
           <Facebook className="h-6 w-6" />
         </Link>
       </div>
