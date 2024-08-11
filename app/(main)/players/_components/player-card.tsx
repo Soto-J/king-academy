@@ -81,14 +81,14 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
             </span>
 
             <div className="flex gap-x-2">
-              <p className="font-semibold">{label}:</p>
+              <p className="font-semibold text-primary">{label}:</p>
               <p className="font-light">{data}</p>
             </div>
           </div>
         ))}
 
         <div className="flex items-center gap-x-4">
-          <h4>Positions:</h4>
+          <p className="text-lg text-primary">Positions:</p>
 
           <ul className="flex flex-wrap gap-x-2">
             {player.positions.map((position, i) => (
