@@ -4,6 +4,7 @@ import { Webhook } from "svix";
 
 import { onUpsertUser } from "@/actions/upsert-user";
 import { deleteUser } from "@/lib/action-helpers/user-service";
+import { revalidatePath } from "next/cache";
 
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET as string;
 
@@ -20,6 +21,7 @@ export async function POST(req: Request) {
 
   if (eventType === "user.created" || eventType === "user.updated") {
     await onUpsertUser(evt.data);
+    revalidatePath("/");
   }
 
   if (eventType === "user.deleted") {
