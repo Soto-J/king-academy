@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from "react";
 import Link from "next/link";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 
@@ -8,6 +10,7 @@ import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  Form,
   FormField,
   FormItem,
   FormLabel,
@@ -20,19 +23,26 @@ import { Crown, OctagonAlertIcon, CircleDot } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
 
 import { AuthBrandPannel } from "../components/auth-brand-pannel";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
 
 const formSchema = z.object({
+  firstName: z.string().min(1, { message: "First name required." }),
+  lastName: z.string().min(1, { message: "Last name required." }),
   email: z.email(),
-  password: z.string().min(1, { message: "Password is required" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters." }),
 });
 
 export const SignUpView = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     },
@@ -41,6 +51,7 @@ export const SignUpView = () => {
   const onGoogleSubmit = () => {
     setIsPending(true);
     setError(null);
+
     authClient.signIn.social(
       {
         provider: "google",
@@ -64,8 +75,14 @@ export const SignUpView = () => {
     setIsPending(true);
     setError(null);
 
-    authClient.signIn.email(
-      { ...values, callbackURL: "/" },
+    const { firstName, lastName } = values;
+
+    authClient.signUp.email(
+      {
+        ...values,
+        name: `${firstName} ${lastName}`,
+        callbackURL: "/",
+      },
       {
         onSuccess: () => {
           setIsPending(false);
@@ -79,6 +96,7 @@ export const SignUpView = () => {
       },
     );
   };
+
   return (
     <div className="">
       <Card className="bg-card/50 overflow-hidden border-0 p-0 shadow-2xl backdrop-blur-sm">
@@ -93,15 +111,61 @@ export const SignUpView = () => {
                   <Crown className="text-primary mx-auto h-8 w-8" />
 
                   <h1 className="from-primary to-primary/70 bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent">
-                    Welcome Back
+                    Let&apos;s get started
                   </h1>
 
                   <p className="text-muted-foreground text-lg">
-                    Access your King Academy dashboard
+                    Create your King Academy account
                   </p>
                 </div>
 
                 <div className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground text-sm font-semibold">
+                          First Name
+                        </FormLabel>
+
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="John"
+                            data-lpignore="true"
+                            className="focus:border-primary h-12 rounded-lg border-2 text-base transition-all duration-300"
+                            {...field}
+                          />
+                        </FormControl>
+
+                        <FormMessage className="text-brand-red" />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground text-sm font-semibold">
+                          Last Name
+                        </FormLabel>
+
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="Doe"
+                            data-lpignore="true"
+                            className="focus:border-primary h-12 rounded-lg border-2 text-base transition-all duration-300"
+                            {...field}
+                          />
+                        </FormControl>
+
+                        <FormMessage className="text-brand-red" />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="email"
@@ -162,7 +226,7 @@ export const SignUpView = () => {
                     disabled={isPending}
                     className="h-12 w-full rounded-lg text-base font-semibold transition-all duration-300 hover:shadow-lg"
                   >
-                    {isPending ? "Signing in..." : "Sign In"}
+                    {isPending ? "Signing up..." : "Sign Up"}
                     <CircleDot className="ml-2 h-4 w-4" />
                   </Button>
 

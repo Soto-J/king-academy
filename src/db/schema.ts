@@ -16,10 +16,10 @@ import {
 // CONSTANTS & ENUMS
 // ============================================================================
 
-export const roles = ["admin", "member"] as const;
+export const roles = ["admin", "user"] as const;
 
-export const BATTING_ORIENTATION = ["right", "left", "switch"] as const;
-export const THROWING_ORIENTATION = ["right", "left", "switch"] as const;
+export const BATTING_STANCE = ["right", "left", "switch"] as const;
+export const THROWING_ARM = BATTING_STANCE;
 export const POSITIONS = [
   "pitcher",
   "catcher",
@@ -39,40 +39,37 @@ export const POSITIONS = [
 // ============================================================================
 
 export const user = mysqlTable("user", {
-  id: varchar("id", { length: 36 })
-    .primaryKey()
-    .$default(() => nanoid()),
+  id: varchar("id", { length: 36 }).primaryKey(),
 
+  name: varchar("name", { length: 50 }).notNull(),
   email: varchar("email", { length: 255 }).notNull().unique(),
-  firstName: varchar("first_name", { length: 25 }).notNull(),
-  lastName: varchar("last_name", { length: 25 }).notNull(),
   image: text("image"),
+  emailVerified: boolean("email_verified")
+    .$defaultFn(() => false)
+    .notNull(),
 
-  emailVerified: boolean("email_verified").default(false).notNull(),
-
-  role: mysqlEnum("role", roles).default("member").notNull(),
+  role: mysqlEnum("role", roles).default("user").notNull(),
   banned: boolean("banned"),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires", { mode: "string" }),
 
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
     .onUpdateNow()
     .notNull(),
 });
 
 export const session = mysqlTable("session", {
-  id: varchar("id", { length: 36 })
-    .primaryKey()
-    .$default(() => nanoid()),
+  id: varchar("id", { length: 36 }).primaryKey(),
   userId: varchar("user_id", { length: 36 })
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
 
   token: varchar("token", { length: 255 }).notNull().unique(),
-  ipAddress: varchar("ip_address", { length: 45 }),
+  ipAddress: text("ip_address"),
   userAgent: text("user_agent"),
+
+  impersonatedBy: text("impersonated_by"),
 
   expiresAt: timestamp("expires_at", { mode: "string" }).notNull(),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
@@ -86,42 +83,38 @@ export const account = mysqlTable("account", {
   id: varchar("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid()),
-  accountId: varchar("account_id", { length: 255 }).notNull(),
-  providerId: varchar("provider_id", { length: 50 }).notNull(),
+  accountId: text("account_id").notNull(),
+  providerId: text("provider_id").notNull(),
   userId: varchar("user_id", { length: 36 })
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
 
+  scope: varchar("scope", { length: 500 }),
+  password: varchar("password", { length: 255 }),
+  idToken: text("id_token"),
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
-  idToken: text("id_token"),
+
   accessTokenExpiresAt: timestamp("access_token_expires_at", {
     mode: "string",
   }),
   refreshTokenExpiresAt: timestamp("refresh_token_expires_at", {
     mode: "string",
   }),
-  scope: varchar("scope", { length: 500 }),
-  password: varchar("password", { length: 255 }),
 
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
-    .onUpdateNow()
-    .notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).notNull(),
 });
 
 export const verification = mysqlTable("verification", {
-  id: varchar("id", { length: 36 })
-    .primaryKey()
-    .$default(() => nanoid()),
+  id: varchar("id", { length: 36 }).primaryKey(),
+
   identifier: varchar("identifier", { length: 255 }).notNull(),
   value: varchar("value", { length: 255 }).notNull(),
 
   expiresAt: timestamp("expires_at", { mode: "string" }).notNull(),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
     .onUpdateNow()
     .notNull(),
 });
@@ -138,15 +131,65 @@ export const profileTable = mysqlTable("profile", {
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
 
-  batting: mysqlEnum("batting", BATTING_ORIENTATION),
-  throwing: mysqlEnum("throwing", THROWING_ORIENTATION),
-  position: mysqlEnum("position", POSITIONS),
-
   school: varchar("school", { length: 100 }),
   bio: text("bio"),
   dateOfBirth: date("date_of_birth"),
   isActive: boolean("is_active").default(false).notNull(),
   phoneNumber: char("phone_number", { length: 16 }).unique(),
+
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" })
+    .defaultNow()
+    .onUpdateNow()
+    .notNull(),
+});
+
+export const positionTable = mysqlTable("position", {
+  id: varchar("id", { length: 36 })
+    .primaryKey()
+    .$default(() => nanoid()),
+  profileId: varchar("profile_id", { length: 36 })
+    .references(() => profileTable.id, { onDelete: "cascade" })
+    .notNull(),
+
+  position: mysqlEnum("position", POSITIONS).notNull(),
+  isPrimary: boolean("is_primary").default(false).notNull(),
+
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" })
+    .defaultNow()
+    .onUpdateNow()
+    .notNull(),
+});
+
+export const battingStanceTable = mysqlTable("batting_stance", {
+  id: varchar("id", { length: 36 })
+    .primaryKey()
+    .$default(() => nanoid()),
+  profileId: varchar("profile_id", { length: 36 })
+    .references(() => profileTable.id, { onDelete: "cascade" })
+    .notNull(),
+
+  stance: mysqlEnum("position", BATTING_STANCE).notNull(),
+  isPrimary: boolean("is_primary").default(false).notNull(),
+
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" })
+    .defaultNow()
+    .onUpdateNow()
+    .notNull(),
+});
+
+export const throwingArmTable = mysqlTable("throwing_arm", {
+  id: varchar("id", { length: 36 })
+    .primaryKey()
+    .$default(() => nanoid()),
+  profileId: varchar("profile_id", { length: 36 })
+    .references(() => profileTable.id, { onDelete: "cascade" })
+    .notNull(),
+
+  batting: mysqlEnum("position", THROWING_ARM).notNull(),
+  isPrimary: boolean("is_primary").default(false).notNull(),
 
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "string" })

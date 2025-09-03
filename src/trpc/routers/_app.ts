@@ -1,16 +1,14 @@
 import { createTRPCRouter } from "../init";
 
-import { iracingRouter } from "@/modules/iracing/server/procedures";
-import { manageRouter } from "@/modules/manage/server/procedure";
-import { membersRouter } from "@/modules/members/server/procedures";
-import { profileRouter } from "@/modules/profile/server/procedures";
+// Note: Import routers as you create them for your baseball academy
+// Example:
+// import { playersRouter } from "@/modules/players/server/procedures";
+// import { teamsRouter } from "@/modules/teams/server/procedures";
 
 export const appRouter = createTRPCRouter({
-  manage: manageRouter,
-  members: membersRouter,
-  profile: profileRouter,
-  iracing: iracingRouter,
-  
+  // Add your baseball academy routers here as you create them
+  // players: playersRouter,
+  // teams: teamsRouter,
 });
 
 // export type definition of API
