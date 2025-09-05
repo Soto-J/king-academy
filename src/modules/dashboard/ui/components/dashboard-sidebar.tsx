@@ -1,5 +1,28 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { cn } from "@/lib/utils";
+
+import {
+  Calendar,
+  ChevronRight,
+  Home,
+  Images,
+  Settings,
+  User,
+  Users,
+} from "lucide-react";
+
+import {
+  useFilterNavigationItems,
+  type NavigationItem,
+} from "@/modules/dashboard/hooks/use-authorization";
+
+import { Separator } from "@/components/ui/separator";
+import { DashboardUserButton } from "./dashboard-user-button";
 import {
   Sidebar,
   SidebarContent,
@@ -11,65 +34,87 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
-import {
-  ChevronRight,
-  Users,
-  Settings,
-  Trophy,
-  Calendar,
-  Home,
-  User,
-} from "lucide-react";
-import { usePathname } from "next/navigation";
-import { DashboardUserButton } from "./dashboard-user-button";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import Image from "next/image";
 
 export const DashboardSidebar = () => {
   const pathname = usePathname();
 
-  const navigationItems = [
-    { icon: Home, label: "Dashboard", href: "/" },
-    { icon: Calendar, label: "Training Schedule", href: "/schedule" },
-    { icon: Trophy, label: "Teams", href: "/teams" },
-    { icon: Users, label: "Players", href: "/players" },
+  const navigationItemsConfig: NavigationItem[] = [
+    {
+      icon: Home,
+      label: "Home",
+      href: "/",
+      roles: ["public", "user", "admin"],
+    },
+    {
+      icon: Images,
+      label: "Gallery",
+      href: "/galery",
+      roles: ["public", "user", "admin"],
+    },
+    {
+      icon: Calendar,
+      label: "Training Schedule",
+      href: "/schedule",
+      roles: ["user", "admin"],
+    },
+    {
+      icon: Users,
+      label: "Players",
+      href: "/players",
+      roles: ["admin"],
+    },
   ];
 
-  const personalItems = [
-    { icon: User, label: "My Profile", href: "/profile" },
-    { icon: Settings, label: "Settings", href: "/settings" },
+  const personalItemsConfig: NavigationItem[] = [
+    {
+      icon: User,
+      label: "My Profile",
+      href: "/profile",
+      roles: ["user", "admin"],
+    },
+    {
+      icon: Settings,
+      label: "Settings",
+      href: "/settings",
+      roles: ["user", "admin"],
+    },
   ];
+
+  const navigationItems = useFilterNavigationItems(navigationItemsConfig);
+  const personalItems = useFilterNavigationItems(personalItemsConfig);
+
   return (
-    <Sidebar className="bg-sidebar border-sidebar-border shadow-2xl">
-      <SidebarHeader className="relative p-6">
-        <Link href="/" className="group flex items-center gap-3">
-          <div className="relative h-10 w-10 overflow-hidden rounded-xl shadow-lg transition-all group-hover:scale-105">
-            <Image
-              src="/logo.jpg"
-              alt="King Academy Logo"
-              fill
-              className="object-contain"
-            />
-          </div>
+    <Sidebar className="shadow-2xl">
+      <SidebarHeader className="p-6 pt-10">
+        <Link href="/" className="group flex gap-x-3">
+          <Image
+            src="/logo.jpg"
+            alt="King Academy Logo"
+            width={42}
+            height={42}
+            priority
+            className="rounded object-cover ring-2 ring-white/20 transition-all group-hover:scale-105"
+          />
 
           <div>
-            <h1 className="text-lg font-bold text-sidebar-foreground">King Academy</h1>
-            <p className="text-xs text-sidebar-foreground/70">Baseball Excellence</p>
+            <h1 className="text-sidebar-foreground text-lg font-bold">
+              King Academy
+            </h1>
+            <p className="text-sidebar-foreground/70 text-xs">
+              Baseball Excellence
+            </p>
           </div>
         </Link>
       </SidebarHeader>
 
-      <Separator className="bg-sidebar-border mx-4 h-px" />
+      <Separator className="via-primary/50 my-4 h-px bg-gradient-to-r from-transparent to-transparent" />
 
       <SidebarContent className="px-4 py-6">
-        <SidebarGroup>
-          <div className="mb-4">
-            <h3 className="text-muted-foreground px-2 text-xs font-semibold tracking-wider uppercase">
-              Main Navigation
-            </h3>
-          </div>
+        <SidebarGroup className="space-y-4">
+          <h3 className="text-muted-foreground px-2 text-xs font-semibold tracking-wider uppercase">
+            Main Navigation
+          </h3>
+
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
               {navigationItems.map(({ href, label, icon: Icon }) => (
@@ -104,14 +149,12 @@ export const DashboardSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <Separator className="bg-sidebar-border my-6 h-px" />
+        <Separator className="via-primary/50 my-4 h-px bg-gradient-to-r from-transparent to-transparent" />
 
-        <SidebarGroup>
-          <div className="mb-4">
-            <h3 className="text-muted-foreground px-2 text-xs font-semibold tracking-wider uppercase">
-              Personal
-            </h3>
-          </div>
+        <SidebarGroup className="space-y-4">
+          <h3 className="text-muted-foreground px-2 text-xs font-semibold tracking-wider uppercase">
+            Personal
+          </h3>
 
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
@@ -148,7 +191,7 @@ export const DashboardSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4">
+      <SidebarFooter className="p-4 pb-8">
         <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>

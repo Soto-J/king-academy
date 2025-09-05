@@ -9,6 +9,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import * as dbSchema from "@/db/schema";
 import env from "@/env";
+
 import { ac, admin, user } from "./permission";
 
 export const auth = betterAuth({

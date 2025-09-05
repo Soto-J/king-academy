@@ -1,22 +1,20 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/modules/dashboard/ui/components/dashboard-sidebar";
 import { SidebarToggle } from "@/modules/dashboard/ui/components/sidebar-toggle";
 
-interface MainLayoutProps {
+interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+export default function ({ children }: DashboardLayoutProps) {
   return (
     <SidebarProvider>
       <DashboardSidebar />
 
-      <main>
+      <SidebarInset>
         <SidebarToggle />
         {children}
-      </main>
+      </SidebarInset>
     </SidebarProvider>
   );
-};
-
-export default MainLayout;
+}

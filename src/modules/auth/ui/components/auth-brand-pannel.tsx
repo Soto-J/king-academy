@@ -1,7 +1,6 @@
-import React from "react";
 import Image from "next/image";
 
-import { Users, CircleDot, Crown } from "lucide-react";
+import { CircleDot, Crown, Users } from "lucide-react";
 
 export const AuthBrandPannel = () => {
   return (

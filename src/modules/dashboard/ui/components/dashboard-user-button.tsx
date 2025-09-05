@@ -2,24 +2,11 @@
 
 import { useRouter } from "next/navigation";
 
-import { authClient } from "@/lib/auth-client";
-
 import { ChevronDownIcon, LogOutIcon } from "lucide-react";
 
-import { useIsMobile } from "@/hooks/use-mobile";
-
 import { GeneratedAvatar } from "@/components/generated-avatar";
-
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
@@ -29,6 +16,16 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { authClient } from "@/lib/auth/auth-client";
 
 export const DashboardUserButton = () => {
   const router = useRouter();

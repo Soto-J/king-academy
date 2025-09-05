@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "auth:generate": "npx @better-auth/cli@latest generate --config ./src/lib/auth/auth.ts"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.4",
@@ -33,6 +36,8 @@
     "dotenv": "^17.2.1",
     "dotenv-expand": "^12.0.2",
     "drizzle-orm": "^0.44.5",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "env": "^0.0.2",
     "lucide-react": "^0.525.0",
     "mysql2": "^3.14.4",

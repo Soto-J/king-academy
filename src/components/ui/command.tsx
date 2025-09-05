@@ -1,11 +1,10 @@
 "use client";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 import * as React from "react";
+
 import { Command as CommandPrimitive } from "cmdk";
 import { SearchIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +18,9 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-} from "./drawer";
+} from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 function Command({
   className,

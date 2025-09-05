@@ -1,9 +1,10 @@
 import { cache } from "react";
 import { headers } from "next/headers";
+
 import { initTRPC, TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 
 export const createTRPCContext = cache(async () => {
   /**

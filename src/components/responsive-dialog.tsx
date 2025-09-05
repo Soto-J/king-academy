@@ -1,7 +1,5 @@
 "use client";
 
-import { useIsMobile } from "@/hooks/use-mobile";
-
 import {
   Dialog,
   DialogContent,
@@ -16,6 +14,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ResponsiveDialogProps {
   children: React.ReactNode;

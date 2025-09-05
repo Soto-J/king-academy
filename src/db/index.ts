@@ -1,7 +1,7 @@
 import "dotenv/config";
 
-import mysql from "mysql2";
 import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2";
 
 declare global {
   var __db: ReturnType<typeof drizzle<Record<string, never>>> | undefined;

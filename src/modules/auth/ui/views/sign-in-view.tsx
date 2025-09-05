@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { CircleDot, Crown, OctagonAlertIcon } from "lucide-react";
+import { FaGoogle } from "react-icons/fa";
 
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -18,11 +22,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import { OctagonAlertIcon, Crown, CircleDot } from "lucide-react";
-import { FaGoogle } from "react-icons/fa";
-
 import { authClient } from "@/lib/auth/auth-client";
+
 import { AuthBrandPannel } from "../components/auth-brand-pannel";
 
 const formSchema = z.object({
