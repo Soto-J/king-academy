@@ -40,8 +40,20 @@ export const DashboardUserButton = () => {
     });
   };
 
-  if (isPending || !session?.user) {
-    return <div>Loading...</div>;
+  if (isPending) {
+    return (
+      <div className="text-muted-foreground flex w-full items-center justify-center p-3 text-sm">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <Button className="w-full" onClick={() => router.push("/sign-in")}>
+        Sign In
+      </Button>
+    );
   }
 
   if (isMobile) {

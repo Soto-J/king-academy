@@ -1,3 +1,3 @@
 export const GaleryPageView = async () => {
-  return <div>HomeView</div>;
+  return <div>Galery Page</div>;
 };

@@ -11,7 +11,7 @@ export default function ({ children }: DashboardLayoutProps) {
     <SidebarProvider>
       <DashboardSidebar />
 
-      <SidebarInset>
+      <SidebarInset className="bg-accent">
         <SidebarToggle />
         {children}
       </SidebarInset>

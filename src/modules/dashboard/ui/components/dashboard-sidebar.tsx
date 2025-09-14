@@ -37,7 +37,7 @@ import {
 
 export const DashboardSidebar = () => {
   const pathname = usePathname();
-
+  
   const navigationItemsConfig: NavigationItem[] = [
     {
       icon: Home,
