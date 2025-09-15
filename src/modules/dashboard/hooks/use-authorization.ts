@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth/auth-client";
+import { LucideIcon } from "lucide-react";
 
 export type UserRole = "public" | "user" | "admin";
 
@@ -9,11 +10,23 @@ export interface AuthState {
   isAuthenticated: boolean;
   isAdmin: boolean;
   isUser: boolean;
-  user: any | null;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role?: string | null;
+    image?: string | null;
+    emailVerified?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+    banned?: boolean | null;
+    banReason?: string | null;
+    banExpires?: Date | null;
+  } | null;
 }
 
 export interface NavigationItem {
-  icon: any;
+  icon: LucideIcon;
   label: string;
   href: string;
   roles: UserRole[];

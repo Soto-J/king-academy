@@ -6,7 +6,7 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export default function ({ children }: DashboardLayoutProps) {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <SidebarProvider>
       <DashboardSidebar />

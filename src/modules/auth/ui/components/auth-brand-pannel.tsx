@@ -68,7 +68,7 @@ export const AuthBrandPannel = () => {
 
         <div className="space-y-2 text-center">
           <p className="text-sm text-blue-100">
-            "Building Champions On and Off the Field"
+            &ldquo;Building Champions On and Off the Field&rdquo;
           </p>
           <div className="flex justify-center space-x-1">
             {[...Array(5)].map((_, i) => (

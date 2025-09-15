@@ -10,6 +10,7 @@ import {
   char,
   mysqlEnum,
   index,
+  int,
 } from "drizzle-orm/mysql-core";
 
 // ============================================================================
@@ -51,12 +52,10 @@ export const user = mysqlTable("user", {
   role: mysqlEnum("role", roles).default("user").notNull(),
   banned: boolean("banned"),
   banReason: text("ban_reason"),
-  banExpires: timestamp("ban_expires", { mode: "string" }),
+  banExpires: timestamp("ban_expires"),
 
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .onUpdateNow()
-    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").onUpdateNow().notNull(),
 });
 
 export const session = mysqlTable("session", {
@@ -71,12 +70,9 @@ export const session = mysqlTable("session", {
 
   impersonatedBy: text("impersonated_by"),
 
-  expiresAt: timestamp("expires_at", { mode: "string" }).notNull(),
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
-    .onUpdateNow()
-    .notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export const account = mysqlTable("account", {
@@ -95,15 +91,11 @@ export const account = mysqlTable("account", {
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
 
-  accessTokenExpiresAt: timestamp("access_token_expires_at", {
-    mode: "string",
-  }),
-  refreshTokenExpiresAt: timestamp("refresh_token_expires_at", {
-    mode: "string",
-  }),
+  accessTokenExpiresAt: timestamp("access_token_expires_at"),
+  refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
 
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").notNull(),
 });
 
 export const verification = mysqlTable("verification", {
@@ -112,11 +104,9 @@ export const verification = mysqlTable("verification", {
   identifier: varchar("identifier", { length: 255 }).notNull(),
   value: varchar("value", { length: 255 }).notNull(),
 
-  expiresAt: timestamp("expires_at", { mode: "string" }).notNull(),
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .onUpdateNow()
-    .notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").onUpdateNow().notNull(),
 });
 
 // ============================================================================
@@ -126,7 +116,8 @@ export const verification = mysqlTable("verification", {
 export const profileTable = mysqlTable("profile", {
   id: varchar("id", { length: 36 })
     .primaryKey()
-    .$default(() => nanoid()),
+    .$default(() => nanoid())
+    .notNull(),
   userId: varchar("user_id", { length: 36 })
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
@@ -137,17 +128,15 @@ export const profileTable = mysqlTable("profile", {
   isActive: boolean("is_active").default(false).notNull(),
   phoneNumber: char("phone_number", { length: 16 }).unique(),
 
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
-    .onUpdateNow()
-    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export const positionTable = mysqlTable("position", {
   id: varchar("id", { length: 36 })
     .primaryKey()
-    .$default(() => nanoid()),
+    .$default(() => nanoid())
+    .notNull(),
   profileId: varchar("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
@@ -155,17 +144,15 @@ export const positionTable = mysqlTable("position", {
   position: mysqlEnum("position", POSITIONS).notNull(),
   isPrimary: boolean("is_primary").default(false).notNull(),
 
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
-    .onUpdateNow()
-    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export const battingStanceTable = mysqlTable("batting_stance", {
   id: varchar("id", { length: 36 })
     .primaryKey()
-    .$default(() => nanoid()),
+    .$default(() => nanoid())
+    .notNull(),
   profileId: varchar("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
@@ -173,17 +160,15 @@ export const battingStanceTable = mysqlTable("batting_stance", {
   stance: mysqlEnum("position", BATTING_STANCE).notNull(),
   isPrimary: boolean("is_primary").default(false).notNull(),
 
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
-    .onUpdateNow()
-    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export const throwingArmTable = mysqlTable("throwing_arm", {
   id: varchar("id", { length: 36 })
     .primaryKey()
-    .$default(() => nanoid()),
+    .$default(() => nanoid())
+    .notNull(),
   profileId: varchar("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
@@ -191,17 +176,15 @@ export const throwingArmTable = mysqlTable("throwing_arm", {
   batting: mysqlEnum("position", THROWING_ARM).notNull(),
   isPrimary: boolean("is_primary").default(false).notNull(),
 
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
-    .onUpdateNow()
-    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export const userAddressTable = mysqlTable("user_address", {
   id: varchar("id", { length: 36 })
     .primaryKey()
-    .$default(() => nanoid()),
+    .$default(() => nanoid())
+    .notNull(),
   userId: varchar("user_id", { length: 36 })
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
@@ -214,11 +197,33 @@ export const userAddressTable = mysqlTable("user_address", {
   state: varchar("state", { length: 20 }),
   zipCode: char("zip_code", { length: 5 }),
 
-  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updated_at", { mode: "string" })
-    .defaultNow()
-    .onUpdateNow()
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+// ============================================================================
+// SCHEDULE
+// ============================================================================
+
+export const scheduleTable = mysqlTable("schedule", {
+  id: varchar("id", { length: 36 })
+    .primaryKey()
+    .$default(() => nanoid())
     .notNull(),
+
+  gameNumber: int("game_number"),
+  division: varchar("division", { length: 20 }),
+
+  homeTeam: varchar("home_team", { length: 20 }),
+  visitingTeam: varchar("visiting_team", { length: 20 }),
+
+  location: varchar("location", { length: 20 }),
+
+  date: timestamp().defaultNow().onUpdateNow().notNull(),
+  endTime: timestamp().defaultNow().onUpdateNow().notNull(),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 // ============================================================================
