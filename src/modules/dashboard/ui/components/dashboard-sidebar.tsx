@@ -53,7 +53,7 @@ export const DashboardSidebar = () => {
     },
     {
       icon: Calendar,
-      label: "Training Schedule",
+      label: "Schedule",
       href: "/schedule",
       roles: ["user", "admin"],
     },

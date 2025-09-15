@@ -158,7 +158,7 @@ export const SchedulePageView = () => {
                       index % 2 === 0 ? "bg-secondary" : "bg-accent"
                     }`}
                   >
-                    <TableCell className="text-foreground font-medium pl-6">
+                    <TableCell className="text-foreground pl-6 font-medium">
                       {game.id}
                     </TableCell>
                     <TableCell className="text-foreground font-medium">
