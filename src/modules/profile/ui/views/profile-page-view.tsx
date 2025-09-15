@@ -1,3 +1,14 @@
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { EditProfileDialog } from "../components/edit-profile-dialog";
+
 export const ProfilePageView = () => {
-  return <div className="space-y-8">Profile Page</div>;
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.profile.getOne.queryOptions({}));
+  return (
+    <>
+      <EditProfileDialog initialValues={data} />
+      Profile Page
+    </>
+  );
 };

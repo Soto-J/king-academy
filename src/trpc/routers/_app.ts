@@ -1,15 +1,11 @@
+import { profileRouter } from "@/modules/profile/server/procedure";
 import { createTRPCRouter } from "../init";
 
-// Note: Import routers as you create them for your baseball academy
-// Example:
-// import { playersRouter } from "@/modules/players/server/procedures";
-// import { teamsRouter } from "@/modules/teams/server/procedures";
+import { playersRouter } from "@/modules/players/server/procedure";
 
 export const appRouter = createTRPCRouter({
-  // Add your baseball academy routers here as you create them
-  // players: playersRouter,
-  // teams: teamsRouter,
+  players: playersRouter,
+  profile: profileRouter,
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;

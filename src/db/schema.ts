@@ -173,14 +173,14 @@ export const throwingArmTable = mysqlTable("throwing_arm", {
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
 
-  batting: mysqlEnum("position", THROWING_ARM).notNull(),
+  arm: mysqlEnum("arm", THROWING_ARM).notNull(),
   isPrimary: boolean("is_primary").default(false).notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
-export const userAddressTable = mysqlTable("user_address", {
+export const addressTable = mysqlTable("address", {
   id: varchar("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
@@ -254,8 +254,6 @@ export const profileTableIndexes = {
 };
 
 export const userAddressTableIndexes = {
-  userIdIdx: index("user_address_user_id_idx").on(userAddressTable.userId),
-  profileIdIdx: index("user_address_profile_id_idx").on(
-    userAddressTable.profileId,
-  ),
+  userIdIdx: index("user_address_user_id_idx").on(addressTable.userId),
+  profileIdIdx: index("user_address_profile_id_idx").on(addressTable.profileId),
 };
