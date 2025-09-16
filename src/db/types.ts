@@ -8,7 +8,7 @@ import {
   positionTable,
   battingStanceTable,
   throwingArmTable,
-  userAddressTable,
+  addressTable,
 } from "./schema";
 
 export type UserTable = InferSelectModel<typeof user>;
@@ -18,4 +18,4 @@ export type ProfileTable = InferSelectModel<typeof profileTable>;
 export type PositionTableTable = InferSelectModel<typeof positionTable>;
 export type BattingStanceTable = InferSelectModel<typeof battingStanceTable>;
 export type ThrowingArmTable = InferSelectModel<typeof throwingArmTable>;
-export type UserAddressTable = InferSelectModel<typeof userAddressTable>;
+export type AddressTable = InferSelectModel<typeof addressTable>;

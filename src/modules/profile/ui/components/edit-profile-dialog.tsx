@@ -48,19 +48,20 @@ export const EditProfileDialog = ({
       firstName: firstName,
       lastName: lastName,
       bio: initialValues?.profile?.bio ?? "",
-      dateOfBirth: initialValues.profile?.dateOfBirth ?? "",
+      dateOfBirth: initialValues.profile?.dateOfBirth
+        ? new Date(initialValues.profile.dateOfBirth)
+        : null,
       phoneNumber: initialValues.profile?.phoneNumber ?? "",
       address: {
         street: initialValues.profile?.street ?? "",
         city: initialValues.profile?.city ?? "",
         state: initialValues.profile?.state ?? "",
-        zipcode: initialValues.profile?.zipCode ?? 0,
+        zipcode: initialValues.profile?.zipCode ?? "",
       },
 
       position: initialValues.profile?.position || undefined,
       battingStance: initialValues.profile?.stance || undefined,
       throwingArm: initialValues.profile?.stance || undefined,
-      
     },
   });
 
@@ -89,7 +90,7 @@ export const EditProfileDialog = ({
     }),
   );
 
-  const onSubmit = (values: z.infer<typeof ProfileEditSchema>) => {
+  const onSubmit = (values: z.infer<typeof ProfileFormSchema>) => {
     if (!initialValues?.user?.id) {
       console.warn("EditProfileDialog: Cannot submit without user ID");
       return;
@@ -175,7 +176,6 @@ export const EditProfileDialog = ({
                 </div>
               </div>
 
-        
               <div className="rounded-xl border border-green-100 bg-gradient-to-br from-green-50 to-white p-4">
                 <div className="mb-4 flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500">
