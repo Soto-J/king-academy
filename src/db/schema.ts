@@ -114,11 +114,11 @@ export const verification = mysqlTable("verification", {
 // ============================================================================
 
 export const profileTable = mysqlTable("profile", {
-  id: varchar("id", { length: 36 })
+  id: char("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  userId: varchar("user_id", { length: 36 })
+  userId: char("user_id", { length: 36 })
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
 
@@ -133,11 +133,11 @@ export const profileTable = mysqlTable("profile", {
 });
 
 export const positionTable = mysqlTable("position", {
-  id: varchar("id", { length: 36 })
+  id: char("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  profileId: varchar("profile_id", { length: 36 })
+  profileId: char("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
 
@@ -149,11 +149,11 @@ export const positionTable = mysqlTable("position", {
 });
 
 export const battingStanceTable = mysqlTable("batting_stance", {
-  id: varchar("id", { length: 36 })
+  id: char("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  profileId: varchar("profile_id", { length: 36 })
+  profileId: char("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
 
@@ -165,36 +165,36 @@ export const battingStanceTable = mysqlTable("batting_stance", {
 });
 
 export const throwingArmTable = mysqlTable("throwing_arm", {
-  id: varchar("id", { length: 36 })
+  id: char("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  profileId: varchar("profile_id", { length: 36 })
+  profileId: char("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
 
-  batting: mysqlEnum("position", THROWING_ARM).notNull(),
+  arm: mysqlEnum("arm", THROWING_ARM).notNull(),
   isPrimary: boolean("is_primary").default(false).notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
-export const userAddressTable = mysqlTable("user_address", {
-  id: varchar("id", { length: 36 })
+export const addressTable = mysqlTable("address", {
+  id: char("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  userId: varchar("user_id", { length: 36 })
+  userId: char("user_id", { length: 36 })
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
-  profileId: varchar("profile_id", { length: 36 })
+  profileId: char("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
 
-  street: varchar("street", { length: 100 }),
-  city: varchar("city", { length: 50 }),
-  state: varchar("state", { length: 20 }),
+  street: char("street", { length: 20 }),
+  city: char("city", { length: 20 }),
+  state: char("state", { length: 2 }),
   zipCode: char("zip_code", { length: 5 }),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -253,9 +253,7 @@ export const profileTableIndexes = {
   userIdIdx: index("profile_user_id_idx").on(profileTable.userId),
 };
 
-export const userAddressTableIndexes = {
-  userIdIdx: index("user_address_user_id_idx").on(userAddressTable.userId),
-  profileIdIdx: index("user_address_profile_id_idx").on(
-    userAddressTable.profileId,
-  ),
+export const addressTableIndexes = {
+  userIdIdx: index("user_address_user_id_idx").on(addressTable.userId),
+  profileIdIdx: index("user_address_profile_id_idx").on(addressTable.profileId),
 };

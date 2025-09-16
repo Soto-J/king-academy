@@ -60,7 +60,7 @@ export const auth = betterAuth({
           })
           .$returningId();
 
-        await db.insert(dbSchema.userAddressTable).values({
+        await db.insert(dbSchema.addressTable).values({
           userId: user.id,
           profileId: newProfile.id,
         });

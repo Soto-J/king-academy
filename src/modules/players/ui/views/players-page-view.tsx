@@ -12,6 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 const players = [
   {
@@ -87,6 +89,8 @@ export const PlayersPageView = () => {
     players.length
   ).toFixed(3);
 
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.players.getMany.queryOptions({}));
   return (
     <div className="space-y-8">
       {/* Background decorative elements */}
