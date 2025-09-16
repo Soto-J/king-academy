@@ -1,14 +1,13 @@
-import { Trophy, Target } from "lucide-react";
+import { z } from "zod";
+
+import { Trophy } from "lucide-react";
 import { Control, UseFormWatch } from "react-hook-form";
 
 import { POSITIONS, BATTING_STANCE, THROWING_ARM } from "@/db/schema";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { ProfileFormSchema } from "../../../schemas";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -24,15 +23,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { ProfileFormSchema } from "../../../schemas";
-import { z } from "zod";
-
 interface BaseballInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
   watch: UseFormWatch<z.infer<typeof ProfileFormSchema>>;
 }
 
-export const BaseballInformationSection = ({ control, watch }: BaseballInformationSectionProps) => {
+export const BaseballInformationSection = ({
+  control,
+  watch,
+}: BaseballInformationSectionProps) => {
   const formatPositionLabel = (position: string) => {
     return position
       .split("_")
@@ -48,7 +47,7 @@ export const BaseballInformationSection = ({ control, watch }: BaseballInformati
     <Card>
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg">
-          <Trophy className="h-5 w-5 text-primary" />
+          <Trophy className="text-primary h-5 w-5" />
           Baseball Information
         </CardTitle>
       </CardHeader>
@@ -59,7 +58,7 @@ export const BaseballInformationSection = ({ control, watch }: BaseballInformati
           render={({ field }) => (
             <FormItem>
               <FormLabel>Positions (check all that apply)</FormLabel>
-              <div className="grid grid-cols-2 gap-3 mt-2">
+              <div className="mt-2 grid grid-cols-2 gap-3">
                 {POSITIONS.map((position) => (
                   <div key={position} className="flex items-center space-x-2">
                     <input
@@ -83,11 +82,11 @@ export const BaseballInformationSection = ({ control, watch }: BaseballInformati
                           field.onChange(newValue);
                         }
                       }}
-                      className="rounded border-border"
+                      className="border-border rounded"
                     />
                     <label
                       htmlFor={position}
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       {formatPositionLabel(position)}
                     </label>

@@ -1,13 +1,15 @@
-import { format } from "date-fns";
-import { User, GraduationCap } from "lucide-react";
+import { z } from "zod";
+
 import { Control } from "react-hook-form";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { format } from "date-fns";
+
+import { User, GraduationCap } from "lucide-react";
+
+import { ProfileFormSchema } from "../../../schemas";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
 import {
   FormControl,
@@ -17,19 +19,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { ProfileFormSchema } from "../../../schemas";
-import { z } from "zod";
-
 interface PersonalInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
 }
 
-export const PersonalInformationSection = ({ control }: PersonalInformationSectionProps) => {
+export const PersonalInformationSection = ({
+  control,
+}: PersonalInformationSectionProps) => {
   return (
     <Card>
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg">
-          <User className="h-5 w-5 text-primary" />
+          <User className="text-primary h-5 w-5" />
           Personal Information
         </CardTitle>
       </CardHeader>

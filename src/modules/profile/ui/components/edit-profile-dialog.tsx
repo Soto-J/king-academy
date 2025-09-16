@@ -130,7 +130,10 @@ export const EditProfileDialog = ({
             <div className="space-y-6">
               <PersonalInformationSection control={form.control} />
               <AddressSection control={form.control} />
-              <BaseballInformationSection control={form.control} watch={form.watch} />
+              <BaseballInformationSection
+                control={form.control}
+                watch={form.watch}
+              />
               <BioSection control={form.control} />
             </div>
           </ScrollArea>

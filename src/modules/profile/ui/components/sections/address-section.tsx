@@ -1,5 +1,9 @@
+import { z } from "zod";
+
 import { MapPin } from "lucide-react";
 import { Control } from "react-hook-form";
+
+import { ProfileFormSchema } from "../../../schemas";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,9 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { ProfileFormSchema } from "../../../schemas";
-import { z } from "zod";
 
 interface AddressSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;

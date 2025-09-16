@@ -1,12 +1,12 @@
-import { FileText } from "lucide-react";
+import { z } from "zod";
+
 import { Control } from "react-hook-form";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { FileText } from "lucide-react";
+
+import { ProfileFormSchema } from "../../../schemas";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import {
   FormControl,
@@ -15,9 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { ProfileFormSchema } from "../../../schemas";
-import { z } from "zod";
 
 interface BioSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -28,7 +25,7 @@ export const BioSection = ({ control }: BioSectionProps) => {
     <Card>
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg">
-          <FileText className="h-5 w-5 text-primary" />
+          <FileText className="text-primary h-5 w-5" />
           About You
         </CardTitle>
       </CardHeader>
