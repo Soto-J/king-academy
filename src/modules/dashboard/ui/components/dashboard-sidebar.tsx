@@ -37,7 +37,7 @@ import {
 
 export const DashboardSidebar = () => {
   const pathname = usePathname();
-  
+
   const navigationItemsConfig: NavigationItem[] = [
     {
       icon: Home,
@@ -48,7 +48,7 @@ export const DashboardSidebar = () => {
     {
       icon: Images,
       label: "Gallery",
-      href: "/galery",
+      href: "/gallery",
       roles: ["public", "user", "admin"],
     },
     {
