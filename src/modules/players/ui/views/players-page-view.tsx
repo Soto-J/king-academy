@@ -1,6 +1,6 @@
 "use client";
 
-import { User, Award, Calendar, MapPin } from "lucide-react";
+import { User, Award, Calendar } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

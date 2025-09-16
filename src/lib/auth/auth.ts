@@ -1,13 +1,15 @@
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
   admin as adminPlugin,
   createAuthMiddleware,
 } from "better-auth/plugins";
+import { betterAuth } from "better-auth";
+
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import * as dbSchema from "@/db/schema";
+
 import env from "@/env";
 
 import { ac, admin, user } from "./permission";
@@ -43,6 +45,10 @@ export const auth = betterAuth({
 
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
+      console.log("PATH", ctx.path);
+      if (ctx.path === "/sign-up") {
+      }
+
       const user = ctx.context.session?.user;
       if (!user) return;
 

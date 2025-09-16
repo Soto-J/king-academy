@@ -254,12 +254,12 @@ export const SignUpView = () => {
                   </Button>
 
                   <div className="text-muted-foreground text-center text-sm">
-                    New to King Academy?{" "}
+                    Already have an account?{" "}
                     <Link
                       href="/sign-up"
                       className="text-primary hover:text-brand-red font-semibold underline-offset-4 transition-colors duration-300 hover:underline"
                     >
-                      Create Account
+                      Sign In
                     </Link>
                   </div>
                 </div>
