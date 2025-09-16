@@ -14,6 +14,7 @@ import {
 } from "@/db/schema";
 
 import { ProfileEditSchema } from "../schemas";
+import { TRPCError } from "@trpc/server";
 
 export const profileRouter = createTRPCRouter({
   getOne: protectedProcedure
@@ -53,6 +54,13 @@ export const profileRouter = createTRPCRouter({
   edit: protectedProcedure
     .input(ProfileEditSchema)
     .mutation(async ({ ctx, input }) => {
+      if (ctx.auth.user.id !== input.userId) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Cannot edit other users profile.",
+        });
+      }
+      
       const {
         userId,
         firstName,
