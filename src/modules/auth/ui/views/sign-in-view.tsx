@@ -215,14 +215,14 @@ export const SignInView = () => {
       <div className="text-muted-foreground mt-6 text-center text-sm">
         By signing in you agree to our{" "}
         <Link
-          href="/terms"
+          href="/"
           className="text-primary hover:text-brand-red font-medium underline-offset-4 transition-colors hover:underline"
         >
           Terms of Service
         </Link>{" "}
         and{" "}
         <Link
-          href="/privacy"
+          href="/"
           className="text-primary hover:text-brand-red font-medium underline-offset-4 transition-colors hover:underline"
         >
           Privacy Policy
