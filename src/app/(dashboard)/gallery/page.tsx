@@ -6,7 +6,7 @@ import { getQueryClient, trpc } from "@/trpc/server";
 
 import { GaleryPageView } from "@/modules/galery/ui/views/galery-page-view";
 
-const GaleryPage = () => {
+const GalleryPage = () => {
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(trpc.gallery.loadImages.queryOptions({}));
   return (
@@ -20,4 +20,4 @@ const GaleryPage = () => {
   );
 };
 
-export default GaleryPage;
+export default GalleryPage;
