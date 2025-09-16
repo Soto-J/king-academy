@@ -3,11 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useTRPC } from "@/trpc/client";
+
 import Masonry from "react-masonry-css";
 
 import { Maximize2 } from "lucide-react";
-
-import { loadImages } from "../../utilities";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -16,7 +17,10 @@ import { GalleryModal } from "../components/gallery-modal";
 export const GaleryPageView = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
-  const images = loadImages();
+  const trpc = useTRPC();
+  const { data: images } = useSuspenseQuery(
+    trpc.gallery.loadImages.queryOptions({}),
+  );
 
   const breakpointColumns = {
     default: 4,
