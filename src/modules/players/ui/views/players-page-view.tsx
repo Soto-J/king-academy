@@ -1,3 +1,5 @@
+"use client";
+
 import { User, Award, Calendar, MapPin } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -90,7 +92,8 @@ export const PlayersPageView = () => {
   ).toFixed(3);
 
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.players.getMany.queryOptions({}));
+  const { data } = useSuspenseQuery(trpc.players.getMany.queryOptions());
+  console.log({ data });
   return (
     <div className="space-y-8">
       {/* Background decorative elements */}

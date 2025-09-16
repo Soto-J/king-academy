@@ -18,9 +18,8 @@ export const playersRouter = createTRPCRouter({
       }
       await db.select().from(user).where(eq(user.id, input.userId));
     }),
-  getMany: protectedProcedure
-    .input(z.object({}))
-    .query(async () => {
-      return await db.select().from(user);
-    }),
+    
+  getMany: protectedProcedure.query(async () => {
+    return await db.select().from(user);
+  }),
 });

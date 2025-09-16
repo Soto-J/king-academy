@@ -15,7 +15,7 @@ const PlayersPage = async () => {
   if (!session) redirect("/sign-in");
 
   const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(trpc.players.getMany.queryOptions({}));
+  void queryClient.prefetchQuery(trpc.players.getMany.queryOptions());
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<p>Loading...</p>}>
