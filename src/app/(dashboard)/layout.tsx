@@ -1,3 +1,5 @@
+import { Toaster } from "sonner";
+
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/modules/dashboard/ui/components/dashboard-sidebar";
 import { SidebarToggle } from "@/modules/dashboard/ui/components/sidebar-toggle";
@@ -10,6 +12,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <SidebarProvider>
       <DashboardSidebar />
+      <Toaster />
 
       <SidebarInset className="bg-accent">
         <SidebarToggle />

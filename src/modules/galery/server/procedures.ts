@@ -1,8 +1,8 @@
-import path from "path";
-import fs from "fs";
+import { z } from "zod";
 
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
-import { z } from "zod";
+
+import { imageFiles } from "../constants";
 
 export const galleryProcedure = createTRPCRouter({
   loadImages: baseProcedure
@@ -13,12 +13,6 @@ export const galleryProcedure = createTRPCRouter({
       }),
     )
     .query(({ input }) => {
-      const imagesDir = path.join(process.cwd(), "public/images");
-
-      const imageFiles = fs
-        .readdirSync(imagesDir)
-        .filter((file) => file.endsWith(".jpg"));
-
       const start = (input.page - 1) * input.limit;
       const end = start + input.limit;
 
