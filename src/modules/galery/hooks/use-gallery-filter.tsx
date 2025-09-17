@@ -1,4 +1,4 @@
-import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
+import { parseAsInteger, useQueryStates } from "nuqs";
 import { DEFAULT_PAGE } from "../constants";
 
 // if input is empty clears URL to default ""

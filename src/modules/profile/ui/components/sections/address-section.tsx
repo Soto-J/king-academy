@@ -39,7 +39,11 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
               <FormLabel>Street Address</FormLabel>
 
               <FormControl>
-                <Input placeholder="123 Main Street" {...field} />
+                <Input
+                  placeholder="123 Main Street"
+                  {...field}
+                  value={field.value || ""}
+                />
               </FormControl>
 
               <FormMessage />
@@ -56,7 +60,11 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 <FormLabel>City</FormLabel>
 
                 <FormControl>
-                  <Input placeholder="City" {...field} />
+                  <Input
+                    placeholder="City"
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -72,7 +80,11 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 <FormLabel>State</FormLabel>
 
                 <FormControl>
-                  <Input placeholder="State" {...field} />
+                  <Input
+                    placeholder="State"
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -88,9 +100,13 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 <FormLabel>ZIP Code</FormLabel>
 
                 <FormControl>
-                  <Input placeholder="12345" {...field} />
+                  <Input
+                    placeholder="12345"
+                    {...field}
+                    value={field.value || ""}
+                  />
                 </FormControl>
-                
+
                 <FormMessage />
               </FormItem>
             )}

@@ -73,11 +73,13 @@ export const BaseballInformationSection = ({
                           : field.value === position
                       }
                       onChange={(e) => {
-                        e.target.checked
-                          ? field.onChange([...field.value, position])
-                          : field.onChange(
-                              field.value.filter((p) => p !== position),
-                            );
+                        if (e.target.checked) {
+                          field.onChange([...field.value, position]);
+                        } else {
+                          field.onChange(
+                            field.value.filter((p) => p !== position),
+                          );
+                        }
                       }}
                       className="border-border rounded"
                     />
@@ -96,15 +98,46 @@ export const BaseballInformationSection = ({
           )}
         />
 
+        <FormField
+          name="primaryPosition"
+          control={control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Primary Position</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                value={field.value || undefined}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select primary position" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {POSITIONS.map((position) => (
+                    <SelectItem key={position} value={position}>
+                      {formatPositionLabel(position)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-3">
             <FormField
-              name="battingStance.stance"
+              name="battingStance"
               control={control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Batting Stance</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value || undefined}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select batting stance" />
@@ -122,59 +155,19 @@ export const BaseballInformationSection = ({
                 </FormItem>
               )}
             />
-
-            {watch("battingStance.stance") === "switch" && (
-              <FormField
-                name="battingStance.primarySide"
-                control={control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Primary Side (for switch hitter)</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select primary side" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="left">Left</SelectItem>
-                        <SelectItem value="right">Right</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            <FormField
-              name="battingStance.isPrimary"
-              control={control}
-              render={({ field }) => (
-                <FormItem className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="battingStancePrimary"
-                    checked={field.value}
-                    onChange={field.onChange}
-                    className="border-border rounded"
-                  />
-                  <FormLabel htmlFor="battingStancePrimary" className="text-sm">
-                    Primary stance
-                  </FormLabel>
-                </FormItem>
-              )}
-            />
           </div>
 
           <div className="space-y-3">
             <FormField
-              name="throwingArm.arm"
+              name="throwingArm"
               control={control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Throwing Arm</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value || undefined}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select throwing arm" />
@@ -189,49 +182,6 @@ export const BaseballInformationSection = ({
                     </SelectContent>
                   </Select>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {watch("throwingArm.arm") === "switch" && (
-              <FormField
-                name="throwingArm.primarySide"
-                control={control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Primary Side (for switch thrower)</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select primary side" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="left">Left</SelectItem>
-                        <SelectItem value="right">Right</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            <FormField
-              name="throwingArm.isPrimary"
-              control={control}
-              render={({ field }) => (
-                <FormItem className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="throwingArmPrimary"
-                    checked={field.value}
-                    onChange={field.onChange}
-                    className="border-border rounded"
-                  />
-                  <FormLabel htmlFor="throwingArmPrimary" className="text-sm">
-                    Primary arm
-                  </FormLabel>
                 </FormItem>
               )}
             />

@@ -39,6 +39,7 @@ export const BioSection = ({ control }: BioSectionProps) => {
               <FormControl>
                 <Textarea
                   {...field}
+                  value={field.value || ""}
                   placeholder="Tell us about your baseball journey, achievements, goals..."
                   className="min-h-[100px] resize-none"
                 />

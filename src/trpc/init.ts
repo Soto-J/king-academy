@@ -3,7 +3,6 @@ import { headers } from "next/headers";
 import superjson from "superjson";
 
 import { initTRPC, TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
 
 import { auth } from "@/lib/auth/auth";
 

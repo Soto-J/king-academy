@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { and, eq, getTableColumns, sql } from "drizzle-orm";
+import { and, eq, getTableColumns } from "drizzle-orm";
 
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
