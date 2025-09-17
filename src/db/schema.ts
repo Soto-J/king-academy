@@ -114,11 +114,11 @@ export const verification = mysqlTable("verification", {
 // ============================================================================
 
 export const profileTable = mysqlTable("profile", {
-  id: char("id", { length: 36 })
+  id: varchar("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  userId: char("user_id", { length: 36 })
+  userId: varchar("user_id", { length: 36 })
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
 
@@ -132,13 +132,29 @@ export const profileTable = mysqlTable("profile", {
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
-export const positionTable = mysqlTable("position", {
-  id: char("id", { length: 36 })
+export const baseballProfileTable = mysqlTable("baseball_profile", {
+  id: varchar("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  profileId: char("profile_id", { length: 36 })
+  profileId: varchar("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
+    .notNull(),
+
+  battingStance: mysqlEnum(BATTING_STANCE),
+  throwingArm: mysqlEnum(THROWING_ARM),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export const positionTable = mysqlTable("position", {
+  id: varchar("id", { length: 36 })
+    .primaryKey()
+    .$default(() => nanoid())
+    .notNull(),
+  baseballProfileId: varchar("baseball_profile_id", { length: 36 })
+    .references(() => baseballProfileTable.id, { onDelete: "cascade" })
     .notNull(),
 
   position: mysqlEnum("position", POSITIONS).notNull(),
@@ -148,52 +164,20 @@ export const positionTable = mysqlTable("position", {
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
-export const battingStanceTable = mysqlTable("batting_stance", {
-  id: char("id", { length: 36 })
-    .primaryKey()
-    .$default(() => nanoid())
-    .notNull(),
-  profileId: char("profile_id", { length: 36 })
-    .references(() => profileTable.id, { onDelete: "cascade" })
-    .notNull(),
-
-  stance: mysqlEnum("position", BATTING_STANCE).notNull(),
-  isPrimary: boolean("is_primary").default(false).notNull(),
-
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
-});
-
-export const throwingArmTable = mysqlTable("throwing_arm", {
-  id: char("id", { length: 36 })
-    .primaryKey()
-    .$default(() => nanoid())
-    .notNull(),
-  profileId: char("profile_id", { length: 36 })
-    .references(() => profileTable.id, { onDelete: "cascade" })
-    .notNull(),
-
-  arm: mysqlEnum("arm", THROWING_ARM).notNull(),
-  isPrimary: boolean("is_primary").default(false).notNull(),
-
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
-});
-
 export const addressTable = mysqlTable("address", {
-  id: char("id", { length: 36 })
+  id: varchar("id", { length: 36 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  userId: char("user_id", { length: 36 })
+  userId: varchar("user_id", { length: 36 })
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
-  profileId: char("profile_id", { length: 36 })
+  profileId: varchar("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .notNull(),
 
-  street: char("street", { length: 20 }),
-  city: char("city", { length: 20 }),
+  street: varchar("street", { length: 20 }),
+  city: varchar("city", { length: 20 }),
   state: char("state", { length: 2 }),
   zipCode: char("zip_code", { length: 5 }),
 
@@ -219,8 +203,8 @@ export const scheduleTable = mysqlTable("schedule", {
 
   location: varchar("location", { length: 20 }),
 
-  date: timestamp().defaultNow().onUpdateNow().notNull(),
-  endTime: timestamp().defaultNow().onUpdateNow().notNull(),
+  date: timestamp().notNull(),
+  endTime: timestamp().notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),

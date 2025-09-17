@@ -1,10 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { EditProfileDialog } from "../components/edit-profile-dialog";
-import { useState } from "react";
 import { Profile } from "../components/profile";
 
 export const ProfilePageView = () => {
@@ -13,6 +14,9 @@ export const ProfilePageView = () => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.profile.getOne.queryOptions({}));
 
+  if (!data) {
+    return <div>No User Data Found</div>;
+  }
   return (
     <>
       <EditProfileDialog
@@ -22,7 +26,7 @@ export const ProfilePageView = () => {
       />
 
       <Profile
-        profile={data}
+        data={data}
         isOwnProfile={true}
         onEditClick={() => setIsOpen(true)}
       />

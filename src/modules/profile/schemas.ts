@@ -6,29 +6,19 @@ export const ProfileFormSchema = z.object({
   firstName: z.string().min(1, "First name required."),
   lastName: z.string().min(1, "Last name required."),
   dateOfBirth: z.date().nullable(),
-  phoneNumber: z.string(),
-  school: z.string().optional(),
-  bio: z.string().optional(),
-  address: z
-    .object({
-      street: z.string(),
-      city: z.string(),
-      state: z.string(),
-      zipcode: z.string().min(5).max(5),
-    })
-    .nullable(),
-  position: z.array(z.enum(POSITIONS)),
-  battingStance: z.object({
-    isPrimary: z.boolean(),
-    stance: z.enum(BATTING_STANCE),
-    primarySide: z.enum(["left", "right"]).optional(),
+  phoneNumber: z.string().nullable(),
+  school: z.string().nullable(),
+  bio: z.string().nullable(),
+  address: z.object({
+    street: z.string().nullable(),
+    city: z.string().nullable(),
+    state: z.string().nullable(),
+    zipcode: z.string().nullable(),
   }),
-  throwingArm: z.object({
-    isPrimary: z.boolean(),
-    arm: z.enum(THROWING_ARM),
-    primarySide: z.enum(["left", "right"]).optional(),
-  }),
-  isPrimary: z.boolean(),
+  positions: z.array(z.enum(POSITIONS)),
+  primaryPosition: z.enum(POSITIONS).optional(),
+  battingStance: z.enum(BATTING_STANCE).nullish(),
+  throwingArm: z.enum(THROWING_ARM).nullish(),
 });
 
 export const ProfileEditSchema = ProfileFormSchema.extend({

@@ -5,7 +5,7 @@ import {
 import { betterAuth } from "better-auth";
 
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { eq } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 
 import { db } from "@/db";
 import * as dbSchema from "@/db/schema";
@@ -45,32 +45,28 @@ export const auth = betterAuth({
 
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
-      console.log("PATH", ctx.path);
-      if (ctx.path === "/sign-up") {
-      }
-
       const user = ctx.context.session?.user;
+
       if (!user) return;
 
-      const userProfile = await db
-        .select()
-        .from(dbSchema.profileTable)
-        .where(eq(dbSchema.profileTable.userId, user.id))
-        .then((row) => row[0]);
-
-      if (!userProfile) {
-        const [newProfile] = await db
+      await db.transaction(async (tx) => {
+        const profile = await tx
           .insert(dbSchema.profileTable)
-          .values({
-            userId: user.id,
-          })
-          .$returningId();
+          .values({ userId: user.id })
+          .onDuplicateKeyUpdate({ set: { id: sql`id` } })
+          .$returningId()
+          .then((row) => row[0]);
 
-        await db.insert(dbSchema.addressTable).values({
-          userId: user.id,
-          profileId: newProfile.id,
-        });
-      }
+        await tx
+          .insert(dbSchema.addressTable)
+          .values({ userId: user.id, profileId: profile.id })
+          .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+
+        await tx
+          .insert(dbSchema.baseballProfileTable)
+          .values({ profileId: profile.id })
+          .onDuplicateKeyUpdate({ set: { id: sql`id` } });
+      });
     }),
   },
 });

@@ -34,6 +34,7 @@ export const PersonalInformationSection = ({
           Personal Information
         </CardTitle>
       </CardHeader>
+
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
@@ -43,8 +44,9 @@ export const PersonalInformationSection = ({
               <FormItem>
                 <FormLabel>First Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John" {...field} />
+                  <Input placeholder="John" {...field} value={field.value || ""} />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -57,8 +59,9 @@ export const PersonalInformationSection = ({
               <FormItem>
                 <FormLabel>Last Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Smith" {...field} />
+                  <Input placeholder="Smith" {...field} value={field.value || ""} />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -88,6 +91,7 @@ export const PersonalInformationSection = ({
                     }}
                   />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -100,8 +104,9 @@ export const PersonalInformationSection = ({
               <FormItem>
                 <FormLabel>Phone Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="(555) 123-4567" {...field} />
+                  <Input placeholder="(555) 123-4567" {...field} value={field.value || ""} />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -118,8 +123,9 @@ export const PersonalInformationSection = ({
                 School
               </FormLabel>
               <FormControl>
-                <Input placeholder="Your school or university" {...field} />
+                <Input placeholder="Your school or university" {...field} value={field.value || ""} />
               </FormControl>
+              
               <FormMessage />
             </FormItem>
           )}

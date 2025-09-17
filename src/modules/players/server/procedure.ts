@@ -9,7 +9,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 export const playersRouter = createTRPCRouter({
   getOne: protectedProcedure
     .input(z.object({ userId: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       if (!input.userId) {
         throw new TRPCError({
           code: "NOT_FOUND",
