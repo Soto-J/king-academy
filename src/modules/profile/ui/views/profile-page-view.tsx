@@ -14,6 +14,9 @@ export const ProfilePageView = () => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.profile.getOne.queryOptions({}));
 
+  if (!data) {
+    return <div>No User Data Found</div>;
+  }
   return (
     <>
       <EditProfileDialog
@@ -23,7 +26,7 @@ export const ProfilePageView = () => {
       />
 
       <Profile
-        profile={data}
+        data={data}
         isOwnProfile={true}
         onEditClick={() => setIsOpen(true)}
       />

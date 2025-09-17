@@ -25,13 +25,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 interface ProfileProps {
-  profile: ProfileGetOne;
+  data: ProfileGetOne;
   onEditClick?: () => void;
   isOwnProfile?: boolean;
 }
 
 export const Profile = ({
-  profile,
+  data,
   onEditClick,
   isOwnProfile = false,
 }: ProfileProps) => {
@@ -74,7 +74,7 @@ export const Profile = ({
     return age;
   };
 
-  if (!profile?.user) {
+  if (!data?.user) {
     return (
       <Card className="w-full">
         <CardContent className="flex h-48 items-center justify-center">
@@ -84,30 +84,33 @@ export const Profile = ({
     );
   }
 
-  const age = calculateAge(profile.profile?.dateOfBirth);
+  const age = calculateAge(data.profile?.dateOfBirth);
 
   return (
     <div className="space-y-6">
-      {/* Baseball-themed Profile Header */}
       <Card className="relative overflow-hidden border-2 border-amber-200/50">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-amber-50 to-orange-50" />
         <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-red-500 via-white to-blue-500" />
+
         <CardContent className="relative pt-8 pb-6">
           <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
             <div className="relative">
               <Avatar className="h-28 w-28 shadow-lg ring-4 ring-amber-300/30">
                 <AvatarImage
-                  src={profile.user.image || undefined}
-                  alt={profile.user.name}
+                  src={data.user.image || undefined}
+                  alt={data.user.name}
                 />
                 <AvatarFallback className="bg-gradient-to-br from-amber-100 to-orange-100 text-2xl font-bold text-amber-800">
-                  {getInitials(profile.user.name)}
+                  {getInitials(data.user.name)}
                 </AvatarFallback>
               </Avatar>
-              {profile.baseballProfile?.position && (
+
+              {data.baseballProfile?.positions?.[0] && (
                 <Badge className="absolute -bottom-2 left-1/2 -translate-x-1/2 transform bg-amber-600 text-white shadow-md">
                   <Trophy className="mr-1 h-3 w-3" />
-                  {formatPositionLabel(profile.baseballProfile.position)}
+                  {formatPositionLabel(
+                    data.baseballProfile.positions[0].position,
+                  )}
                 </Badge>
               )}
             </div>
@@ -117,7 +120,7 @@ export const Profile = ({
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     <h1 className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-4xl font-bold text-transparent">
-                      {profile.user.name}
+                      {data.user.name}
                     </h1>
                     <Star className="h-6 w-6 fill-amber-400 text-amber-500" />
                   </div>
@@ -131,22 +134,28 @@ export const Profile = ({
                         Age {age}
                       </Badge>
                     )}
-                    {profile.baseballProfile?.battingStance && (
+                    {data.baseballProfile?.battingStance && (
                       <Badge
                         variant="secondary"
                         className="bg-green-100 text-green-800"
                       >
                         <Target className="mr-1 h-3 w-3" />
-                        {formatStanceLabel(profile.baseballProfile.battingStance)} Batter
+                        {formatStanceLabel(
+                          data.baseballProfile.battingStance,
+                        )}{" "}
+                        Batter
                       </Badge>
                     )}
-                    {profile.baseballProfile?.throwingArm && (
+                    {data.baseballProfile?.throwingArm && (
                       <Badge
                         variant="secondary"
                         className="bg-purple-100 text-purple-800"
                       >
                         <Zap className="mr-1 h-3 w-3" />
-                        {formatStanceLabel(profile.baseballProfile.throwingArm)} Thrower
+                        {formatStanceLabel(
+                          data.baseballProfile.throwingArm,
+                        )}{" "}
+                        Thrower
                       </Badge>
                     )}
                   </div>
@@ -168,18 +177,18 @@ export const Profile = ({
               <div className="flex flex-wrap gap-4 text-sm text-slate-600">
                 <div className="flex items-center gap-2 rounded-full bg-white/60 px-3 py-1">
                   <Mail className="h-4 w-4 text-amber-600" />
-                  {profile.user.email}
+                  {data.user.email}
                 </div>
-                {profile.profile?.phoneNumber && (
+                {data.profile?.phoneNumber && (
                   <div className="flex items-center gap-2 rounded-full bg-white/60 px-3 py-1">
                     <Phone className="h-4 w-4 text-amber-600" />
-                    {profile.profile.phoneNumber}
+                    {data.profile.phoneNumber}
                   </div>
                 )}
-                {profile.profile?.school && (
+                {data.profile?.school && (
                   <div className="flex items-center gap-2 rounded-full bg-white/60 px-3 py-1">
                     <GraduationCap className="h-4 w-4 text-amber-600" />
-                    {profile.profile.school}
+                    {data.profile.school}
                   </div>
                 )}
               </div>
@@ -192,7 +201,7 @@ export const Profile = ({
         {/* Personal Information */}
         <div className="space-y-6 lg:col-span-2">
           {/* Bio Section */}
-          {profile.profile?.bio && (
+          {data.profile?.bio && (
             <Card className="border-l-4 border-l-amber-400 shadow-md">
               <CardHeader className="bg-gradient-to-r from-amber-50 to-orange-50">
                 <CardTitle className="flex items-center gap-2 text-amber-800">
@@ -201,8 +210,8 @@ export const Profile = ({
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
-                <p className="text-slate-700 leading-relaxed text-base">
-                  {profile.profile.bio}
+                <p className="text-base leading-relaxed text-slate-700">
+                  {data.profile.bio}
                 </p>
               </CardContent>
             </Card>
@@ -216,69 +225,84 @@ export const Profile = ({
                 Baseball Profile
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-6 space-y-6">
+            <CardContent className="space-y-6 pt-6">
               <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
-                  <div className="flex items-center justify-center gap-2 text-blue-700 mb-2">
+                <div className="rounded-lg border border-blue-200 bg-gradient-to-br from-blue-50 to-blue-100 p-4 text-center">
+                  <div className="mb-2 flex items-center justify-center gap-2 text-blue-700">
                     <Target className="h-5 w-5" />
-                    <span className="font-semibold text-sm">Primary Position</span>
+                    <span className="text-sm font-semibold">
+                      Primary Position
+                    </span>
                   </div>
-                  <p className="font-bold text-lg text-blue-800">
-                    {profile.baseballProfile?.position
-                      ? formatPositionLabel(profile.baseballProfile.position)
+
+                  <p className="text-lg font-bold text-blue-800">
+                    {data.baseballProfile?.positions?.[0]
+                      ? formatPositionLabel(
+                          data.baseballProfile.positions[0].position,
+                        )
                       : "Not specified"}
                   </p>
                 </div>
 
-                <div className="text-center p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200">
-                  <div className="flex items-center justify-center gap-2 text-red-700 mb-2">
+                <div className="rounded-lg border border-red-200 bg-gradient-to-br from-red-50 to-red-100 p-4 text-center">
+                  <div className="mb-2 flex items-center justify-center gap-2 text-red-700">
                     <Shield className="h-5 w-5" />
-                    <span className="font-semibold text-sm">Batting Stance</span>
+                    <span className="text-sm font-semibold">
+                      Batting Stance
+                    </span>
                   </div>
-                  <p className="font-bold text-lg text-red-800">
-                    {profile.baseballProfile?.battingStance
-                      ? formatStanceLabel(profile.baseballProfile.battingStance)
+
+                  <p className="text-lg font-bold text-red-800">
+                    {data.baseballProfile?.battingStance
+                      ? formatStanceLabel(data.baseballProfile.battingStance)
                       : "Not specified"}
                   </p>
                 </div>
 
-                <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg border border-purple-200">
-                  <div className="flex items-center justify-center gap-2 text-purple-700 mb-2">
+                <div className="rounded-lg border border-purple-200 bg-gradient-to-br from-purple-50 to-purple-100 p-4 text-center">
+                  <div className="mb-2 flex items-center justify-center gap-2 text-purple-700">
                     <Zap className="h-5 w-5" />
-                    <span className="font-semibold text-sm">Throwing Arm</span>
+                    <span className="text-sm font-semibold">Throwing Arm</span>
                   </div>
-                  <p className="font-bold text-lg text-purple-800">
-                    {profile.baseballProfile?.throwingArm
-                      ? formatStanceLabel(profile.baseballProfile.throwingArm)
+                  <p className="text-lg font-bold text-purple-800">
+                    {data.baseballProfile?.throwingArm
+                      ? formatStanceLabel(data.baseballProfile.throwingArm)
                       : "Not specified"}
                   </p>
                 </div>
               </div>
 
               {/* Achievement Badge Section */}
-              <div className="mt-6 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg border border-amber-200">
-                <div className="flex items-center gap-2 mb-3">
+              <div className="mt-6 rounded-lg border border-amber-200 bg-gradient-to-r from-yellow-50 to-amber-50 p-4">
+                <div className="mb-3 flex items-center gap-2">
                   <Medal className="h-5 w-5 text-amber-600" />
-                  <span className="font-semibold text-amber-800">Player Highlights</span>
+                  <span className="font-semibold text-amber-800">
+                    Player Highlights
+                  </span>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {profile.baseballProfile?.position && (
-                    <Badge className="bg-amber-100 text-amber-800 border-amber-300">
-                      {formatPositionLabel(profile.baseballProfile.position)} Specialist
+                  {data.baseballProfile?.positions?.[0] && (
+                    <Badge className="border-amber-300 bg-amber-100 text-amber-800">
+                      {formatPositionLabel(
+                        data.baseballProfile.positions[0].position,
+                      )}{" "}
+                      Specialist
                     </Badge>
                   )}
-                  {profile.baseballProfile?.battingStance && (
-                    <Badge className="bg-green-100 text-green-800 border-green-300">
-                      {formatStanceLabel(profile.baseballProfile.battingStance)} Hitter
+                  {data.baseballProfile?.battingStance && (
+                    <Badge className="border-green-300 bg-green-100 text-green-800">
+                      {formatStanceLabel(data.baseballProfile.battingStance)}{" "}
+                      Hitter
                     </Badge>
                   )}
-                  {profile.baseballProfile?.throwingArm && (
-                    <Badge className="bg-blue-100 text-blue-800 border-blue-300">
-                      {formatStanceLabel(profile.baseballProfile.throwingArm)}-Handed
+                  {data.baseballProfile?.throwingArm && (
+                    <Badge className="border-blue-300 bg-blue-100 text-blue-800">
+                      {formatStanceLabel(data.baseballProfile.throwingArm)}
+                      -Handed
                     </Badge>
                   )}
                   {age && age >= 18 && (
-                    <Badge className="bg-purple-100 text-purple-800 border-purple-300">
+                    <Badge className="border-purple-300 bg-purple-100 text-purple-800">
                       College Eligible
                     </Badge>
                   )}
@@ -299,44 +323,48 @@ export const Profile = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 pt-6">
-              {profile.profile?.dateOfBirth && (
-                <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                  <div className="flex items-center gap-2 text-blue-700 mb-1">
+              {data.profile?.dateOfBirth && (
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                  <div className="mb-1 flex items-center gap-2 text-blue-700">
                     <Calendar className="h-4 w-4" />
-                    <span className="font-semibold text-sm">Date of Birth</span>
+                    <span className="text-sm font-semibold">Date of Birth</span>
                   </div>
                   <p className="font-medium text-slate-800">
-                    {formatDate(profile.profile.dateOfBirth)}
+                    {formatDate(data.profile.dateOfBirth)}
                   </p>
                 </div>
               )}
 
-              {profile.profile?.school && (
-                <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                  <div className="flex items-center gap-2 text-blue-700 mb-1">
+              {data.profile?.school && (
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                  <div className="mb-1 flex items-center gap-2 text-blue-700">
                     <GraduationCap className="h-4 w-4" />
-                    <span className="font-semibold text-sm">School</span>
+                    <span className="text-sm font-semibold">School</span>
                   </div>
-                  <p className="font-medium text-slate-800">{profile.profile.school}</p>
+                  <p className="font-medium text-slate-800">
+                    {data.profile.school}
+                  </p>
                 </div>
               )}
 
-              {profile.profile?.phoneNumber && (
-                <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                  <div className="flex items-center gap-2 text-blue-700 mb-1">
+              {data.profile?.phoneNumber && (
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                  <div className="mb-1 flex items-center gap-2 text-blue-700">
                     <Phone className="h-4 w-4" />
-                    <span className="font-semibold text-sm">Phone</span>
+                    <span className="text-sm font-semibold">Phone</span>
                   </div>
-                  <p className="font-medium text-slate-800">{profile.profile.phoneNumber}</p>
+                  <p className="font-medium text-slate-800">
+                    {data.profile.phoneNumber}
+                  </p>
                 </div>
               )}
             </CardContent>
           </Card>
 
           {/* Address */}
-          {(profile.profile?.street ||
-            profile.profile?.city ||
-            profile.profile?.state) && (
+          {(data.profile?.address?.street ||
+            data.profile?.address?.city ||
+            data.profile?.address?.state) && (
             <Card className="border-l-4 border-l-red-400 shadow-md">
               <CardHeader className="bg-gradient-to-r from-red-50 to-pink-50">
                 <CardTitle className="flex items-center gap-2 text-red-800">
@@ -345,15 +373,17 @@ export const Profile = ({
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
-                <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                  {profile.profile.street && (
-                    <p className="font-semibold text-slate-800 mb-2">{profile.profile.street}</p>
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                  {data.profile.address?.street && (
+                    <p className="mb-2 font-semibold text-slate-800">
+                      {data.profile.address.street}
+                    </p>
                   )}
-                  <p className="text-slate-600 font-medium">
+                  <p className="font-medium text-slate-600">
                     {[
-                      profile.profile.city,
-                      profile.profile.state,
-                      profile.profile.zipCode,
+                      data.profile.address?.city,
+                      data.profile.address?.state,
+                      data.profile.address?.zipCode,
                     ]
                       .filter(Boolean)
                       .join(", ")}

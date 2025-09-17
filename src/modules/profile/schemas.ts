@@ -6,33 +6,19 @@ export const ProfileFormSchema = z.object({
   firstName: z.string().min(1, "First name required."),
   lastName: z.string().min(1, "Last name required."),
   dateOfBirth: z.date().nullable(),
-  phoneNumber: z.string().optional(),
-  school: z.string().optional(),
-  bio: z.string().optional(),
-  address: z
-    .object({
-      street: z.string().optional(),
-      city: z.string().optional(),
-      state: z.string().optional(),
-      zipcode: z.string().optional(),
-    })
-    .optional(),
-  positions: z.array(z.enum(POSITIONS)).default([]),
-  battingStance: z
-    .object({
-      isPrimary: z.boolean().optional(),
-      stance: z.enum(BATTING_STANCE).optional(),
-      primarySide: z.enum(["left", "right"]).optional(),
-    })
-    .optional(),
-  throwingArm: z
-    .object({
-      isPrimary: z.boolean().optional(),
-      arm: z.enum(THROWING_ARM).optional(),
-      primarySide: z.enum(["left", "right"]).optional(),
-    })
-    .optional(),
-  isPrimary: z.boolean(),
+  phoneNumber: z.string().nullable(),
+  school: z.string().nullable(),
+  bio: z.string().nullable(),
+  address: z.object({
+    street: z.string().nullable(),
+    city: z.string().nullable(),
+    state: z.string().nullable(),
+    zipcode: z.string().nullable(),
+  }),
+  positions: z.array(z.enum(POSITIONS)),
+  primaryPosition: z.enum(POSITIONS).optional(),
+  battingStance: z.enum(BATTING_STANCE).nullish(),
+  throwingArm: z.enum(THROWING_ARM).nullish(),
 });
 
 export const ProfileEditSchema = ProfileFormSchema.extend({

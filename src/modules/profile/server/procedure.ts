@@ -19,35 +19,62 @@ export const profileRouter = createTRPCRouter({
   getOne: protectedProcedure
     .input(z.object({ userId: z.string().nullish() }))
     .query(async ({ ctx, input }) => {
-      return await db
+      const [data] = await db
         .select({
           user: getTableColumns(user),
-          baseballProfile: {
-            ...getTableColumns(baseballProfileTable),
-            ...getTableColumns(positionTable),
-          },
-          profile: {
-            ...getTableColumns(profileTable),
-            positions: getTableColumns(addressTable),
-          },
+          profile: getTableColumns(profileTable),
+          address: getTableColumns(addressTable),
+          baseballProfile: getTableColumns(baseballProfileTable),
         })
         .from(user)
-        .leftJoin(profileTable, eq(profileTable.userId, user.id))
-        .leftJoin(addressTable, eq(addressTable.profileId, profileTable.id))
-        .leftJoin(
+        .innerJoin(profileTable, eq(profileTable.userId, user.id))
+        .innerJoin(addressTable, eq(addressTable.profileId, profileTable.id))
+        .innerJoin(
           baseballProfileTable,
           eq(baseballProfileTable.profileId, profileTable.id),
-        )
-        .leftJoin(
-          positionTable,
-          eq(positionTable.baseballProfileId, baseballProfileTable.id),
         )
         .where(
           input?.userId
             ? eq(user.id, input.userId)
             : eq(user.id, ctx.auth.user.id),
         );
-      // .then((row) => row[0]);
+
+      if (!data) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User data not found.",
+        });
+      }
+
+      const positions = await db
+        .select({
+          position: positionTable.position,
+          isPrimary: positionTable.isPrimary,
+        })
+        .from(positionTable)
+        .where(eq(positionTable.baseballProfileId, data.baseballProfile.id));
+
+      return {
+        user: data.user,
+        profile: {
+          school: data.profile.school,
+          bio: data.profile.bio,
+          dateOfBirth: data.profile.dateOfBirth,
+          isActive: data.profile.isActive,
+          phoneNumber: data.profile.phoneNumber,
+          address: {
+            street: data.address.street,
+            state: data.address.state,
+            city: data.address.city,
+            zipCode: data.address.zipCode,
+          },
+        },
+        baseballProfile: {
+          battingStance: data.baseballProfile.battingStance,
+          throwingArm: data.baseballProfile.throwingArm,
+          positions,
+        },
+      };
     }),
 
   edit: protectedProcedure
@@ -70,6 +97,7 @@ export const profileRouter = createTRPCRouter({
         school,
         bio,
         positions,
+        primaryPosition,
         battingStance,
         throwingArm,
       } = input;
@@ -120,51 +148,38 @@ export const profileRouter = createTRPCRouter({
             },
           });
 
-        await tx
-          .insert(positionTable)
-          .values(
-            positions.map((position) => ({
-              profileId: insertId.id,
-              position: position,
-            })),
-          )
+        // First, get the baseball profile ID
+        const [baseballProfile] = await tx
+          .insert(baseballProfileTable)
+          .values({
+            profileId: insertId.id,
+            battingStance,
+            throwingArm,
+          })
           .onDuplicateKeyUpdate({
             set: {
-              position: sql`VALUE(position)`,
+              battingStance,
+              throwingArm,
             },
-          });
+          })
+          .$returningId();
 
-        if (battingStance) {
-          await tx
-            .insert(battingStanceTable)
-            .values({
-              profileId: insertId.id,
-              stance: battingStance.stance,
-              isPrimary: battingStance.isPrimary,
-            })
-            .onDuplicateKeyUpdate({
-              set: {
-                stance: battingStance.stance,
-                isPrimary: battingStance.isPrimary,
-              },
-            });
-        }
+        // Delete existing positions
+        await tx
+          .delete(positionTable)
+          .where(eq(positionTable.baseballProfileId, baseballProfile.id));
 
-        if (throwingArm) {
+        // Insert new positions with isPrimary flags
+        if (positions.length > 0) {
           await tx
-            .insert(throwingArmTable)
-            .values({
-              profileId: insertId.id,
-              arm: throwingArm.arm,
-              isPrimary: throwingArm.isPrimary,
-            })
-            .onDuplicateKeyUpdate({
-              set: {
-                arm: throwingArm.arm,
-                isPrimary: throwingArm.isPrimary,
-                updatedAt: new Date(),
-              },
-            });
+            .insert(positionTable)
+            .values(
+              positions.map((position) => ({
+                baseballProfileId: baseballProfile.id,
+                position: position,
+                isPrimary: position === primaryPosition,
+              })),
+            );
         }
       });
 

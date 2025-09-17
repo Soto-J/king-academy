@@ -40,36 +40,29 @@ export const EditProfileDialog = ({
   const form = useForm<z.infer<typeof ProfileFormSchema>>({
     resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
-      firstName: firstName || "",
-      lastName: lastName || "",
+      firstName: firstName,
+      lastName: lastName,
       dateOfBirth: initialValues.profile?.dateOfBirth
         ? new Date(initialValues.profile.dateOfBirth)
         : null,
       phoneNumber: initialValues.profile?.phoneNumber || "",
       school: initialValues.profile?.school || "",
       address: {
-        street: initialValues.profile?.street || "",
-        city: initialValues.profile?.city || "",
-        state: initialValues.profile?.state || "",
-        zipcode: initialValues.profile?.zipCode || "",
+        street: initialValues.profile.address?.street || "",
+        city: initialValues.profile.address?.city || "",
+        state: initialValues.profile.address?.state || "",
+        zipcode: initialValues.profile.address?.zipCode || "",
       },
       bio: initialValues?.profile?.bio || "",
-      positions: initialValues.baseballProfile?.position || [],
-      battingStance: initialValues.baseballProfile?.battingStance
-        ? {
-            stance: initialValues.baseballProfile.battingStance,
-            isPrimary: initialValues.baseballProfile?.isPrimary || true,
-            primarySide: undefined,
-          }
-        : undefined,
-      throwingArm: initialValues.baseballProfile?.throwingArm
-        ? {
-            arm: initialValues.baseballProfile.throwingArm,
-            isPrimary: initialValues.baseballProfile?.isPrimary || true,
-            primarySide: undefined,
-          }
-        : undefined,
-      isPrimary: true,
+      positions:
+        initialValues.baseballProfile?.positions?.map(
+          (value) => value.position,
+        ) || [],
+      primaryPosition: initialValues.baseballProfile?.positions?.find(
+        (pos) => pos.isPrimary,
+      )?.position,
+      battingStance: initialValues.baseballProfile?.battingStance,
+      throwingArm: initialValues.baseballProfile?.throwingArm,
     },
   });
 
