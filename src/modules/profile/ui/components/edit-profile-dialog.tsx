@@ -40,34 +40,32 @@ export const EditProfileDialog = ({
   const form = useForm<z.infer<typeof ProfileFormSchema>>({
     resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
-      firstName: firstName,
-      lastName: lastName,
+      firstName: firstName || "",
+      lastName: lastName || "",
       dateOfBirth: initialValues.profile?.dateOfBirth
         ? new Date(initialValues.profile.dateOfBirth)
         : null,
-      phoneNumber: initialValues.profile?.phoneNumber ?? "",
-      school: initialValues.profile?.school ?? "",
+      phoneNumber: initialValues.profile?.phoneNumber || "",
+      school: initialValues.profile?.school || "",
       address: {
-        street: initialValues.profile?.street ?? "",
-        city: initialValues.profile?.city ?? "",
-        state: initialValues.profile?.state ?? "",
-        zipcode: initialValues.profile?.zipCode ?? "",
+        street: initialValues.profile?.street || "",
+        city: initialValues.profile?.city || "",
+        state: initialValues.profile?.state || "",
+        zipcode: initialValues.profile?.zipCode || "",
       },
-      bio: initialValues?.profile?.bio ?? "",
-      position: initialValues.profile?.position
-        ? [initialValues.profile.position]
-        : [],
-      battingStance: initialValues.profile?.stance
+      bio: initialValues?.profile?.bio || "",
+      positions: initialValues.baseballProfile?.position || [],
+      battingStance: initialValues.baseballProfile?.battingStance
         ? {
-            stance: initialValues.profile.stance,
-            isPrimary: true,
+            stance: initialValues.baseballProfile.battingStance,
+            isPrimary: initialValues.baseballProfile?.isPrimary || true,
             primarySide: undefined,
           }
         : undefined,
-      throwingArm: initialValues.profile?.arm
+      throwingArm: initialValues.baseballProfile?.throwingArm
         ? {
-            arm: initialValues.profile.arm,
-            isPrimary: true,
+            arm: initialValues.baseballProfile.throwingArm,
+            isPrimary: initialValues.baseballProfile?.isPrimary || true,
             primarySide: undefined,
           }
         : undefined,
@@ -103,13 +101,22 @@ export const EditProfileDialog = ({
   const onSubmit = (values: z.infer<typeof ProfileFormSchema>) => {
     if (!initialValues?.user?.id) {
       console.warn("EditProfileDialog: Cannot submit without user ID");
+      toast.error("Unable to save: Missing user information");
       return;
     }
 
-    editProfile.mutate({
-      userId: initialValues.user.id,
-      ...values,
-    });
+    console.log("Form submission triggered with values:", values);
+    console.log("Form validation errors:", form.formState.errors);
+
+    try {
+      editProfile.mutate({
+        userId: initialValues.user.id,
+        ...values,
+      });
+    } catch (error) {
+      console.error("Error during form submission:", error);
+      toast.error("Failed to submit form");
+    }
   };
 
   if (!initialValues?.user?.id) {
@@ -129,11 +136,14 @@ export const EditProfileDialog = ({
           <ScrollArea className="h-[500px] pr-4">
             <div className="space-y-6">
               <PersonalInformationSection control={form.control} />
+
               <AddressSection control={form.control} />
+
               <BaseballInformationSection
                 control={form.control}
                 watch={form.watch}
               />
+
               <BioSection control={form.control} />
             </div>
           </ScrollArea>
@@ -147,6 +157,7 @@ export const EditProfileDialog = ({
             >
               Cancel
             </Button>
+
             <Button
               type="submit"
               disabled={editProfile.isPending}

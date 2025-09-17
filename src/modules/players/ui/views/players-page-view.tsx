@@ -2,6 +2,9 @@
 
 import { User, Award, Calendar } from "lucide-react";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useTRPC } from "@/trpc/client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -14,8 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
 
 const players = [
   {

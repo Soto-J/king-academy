@@ -1,15 +1,14 @@
 import { z } from "zod";
-import { and, eq, getTableColumns } from "drizzle-orm";
+import { and, eq, getTableColumns, sql } from "drizzle-orm";
 
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
 import { db } from "@/db";
 import {
   addressTable,
-  battingStanceTable,
+  baseballProfileTable,
   positionTable,
   profileTable,
-  throwingArmTable,
   user,
 } from "@/db/schema";
 
@@ -23,32 +22,32 @@ export const profileRouter = createTRPCRouter({
       return await db
         .select({
           user: getTableColumns(user),
+          baseballProfile: {
+            ...getTableColumns(baseballProfileTable),
+            ...getTableColumns(positionTable),
+          },
           profile: {
             ...getTableColumns(profileTable),
-            ...getTableColumns(addressTable),
-            ...getTableColumns(positionTable),
-            ...getTableColumns(battingStanceTable),
-            ...getTableColumns(throwingArmTable),
+            positions: getTableColumns(addressTable),
           },
         })
         .from(user)
         .leftJoin(profileTable, eq(profileTable.userId, user.id))
         .leftJoin(addressTable, eq(addressTable.profileId, profileTable.id))
-        .leftJoin(positionTable, eq(positionTable.profileId, profileTable.id))
         .leftJoin(
-          battingStanceTable,
-          eq(battingStanceTable.profileId, profileTable.id),
+          baseballProfileTable,
+          eq(baseballProfileTable.profileId, profileTable.id),
         )
         .leftJoin(
-          throwingArmTable,
-          eq(throwingArmTable.profileId, profileTable.id),
+          positionTable,
+          eq(positionTable.baseballProfileId, baseballProfileTable.id),
         )
         .where(
           input?.userId
             ? eq(user.id, input.userId)
             : eq(user.id, ctx.auth.user.id),
-        )
-        .then((row) => row[0]);
+        );
+      // .then((row) => row[0]);
     }),
 
   edit: protectedProcedure
@@ -60,7 +59,7 @@ export const profileRouter = createTRPCRouter({
           message: "Cannot edit other users profile.",
         });
       }
-      
+
       const {
         userId,
         firstName,
@@ -70,7 +69,7 @@ export const profileRouter = createTRPCRouter({
         phoneNumber,
         school,
         bio,
-        position,
+        positions,
         battingStance,
         throwingArm,
       } = input;
@@ -121,27 +120,20 @@ export const profileRouter = createTRPCRouter({
             },
           });
 
-        // Handle positions (can be multiple)
-        if (position.length > 0) {
-          for (const pos of position) {
-            await tx
-              .insert(positionTable)
-              .values({
-                profileId: insertId.id,
-                position: pos,
-                isPrimary: true,
-              })
-              .onDuplicateKeyUpdate({
-                set: {
-                  position: pos,
-                  isPrimary: true,
-                  updatedAt: new Date(),
-                },
-              });
-          }
-        }
+        await tx
+          .insert(positionTable)
+          .values(
+            positions.map((position) => ({
+              profileId: insertId.id,
+              position: position,
+            })),
+          )
+          .onDuplicateKeyUpdate({
+            set: {
+              position: sql`VALUE(position)`,
+            },
+          });
 
-        // Handle batting stance
         if (battingStance) {
           await tx
             .insert(battingStanceTable)
@@ -154,7 +146,6 @@ export const profileRouter = createTRPCRouter({
               set: {
                 stance: battingStance.stance,
                 isPrimary: battingStance.isPrimary,
-                updatedAt: new Date(),
               },
             });
         }

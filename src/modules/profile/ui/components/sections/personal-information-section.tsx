@@ -34,6 +34,7 @@ export const PersonalInformationSection = ({
           Personal Information
         </CardTitle>
       </CardHeader>
+
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
@@ -45,6 +46,7 @@ export const PersonalInformationSection = ({
                 <FormControl>
                   <Input placeholder="John" {...field} />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -59,6 +61,7 @@ export const PersonalInformationSection = ({
                 <FormControl>
                   <Input placeholder="Smith" {...field} />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -88,6 +91,7 @@ export const PersonalInformationSection = ({
                     }}
                   />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -102,6 +106,7 @@ export const PersonalInformationSection = ({
                 <FormControl>
                   <Input placeholder="(555) 123-4567" {...field} />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -120,6 +125,7 @@ export const PersonalInformationSection = ({
               <FormControl>
                 <Input placeholder="Your school or university" {...field} />
               </FormControl>
+              
               <FormMessage />
             </FormItem>
           )}

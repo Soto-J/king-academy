@@ -45,19 +45,22 @@ export const BaseballInformationSection = ({
 
   return (
     <Card>
-      <CardHeader className="pb-4">
+      <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
           <Trophy className="text-primary h-5 w-5" />
-          Baseball Information
+
+          <span>Baseball Information</span>
         </CardTitle>
       </CardHeader>
+
       <CardContent className="space-y-4">
         <FormField
-          name="position"
+          name="positions"
           control={control}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Positions (check all that apply)</FormLabel>
+
               <div className="mt-2 grid grid-cols-2 gap-3">
                 {POSITIONS.map((position) => (
                   <div key={position} className="flex items-center space-x-2">
@@ -65,22 +68,16 @@ export const BaseballInformationSection = ({
                       type="checkbox"
                       id={position}
                       checked={
-                        Array.isArray(field.value)
+                        field.value
                           ? field.value.includes(position)
                           : field.value === position
                       }
                       onChange={(e) => {
-                        if (e.target.checked) {
-                          const newValue = Array.isArray(field.value)
-                            ? [...field.value, position]
-                            : [position];
-                          field.onChange(newValue);
-                        } else {
-                          const newValue = Array.isArray(field.value)
-                            ? field.value.filter((p) => p !== position)
-                            : [];
-                          field.onChange(newValue);
-                        }
+                        e.target.checked
+                          ? field.onChange([...field.value, position])
+                          : field.onChange(
+                              field.value.filter((p) => p !== position),
+                            );
                       }}
                       className="border-border rounded"
                     />
@@ -93,6 +90,7 @@ export const BaseballInformationSection = ({
                   </div>
                 ))}
               </div>
+
               <FormMessage />
             </FormItem>
           )}
