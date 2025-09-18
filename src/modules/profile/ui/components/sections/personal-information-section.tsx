@@ -28,7 +28,7 @@ export const PersonalInformationSection = ({
 }: PersonalInformationSectionProps) => {
   return (
     <Card>
-      <CardHeader className="pb-4">
+      <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
           <User className="text-primary h-5 w-5" />
           Personal Information
@@ -44,7 +44,7 @@ export const PersonalInformationSection = ({
               <FormItem>
                 <FormLabel>First Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John" {...field} value={field.value || ""} />
+                  <Input placeholder="John" {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -59,7 +59,7 @@ export const PersonalInformationSection = ({
               <FormItem>
                 <FormLabel>Last Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Smith" {...field} value={field.value || ""} />
+                  <Input placeholder="Smith" {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -79,16 +79,13 @@ export const PersonalInformationSection = ({
                   <Input
                     type="date"
                     value={
-                      field.value && field.value instanceof Date
-                        ? format(field.value, "yyyy-MM-dd")
+                      field.value instanceof Date
+                        ? field.value.toISOString().split("T")[0]
                         : ""
                     }
-                    onChange={(e) => {
-                      const date = e.target.value
-                        ? new Date(e.target.value)
-                        : null;
-                      field.onChange(date);
-                    }}
+                    onChange={(e) => field.onChange(new Date(e.target.value))}
+                    onBlur={field.onBlur}
+                    name={field.name}
                   />
                 </FormControl>
 
@@ -104,7 +101,7 @@ export const PersonalInformationSection = ({
               <FormItem>
                 <FormLabel>Phone Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="(555) 123-4567" {...field} value={field.value || ""} />
+                  <Input placeholder="(555) 123-4567" {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -123,9 +120,9 @@ export const PersonalInformationSection = ({
                 School
               </FormLabel>
               <FormControl>
-                <Input placeholder="Your school or university" {...field} value={field.value || ""} />
+                <Input placeholder="Your school or university" {...field} />
               </FormControl>
-              
+
               <FormMessage />
             </FormItem>
           )}
