@@ -1,6 +1,6 @@
 "use client";
 
-import z from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -58,17 +58,16 @@ export const EditProfileDialog = ({
         initialValues.baseballProfile?.positions?.map(
           (value) => value.position,
         ) || [],
-      primaryPosition: initialValues.baseballProfile?.positions?.find(
-        (pos) => pos.isPrimary,
-      )?.position,
-      battingStance: initialValues.baseballProfile?.battingStance,
-      throwingArm: initialValues.baseballProfile?.throwingArm,
+      primaryPosition:
+        initialValues.baseballProfile?.positions?.find((pos) => pos.isPrimary)
+          ?.position || null,
+      battingStance: initialValues.baseballProfile?.battingStance || null,
+      throwingArm: initialValues.baseballProfile?.throwingArm || null,
     },
   });
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-
   const editProfile = useMutation(
     trpc.profile.edit.mutationOptions({
       onSuccess: async () => {
@@ -92,14 +91,20 @@ export const EditProfileDialog = ({
   );
 
   const onSubmit = (values: z.infer<typeof ProfileFormSchema>) => {
-    if (!initialValues?.user?.id) {
-      console.warn("EditProfileDialog: Cannot submit without user ID");
-      toast.error("Unable to save: Missing user information");
-      return;
-    }
+    console.log({ values });
+    // const formattedValues = {
+    //   ...values,
+    //   dateOfBirth: values.dateOfBirth
+    //     ? (() => {
+    //         const date = values.dateOfBirth;
+    //         const month = String(date.getMonth() + 1).padStart(2, "0");
+    //         const day = String(date.getDate()).padStart(2, "0");
+    //         const year = date.getFullYear();
+    //         return `${month}-${day}-${year}`;
+    //       })()
+    //     : null,
+    // };
 
-    console.log("Form submission triggered with values:", values);
-    console.log("Form validation errors:", form.formState.errors);
 
     try {
       editProfile.mutate({
