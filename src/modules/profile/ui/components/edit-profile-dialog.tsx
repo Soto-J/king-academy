@@ -92,20 +92,18 @@ export const EditProfileDialog = ({
 
   const onSubmit = (values: z.infer<typeof ProfileFormSchema>) => {
     console.log({ values });
-    const formattedValues = {
-      ...values,
-      dateOfBirth: values.dateOfBirth
-        ? (() => {
-            const date = values.dateOfBirth;
-            const month = String(date.getMonth() + 1).padStart(2, "0");
-            const day = String(date.getDate()).padStart(2, "0");
-            const year = date.getFullYear();
-            return `${month}-${day}-${year}`;
-          })()
-        : null,
-    };
-
-    console.log({ formattedValues });
+    // const formattedValues = {
+    //   ...values,
+    //   dateOfBirth: values.dateOfBirth
+    //     ? (() => {
+    //         const date = values.dateOfBirth;
+    //         const month = String(date.getMonth() + 1).padStart(2, "0");
+    //         const day = String(date.getDate()).padStart(2, "0");
+    //         const year = date.getFullYear();
+    //         return `${month}-${day}-${year}`;
+    //       })()
+    //     : null,
+    // };
 
 
     try {

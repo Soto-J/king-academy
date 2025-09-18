@@ -80,10 +80,16 @@ export const PersonalInformationSection = ({
                     type="date"
                     value={
                       field.value instanceof Date
-                        ? field.value.toISOString().split("T")[0]
+                       ? format(field.value, "yyyy-MM-dd")
                         : ""
                     }
-                    onChange={(e) => field.onChange(new Date(e.target.value))}
+                    onChange={(e) =>{
+                      const v = e.target.value;
+                      if (!v) return field.onChange(null);
+                      
+                      const [y, m, d] = v.split("-").map(Number);
+                      field.onChange(new Date(y, m - 1, d));
+                    }}
                     onBlur={field.onBlur}
                     name={field.name}
                   />
