@@ -23,12 +23,13 @@ interface BioSectionProps {
 export const BioSection = ({ control }: BioSectionProps) => {
   return (
     <Card>
-      <CardHeader className="pb-4">
+      <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
           <FileText className="text-primary h-5 w-5" />
           About You
         </CardTitle>
       </CardHeader>
+
       <CardContent>
         <FormField
           name="bio"
@@ -36,14 +37,15 @@ export const BioSection = ({ control }: BioSectionProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Player Bio</FormLabel>
+              
               <FormControl>
                 <Textarea
                   {...field}
-                  value={field.value || ""}
                   placeholder="Tell us about your baseball journey, achievements, goals..."
                   className="min-h-[100px] resize-none"
                 />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}

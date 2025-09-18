@@ -120,6 +120,7 @@ export const profileTable = mysqlTable("profile", {
     .notNull(),
   userId: varchar("user_id", { length: 36 })
     .references(() => user.id, { onDelete: "cascade" })
+    .unique()
     .notNull(),
 
   school: varchar("school", { length: 100 }),
@@ -139,6 +140,7 @@ export const baseballProfileTable = mysqlTable("baseball_profile", {
     .notNull(),
   profileId: varchar("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
+    .unique()
     .notNull(),
 
   battingStance: mysqlEnum(BATTING_STANCE),
@@ -174,6 +176,7 @@ export const addressTable = mysqlTable("address", {
     .notNull(),
   profileId: varchar("profile_id", { length: 36 })
     .references(() => profileTable.id, { onDelete: "cascade" })
+    .unique()
     .notNull(),
 
   street: varchar("street", { length: 20 }),

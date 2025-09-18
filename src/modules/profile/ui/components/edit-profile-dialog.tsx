@@ -71,13 +71,9 @@ export const EditProfileDialog = ({
   const editProfile = useMutation(
     trpc.profile.edit.mutationOptions({
       onSuccess: async () => {
-        if (initialValues?.user?.id) {
-          await queryClient.invalidateQueries(
-            trpc.profile.getOne.queryOptions({
-              userId: initialValues.user.id,
-            }),
-          );
-        }
+        await queryClient.invalidateQueries({
+          queryKey: [["profile"]],
+        });
 
         toast.success("Profile Updated!");
         onCloseDialog();
@@ -92,19 +88,6 @@ export const EditProfileDialog = ({
 
   const onSubmit = (values: z.infer<typeof ProfileFormSchema>) => {
     console.log({ values });
-    // const formattedValues = {
-    //   ...values,
-    //   dateOfBirth: values.dateOfBirth
-    //     ? (() => {
-    //         const date = values.dateOfBirth;
-    //         const month = String(date.getMonth() + 1).padStart(2, "0");
-    //         const day = String(date.getDate()).padStart(2, "0");
-    //         const year = date.getFullYear();
-    //         return `${month}-${day}-${year}`;
-    //       })()
-    //     : null,
-    // };
-
 
     try {
       editProfile.mutate({

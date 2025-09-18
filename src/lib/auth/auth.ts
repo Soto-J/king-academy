@@ -5,7 +5,7 @@ import {
 import { betterAuth } from "better-auth";
 
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { sql } from "drizzle-orm";
+import { sql, eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import * as dbSchema from "@/db/schema";
@@ -50,12 +50,19 @@ export const auth = betterAuth({
       if (!user) return;
 
       await db.transaction(async (tx) => {
-        const profile = await tx
-          .insert(dbSchema.profileTable)
-          .values({ userId: user.id })
-          .onDuplicateKeyUpdate({ set: { id: sql`id` } })
-          .$returningId()
+        let profile = await tx
+          .select({ id: dbSchema.profileTable.id })
+          .from(dbSchema.profileTable)
+          .where(eq(dbSchema.profileTable.userId, user.id))
           .then((row) => row[0]);
+
+        if (!profile) {
+          profile = await tx
+            .insert(dbSchema.profileTable)
+            .values({ userId: user.id })
+            .$returningId()
+            .then((row) => row[0]);
+        }
 
         await tx
           .insert(dbSchema.addressTable)

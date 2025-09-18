@@ -2,12 +2,6 @@ import { z } from "zod";
 
 import { BATTING_STANCE, POSITIONS, THROWING_ARM } from "@/db/schema";
 
-const optional = z.string().optional();
-const nullableString = z
-  .string()
-  .nullable()
-  .transform((val) => (val === "" ? null : val));
-
 export const ProfileFormSchema = z
   .object({
     firstName: z.string().min(1, "First name required."),
@@ -15,17 +9,23 @@ export const ProfileFormSchema = z
     dateOfBirth: z.date().nullish(),
     phoneNumber: z.string().optional(),
     school: z.string().optional(),
-    bio: z.string().optional(),
+
     address: z.object({
       street: z.string().optional(),
       city: z.string().optional(),
-      state: z.string().optional(),
-      zipcode: z.string().optional(),
+      state: z
+        .string()
+        .max(2, "State must be 2 characters (e.g., NY, CA)")
+        .optional(),
+      zipcode: z.string().max(5, "ZIP code must be 5 digits").optional(),
     }),
-    positions: z.array(z.enum(POSITIONS)),
+
     primaryPosition: z.enum(POSITIONS).nullable(),
+    positions: z.array(z.enum(POSITIONS)),
     battingStance: z.enum(BATTING_STANCE).nullable(),
     throwingArm: z.enum(THROWING_ARM).nullable(),
+
+    bio: z.string().optional(),
   })
   .refine(
     (data) =>
