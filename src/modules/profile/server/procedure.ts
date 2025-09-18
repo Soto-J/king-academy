@@ -102,86 +102,87 @@ export const profileRouter = createTRPCRouter({
         throwingArm,
       } = input;
 
-      await db.transaction(async (tx) => {
-        await tx
-          .update(user)
-          .set({
-            name: `${firstName} ${lastName}`,
-          })
-          .where(and(eq(user.id, userId), eq(user.id, ctx.auth.user.id)));
+      await db
+        .update(user)
+        .set({
+          name: `${firstName} ${lastName}`,
+        })
+        .where(and(eq(user.id, userId), eq(user.id, ctx.auth.user.id)));
 
-        const [insertId] = await tx
-          .insert(profileTable)
-          .values({
-            userId,
+      await db
+        .insert(profileTable)
+        .values({
+          userId,
+          school,
+          bio,
+          dateOfBirth,
+          phoneNumber,
+        })
+        .onDuplicateKeyUpdate({
+          set: {
             school,
             bio,
             dateOfBirth,
             phoneNumber,
-          })
-          .onDuplicateKeyUpdate({
-            set: {
-              school,
-              bio,
-              dateOfBirth,
-              phoneNumber,
-            },
-          })
-          .$returningId();
+          },
+        });
 
-        await tx
-          .insert(addressTable)
-          .values({
-            userId,
-            profileId: insertId.id,
+      const [userProfile] = await db
+        .select({ id: profileTable.id })
+        .from(profileTable)
+        .where(eq(profileTable.userId, userId));
+
+      await db
+        .insert(addressTable)
+        .values({
+          userId,
+          profileId: userProfile.id,
+          street: address?.street || "",
+          city: address?.city || "",
+          state: address?.state || "",
+          zipCode: address?.zipcode || "",
+        })
+        .onDuplicateKeyUpdate({
+          set: {
             street: address?.street || "",
             city: address?.city || "",
             state: address?.state || "",
             zipCode: address?.zipcode || "",
-          })
-          .onDuplicateKeyUpdate({
-            set: {
-              street: address?.street || "",
-              city: address?.city || "",
-              state: address?.state || "",
-              zipCode: address?.zipcode || "",
-            },
-          });
+          },
+        });
 
-        // First, get the baseball profile ID
-        const [baseballProfile] = await tx
-          .insert(baseballProfileTable)
-          .values({
-            profileId: insertId.id,
+      await db
+        .insert(baseballProfileTable)
+        .values({
+          profileId: userProfile.id,
+          battingStance,
+          throwingArm,
+        })
+        .onDuplicateKeyUpdate({
+          set: {
             battingStance,
             throwingArm,
-          })
-          .onDuplicateKeyUpdate({
-            set: {
-              battingStance,
-              throwingArm,
-            },
-          })
-          .$returningId();
+          },
+        });
 
-        // Delete existing positions
-        await tx
-          .delete(positionTable)
-          .where(eq(positionTable.baseballProfileId, baseballProfile.id));
+      const [baseballProfile] = await db
+        .select({ id: baseballProfileTable.id })
+        .from(baseballProfileTable)
+        .where(eq(baseballProfileTable.profileId, userProfile.id));
 
-        // Insert new positions with isPrimary flags
-        if (positions.length > 0) {
-          await tx
-            .insert(positionTable)
-            .values(
-              positions.map((position) => ({
-                baseballProfileId: baseballProfile.id,
-                position: position,
-                isPrimary: position === primaryPosition,
-              })),
-            );
-        }
-      });
+      await db
+        .delete(positionTable)
+        .where(eq(positionTable.baseballProfileId, baseballProfile.id));
+
+      if (positions.length > 0) {
+        await db.insert(positionTable).values(
+          positions.map((position) => ({
+            baseballProfileId: baseballProfile.id,
+            position: position,
+            isPrimary: position === primaryPosition,
+          })),
+        );
+      }
 
       return { success: true };
     }),

@@ -72,32 +72,32 @@ export const PersonalInformationSection = ({
           <FormField
             name="dateOfBirth"
             control={control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Date of Birth</FormLabel>
-                <FormControl>
-                  <Input
-                    type="date"
-                    value={
-                      field.value instanceof Date
-                       ? format(field.value, "yyyy-MM-dd")
-                        : ""
-                    }
-                    onChange={(e) =>{
-                      const v = e.target.value;
-                      if (!v) return field.onChange(null);
-                      
-                      const [y, m, d] = v.split("-").map(Number);
-                      field.onChange(new Date(y, m - 1, d));
-                    }}
-                    onBlur={field.onBlur}
-                    name={field.name}
-                  />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
+            render={({ field }) => {
+              const displayValue = field.value instanceof Date 
+                ? field.value.toISOString().split('T')[0]
+                : field.value || "";
+              
+              return (
+                <FormItem>
+                  <FormLabel>Date of Birth</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      value={displayValue}
+                      onChange={(e) =>{
+                        const v = e.target.value;
+                        if (!v) return field.onChange(null);
+                        
+                        field.onChange(new Date(v + 'T00:00:00.000Z'));
+                      }}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
 
           <FormField

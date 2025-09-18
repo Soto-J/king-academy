@@ -55,6 +55,36 @@ export const BaseballInformationSection = ({
 
       <CardContent className="space-y-4">
         <FormField
+          name="primaryPosition"
+          control={control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Primary Position</FormLabel>
+
+              <Select
+                onValueChange={field.onChange}
+                value={field.value || undefined}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select primary position" />
+                  </SelectTrigger>
+                </FormControl>
+
+                <SelectContent>
+                  {POSITIONS.map((position) => (
+                    <SelectItem key={position} value={position}>
+                      {formatPositionLabel(position)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
           name="positions"
           control={control}
           render={({ field }) => (
@@ -72,17 +102,16 @@ export const BaseballInformationSection = ({
                           ? field.value.includes(position)
                           : field.value === position
                       }
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          field.onChange([...field.value, position]);
-                        } else {
-                          field.onChange(
-                            field.value.filter((p) => p !== position),
-                          );
-                        }
-                      }}
+                      onChange={(e) =>
+                        e.target.checked
+                          ? field.onChange([...field.value, position])
+                          : field.onChange(
+                              field.value.filter((p) => p !== position),
+                            )
+                      }
                       className="border-border rounded"
                     />
+
                     <label
                       htmlFor={position}
                       className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -98,34 +127,6 @@ export const BaseballInformationSection = ({
           )}
         />
 
-        <FormField
-          name="primaryPosition"
-          control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Primary Position</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                value={field.value || undefined}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select primary position" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {POSITIONS.map((position) => (
-                    <SelectItem key={position} value={position}>
-                      {formatPositionLabel(position)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-3">
             <FormField
@@ -134,6 +135,7 @@ export const BaseballInformationSection = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Batting Stance</FormLabel>
+                  
                   <Select
                     onValueChange={field.onChange}
                     value={field.value || undefined}
@@ -143,6 +145,7 @@ export const BaseballInformationSection = ({
                         <SelectValue placeholder="Select batting stance" />
                       </SelectTrigger>
                     </FormControl>
+
                     <SelectContent>
                       {BATTING_STANCE.map((stance) => (
                         <SelectItem key={stance} value={stance}>
@@ -151,6 +154,7 @@ export const BaseballInformationSection = ({
                       ))}
                     </SelectContent>
                   </Select>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -164,6 +168,7 @@ export const BaseballInformationSection = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Throwing Arm</FormLabel>
+
                   <Select
                     onValueChange={field.onChange}
                     value={field.value || undefined}
@@ -173,6 +178,7 @@ export const BaseballInformationSection = ({
                         <SelectValue placeholder="Select throwing arm" />
                       </SelectTrigger>
                     </FormControl>
+
                     <SelectContent>
                       {THROWING_ARM.map((arm) => (
                         <SelectItem key={arm} value={arm}>
