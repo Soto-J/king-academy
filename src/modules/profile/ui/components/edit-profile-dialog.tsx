@@ -16,10 +16,10 @@ import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Form } from "@/components/ui/form";
 import { ProfileFormSchema } from "../../schemas";
 
-import { PersonalInformationSection } from "./sections/personal-information-section";
-import { AddressSection } from "./sections/address-section";
-import { BaseballInformationSection } from "./sections/baseball-information-section";
-import { BioSection } from "./sections/bio-section";
+import { PersonalInformationSection } from "./form/personal-information-section";
+import { AddressSection } from "./form/address-section";
+import { BaseballInformationSection } from "./form/baseball-information-section";
+import { BioSection } from "./form/bio-section";
 
 interface EditProfileDialogProps {
   onOpenDialog: boolean;

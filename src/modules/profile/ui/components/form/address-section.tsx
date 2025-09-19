@@ -3,10 +3,19 @@ import { z } from "zod";
 import { MapPin } from "lucide-react";
 import { Control } from "react-hook-form";
 
-import { ProfileFormSchema } from "../../../schemas";
+import { ProfileFormSchema } from "@/modules/profile/schemas";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { US_STATES } from "@/modules/profile/constants";
+
 import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   FormControl,
   FormField,
@@ -42,7 +51,6 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 <Input
                   placeholder="123 Main Street"
                   {...field}
-                  value={field.value || ""}
                 />
               </FormControl>
 
@@ -63,7 +71,7 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                   <Input
                     placeholder="City"
                     {...field}
-                    value={field.value || ""}
+                    // value={field.value || ""}
                   />
                 </FormControl>
 
@@ -81,13 +89,24 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
               <FormItem>
                 <FormLabel>State</FormLabel>
 
-                <FormControl>
-                  <Input
-                    placeholder="State"
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || ""}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select state" />
+                    </SelectTrigger>
+                  </FormControl>
+                  
+                  <SelectContent>
+                    {US_STATES.map((state) => (
+                      <SelectItem key={state.value} value={state.value}>
+                        {state.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
                 <div className="min-h-[1.25rem]">
                   <FormMessage />
