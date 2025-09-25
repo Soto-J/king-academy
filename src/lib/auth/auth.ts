@@ -50,19 +50,17 @@ export const auth = betterAuth({
       if (!user) return;
 
       await db.transaction(async (tx) => {
-        let profile = await tx
-          .select({ id: dbSchema.profileTable.id })
-          .from(dbSchema.profileTable)
-          .where(eq(dbSchema.profileTable.userId, user.id))
-          .then((row) => row[0]);
+        await tx
+          .insert(dbSchema.profileTable)
+          .values({
+            userId: user.id,
+          })
+          .onDuplicateKeyUpdate({ set: { id: sql`id` } });
 
-        if (!profile) {
-          profile = await tx
-            .insert(dbSchema.profileTable)
-            .values({ userId: user.id })
-            .$returningId()
-            .then((row) => row[0]);
-        }
+        const [profile] = await tx
+          .select()
+          .from(dbSchema.profileTable)
+          .where(eq(dbSchema.profileTable.userId, user.id));
 
         await tx
           .insert(dbSchema.addressTable)
