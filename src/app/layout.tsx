@@ -23,14 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <NuqsAdapter>
-      <TRPCReactProvider>
-        <html lang="en">
-          <body className={`${inter.variable} font-inter antialiased`}>
-            {children}
-          </body>
-        </html>
-      </TRPCReactProvider>
-    </NuqsAdapter>
+    <html lang="en">
+      <body className={`${inter.variable} font-inter antialiased`}>
+        <NuqsAdapter>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </NuqsAdapter>
+      </body>
+    </html>
   );
 }

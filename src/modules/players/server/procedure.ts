@@ -30,7 +30,7 @@ export const playersRouter = createTRPCRouter({
   getMany: protectedProcedure
     .input(
       z.object({
-        page: z.number(),
+        page: z.number().min(1).default(1),
         pageSize: z
           .number()
           .min(MIN_PAGE_SIZE)
@@ -68,14 +68,22 @@ export const playersRouter = createTRPCRouter({
                 eq(positionTable.baseballProfileId, baseballProfileTable.id),
                 eq(positionTable.isPrimary, true),
               ),
-            ),
+            )
+            .limit(input.pageSize)
+            .offset((input.page - 1) * input.pageSize),
 
-          db.select({ totalPlayers: count() }).from(user),
+          db
+            .select({ totalPlayers: count() })
+            .from(user)
+            .limit(input.pageSize)
+            .offset((input.page - 1) * input.pageSize),
 
           db
             .select({ totalActive: count() })
             .from(profileTable)
-            .where(eq(profileTable.isActive, true)),
+            .where(eq(profileTable.isActive, true))
+            .limit(input.pageSize)
+            .offset((input.page - 1) * input.pageSize),
         ]);
 
       const totalPages = Math.ceil(totalPlayers / input.pageSize);
