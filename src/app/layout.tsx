@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next";
 
 import { TRPCReactProvider } from "@/trpc/client";
 
@@ -22,12 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <TRPCReactProvider>
-      <html lang="en">
-        <body className={`${inter.variable} font-inter antialiased`}>
-          {children}
-        </body>
-      </html>
-    </TRPCReactProvider>
+    <html lang="en">
+      <body className={`${inter.variable} font-inter antialiased`}>
+        <NuqsAdapter>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </NuqsAdapter>
+      </body>
+    </html>
   );
 }
