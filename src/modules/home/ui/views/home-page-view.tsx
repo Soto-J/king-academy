@@ -9,12 +9,6 @@ import Link from "next/link";
 export const HomePageView = async () => {
   return (
     <div className="relative">
-      {/* Background decorative elements */}
-      <div className="bg-primary/5 absolute -top-40 -right-40 h-80 w-80 rounded-full blur-3xl" />
-      <div className="bg-brand-red/5 absolute top-1/2 -left-40 h-60 w-60 rounded-full blur-2xl" />
-      <div className="bg-primary/5 absolute -right-20 bottom-0 h-40 w-40 rounded-full blur-2xl" />
-
-      {/* Hero Section */}
       <div className="from-primary/15 via-secondary to-primary/15 border-border/10 relative mb-16 overflow-hidden rounded-3xl border bg-gradient-to-br p-8 shadow-xl backdrop-blur-sm">
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/5 to-transparent" />
 
