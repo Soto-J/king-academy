@@ -1,24 +1,20 @@
 import { z } from "zod";
-import { and, eq, getTableColumns } from "drizzle-orm";
-
+import { eq } from "drizzle-orm";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
 import { db } from "@/db";
-import {
-  addressTable,
-  baseballProfileTable,
-  positionTable,
-  profileTable,
-  scheduleTable,
-  user,
-} from "@/db/schema";
-
-import { TRPCError } from "@trpc/server";
+import { scheduleTable } from "@/db/schema";
 
 export const scheduleRouter = createTRPCRouter({
   getOne: protectedProcedure
-    .input(z.object({ userId: z.string().nullish() }))
-    .query(async ({ ctx, input }) => {}),
+    .input(z.object({ scheduleId: z.string() }))
+    .query(async ({ input }) => {
+      return await db
+        .select()
+        .from(scheduleTable)
+        .where(eq(scheduleTable.id, input.scheduleId))
+        .then((row) => row[0]);
+    }),
 
   getMany: protectedProcedure.query(async ({ ctx, input }) => {
     return await db.select().from(scheduleTable);

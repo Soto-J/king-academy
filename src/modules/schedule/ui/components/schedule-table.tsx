@@ -1,8 +1,12 @@
 import { Calendar, MapPin } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { scheduleData } from "../../data";
+
+import { ScheduleGetMany } from "@/modules/schedule/types";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -14,7 +18,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export const ScheduleTable = () => {
+interface ScheduleTableProps {
+  schedules: ScheduleGetMany;
+}
+export const ScheduleTable = ({ schedules }: ScheduleTableProps) => {
   const totalGames = scheduleData.length;
 
   return (

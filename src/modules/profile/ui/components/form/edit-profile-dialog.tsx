@@ -8,18 +8,18 @@ import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-import { ProfileGetOne } from "../../types";
+import { ProfileGetOne } from "../../../types";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Form } from "@/components/ui/form";
-import { ProfileFormSchema } from "../../schemas";
+import { ProfileFormSchema } from "../../../schemas";
 
-import { PersonalInformationSection } from "./form/personal-information-section";
-import { AddressSection } from "./form/address-section";
-import { BaseballInformationSection } from "./form/baseball-information-section";
-import { BioSection } from "./form/bio-section";
+import { PersonalInformationSection } from "./personal-information-section";
+import { AddressSection } from "./address-section";
+import { BaseballInformationSection } from "./baseball-information-section";
+import { BioSection } from "./bio-section";
 
 interface EditProfileDialogProps {
   onOpenDialog: boolean;
