@@ -198,16 +198,17 @@ export const scheduleTable = mysqlTable("schedule", {
     .$default(() => nanoid())
     .notNull(),
 
-  gameNumber: int("game_number"),
-  division: varchar("division", { length: 20 }),
+  gameNumber: int("game_number").unique().notNull(),
+  division: varchar("division", { length: 20 }).notNull(),
 
-  homeTeam: varchar("home_team", { length: 20 }),
-  visitingTeam: varchar("visiting_team", { length: 20 }),
+  homeTeam: varchar("home_team", { length: 20 }).notNull(),
+  visitingTeam: varchar("visiting_team", { length: 20 }).notNull(),
 
-  location: varchar("location", { length: 20 }),
+  location: varchar("location", { length: 20 }).notNull(),
 
-  date: timestamp().notNull(),
-  endTime: timestamp().notNull(),
+  date: timestamp("date").notNull(),
+  startTime: timestamp("start_time").notNull(),
+  endTime: timestamp("end_time").notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),

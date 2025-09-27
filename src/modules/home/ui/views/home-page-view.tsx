@@ -1,12 +1,18 @@
+"use client";
+
+import Link from "next/link";
 import { Star, Trophy, Users, Target, Calendar, Medal } from "lucide-react";
+
+import { authClient } from "@/lib/auth/auth-client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-import HeroCarousel from "../components/hero-carousel";
-import Link from "next/link";
+import HeroCarousel from "@/modules/home/ui/components/hero-carousel";
 
-export const HomePageView = async () => {
+export const HomePageView = () => {
+  const { data: session } = authClient.useSession();
+
   return (
     <div className="relative">
       <div className="from-primary/15 via-secondary to-primary/15 border-border/10 relative mb-16 overflow-hidden rounded-3xl border bg-gradient-to-br p-8 shadow-xl backdrop-blur-sm">
@@ -140,6 +146,7 @@ export const HomePageView = async () => {
 
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button
+              disabled={!!session}
               size="lg"
               className="bg-primary hover:bg-primary/90 text-white shadow-lg"
             >

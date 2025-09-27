@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { EditProfileDialog } from "../components/edit-profile-dialog";
+import { EditProfileDialog } from "../components/form/edit-profile-dialog";
 import { Profile } from "../components/profile";
 
 export const ProfilePageView = () => {
