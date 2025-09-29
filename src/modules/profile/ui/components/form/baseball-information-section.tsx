@@ -79,7 +79,8 @@ export const BaseballInformationSection = ({
                   ))}
                 </SelectContent>
               </Select>
-              <FormMessage />
+
+              <FormMessage className="h-4 text-xs" />
             </FormItem>
           )}
         />
@@ -122,7 +123,7 @@ export const BaseballInformationSection = ({
                 ))}
               </div>
 
-              <FormMessage />
+              <FormMessage className="h-4 text-xs" />
             </FormItem>
           )}
         />
@@ -135,7 +136,7 @@ export const BaseballInformationSection = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Batting Stance</FormLabel>
-                  
+
                   <Select
                     onValueChange={field.onChange}
                     value={field.value || undefined}
@@ -155,7 +156,7 @@ export const BaseballInformationSection = ({
                     </SelectContent>
                   </Select>
 
-                  <FormMessage />
+                  <FormMessage className="h-4 text-xs" />
                 </FormItem>
               )}
             />
@@ -187,7 +188,8 @@ export const BaseballInformationSection = ({
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+
+                  <FormMessage className="h-4 text-xs" />
                 </FormItem>
               )}
             />

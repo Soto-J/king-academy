@@ -140,6 +140,7 @@ export const SignInView = () => {
                         <FormLabel className="text-foreground text-sm font-semibold">
                           Password
                         </FormLabel>
+                        
                         <FormControl>
                           <Input
                             type="password"
@@ -148,6 +149,7 @@ export const SignInView = () => {
                             {...field}
                           />
                         </FormControl>
+
                         <FormMessage className="text-brand-red" />
                       </FormItem>
                     )}

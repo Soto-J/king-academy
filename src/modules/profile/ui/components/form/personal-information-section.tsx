@@ -47,7 +47,7 @@ export const PersonalInformationSection = ({
                   <Input placeholder="John" {...field} />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage className="h-4 text-xs" />
               </FormItem>
             )}
           />
@@ -62,7 +62,7 @@ export const PersonalInformationSection = ({
                   <Input placeholder="Smith" {...field} />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage className="h-4 text-xs" />
               </FormItem>
             )}
           />
@@ -73,10 +73,11 @@ export const PersonalInformationSection = ({
             name="dateOfBirth"
             control={control}
             render={({ field }) => {
-              const displayValue = field.value instanceof Date 
-                ? field.value.toISOString().split('T')[0]
-                : field.value || "";
-              
+              const displayValue =
+                field.value instanceof Date
+                  ? field.value.toISOString().split("T")[0]
+                  : field.value || "";
+
               return (
                 <FormItem>
                   <FormLabel>Date of Birth</FormLabel>
@@ -84,17 +85,17 @@ export const PersonalInformationSection = ({
                     <Input
                       type="date"
                       value={displayValue}
-                      onChange={(e) =>{
+                      onChange={(e) => {
                         const v = e.target.value;
                         if (!v) return field.onChange(null);
-                        
-                        field.onChange(new Date(v + 'T00:00:00.000Z'));
+
+                        field.onChange(new Date(v + "T00:00:00.000Z"));
                       }}
                       onBlur={field.onBlur}
                       name={field.name}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="h-4 text-xs" />
                 </FormItem>
               );
             }}
@@ -110,7 +111,7 @@ export const PersonalInformationSection = ({
                   <Input placeholder="(555) 123-4567" {...field} />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage className="h-4 text-xs" />
               </FormItem>
             )}
           />
@@ -129,7 +130,7 @@ export const PersonalInformationSection = ({
                 <Input placeholder="Your school or university" {...field} />
               </FormControl>
 
-              <FormMessage />
+              <FormMessage className="h-4 text-xs" />
             </FormItem>
           )}
         />
