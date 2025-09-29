@@ -35,7 +35,7 @@ export const SchedulePageView = () => {
         onOpenDialog={isOpen}
         onCloseDialog={() => setIsOpen(false)}
         initialValues={selectedSchedule}
-        mode="Create"
+        mode={selectedSchedule ? "Edit" : "Create"}
       />
 
       <div className="space-y-8">
