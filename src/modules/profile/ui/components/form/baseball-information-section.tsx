@@ -80,7 +80,9 @@ export const BaseballInformationSection = ({
                 </SelectContent>
               </Select>
 
-              <FormMessage className="h-4 text-xs" />
+              <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
             </FormItem>
           )}
         />
@@ -123,7 +125,9 @@ export const BaseballInformationSection = ({
                 ))}
               </div>
 
-              <FormMessage className="h-4 text-xs" />
+              <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
             </FormItem>
           )}
         />
@@ -156,7 +160,9 @@ export const BaseballInformationSection = ({
                     </SelectContent>
                   </Select>
 
-                  <FormMessage className="h-4 text-xs" />
+                  <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
                 </FormItem>
               )}
             />
@@ -189,7 +195,9 @@ export const BaseballInformationSection = ({
                     </SelectContent>
                   </Select>
 
-                  <FormMessage className="h-4 text-xs" />
+                  <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
                 </FormItem>
               )}
             />

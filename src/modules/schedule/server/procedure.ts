@@ -42,8 +42,8 @@ export const scheduleRouter = createTRPCRouter({
         ...restOfData,
         gameNumber: Number(gameNumber),
         date: new Date(date),
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        startTime: startTime,
+        endTime: endTime,
       };
 
       await db

@@ -53,7 +53,9 @@ export const LocationSection = ({ control }: LocationSectionProps) => {
                 />
               </FormControl>
 
-              <FormMessage className="h-4 text-xs" />
+              <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
             </FormItem>
           )}
         />

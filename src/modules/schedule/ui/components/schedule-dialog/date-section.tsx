@@ -46,8 +46,9 @@ export const DateSection = ({ control }: DateSectionProps) => {
                   className="w-fit text-center font-medium"
                 />
               </FormControl>
-
-              <FormMessage className="text-xs" />
+              <div className="min-h-3">
+                <FormMessage className="text-xs" />
+              </div>
             </FormItem>
           )}
         />
@@ -71,7 +72,9 @@ export const DateSection = ({ control }: DateSectionProps) => {
                   />
                 </FormControl>
 
-                <FormMessage className="text-xs" />
+                <div className="min-h-[1.25rem]">
+                  <FormMessage className="text-xs" />
+                </div>
               </FormItem>
             )}
           />
@@ -94,7 +97,9 @@ export const DateSection = ({ control }: DateSectionProps) => {
                   />
                 </FormControl>
 
-                <FormMessage className="text-xs" />
+                <div className="min-h-[1.25rem]">
+                  <FormMessage className="text-xs" />
+                </div>
               </FormItem>
             )}
           />

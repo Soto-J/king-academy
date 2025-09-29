@@ -4,6 +4,7 @@ import {
   mysqlTable,
   varchar,
   text,
+  time,
   timestamp,
   boolean,
   date,
@@ -207,8 +208,8 @@ export const scheduleTable = mysqlTable("schedule", {
   location: varchar("location", { length: 20 }).notNull(),
 
   date: timestamp("date").notNull(),
-  startTime: timestamp("start_time").notNull(),
-  endTime: timestamp("end_time").notNull(),
+  startTime: time("start_time").notNull(),
+  endTime: time("end_time").notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
