@@ -54,7 +54,9 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 />
               </FormControl>
 
-              <FormMessage className="h-4 text-xs"/>
+              <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
             </FormItem>
           )}
         />
@@ -76,7 +78,9 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 </FormControl>
 
                 <div className="min-h-[1.25rem]">
-                  <FormMessage className="h-4 text-xs"/>
+                  <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
                 </div>
               </FormItem>
             )}
@@ -109,7 +113,9 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 </Select>
 
                 <div className="min-h-[1.25rem]">
-                  <FormMessage className="h-4 text-xs"/>
+                  <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
                 </div>
               </FormItem>
             )}
@@ -131,7 +137,9 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 </FormControl>
 
                 <div className="min-h-[1.25rem]">
-                  <FormMessage className="h-4 text-xs"/>
+                  <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
                 </div>
               </FormItem>
             )}

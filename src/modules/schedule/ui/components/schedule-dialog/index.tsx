@@ -56,7 +56,7 @@ export const ScheduleDialog = ({
   const form = useForm<z.infer<typeof ScheduleFormSchema>>({
     resolver: zodResolver(ScheduleFormSchema),
     defaultValues: {
-      gameNumber: initialValues?.gameNumber.toString() || "",
+      gameNumber: initialValues?.gameNumber?.toString() || "",
       division: initialValues?.division || "",
       homeTeam: initialValues?.homeTeam || "",
       visitingTeam: initialValues?.visitingTeam || "",

@@ -53,7 +53,9 @@ export const TeamsSection = ({ control }: TeamsSectionProps) => {
                 />
               </FormControl>
 
-              <FormMessage className="h-4 text-xs" />
+              <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
             </FormItem>
           )}
         />
@@ -82,7 +84,9 @@ export const TeamsSection = ({ control }: TeamsSectionProps) => {
                 />
               </FormControl>
 
-              <FormMessage className="h-4 text-xs" />
+              <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
             </FormItem>
           )}
         />

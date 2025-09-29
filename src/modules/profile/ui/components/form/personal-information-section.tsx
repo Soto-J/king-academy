@@ -47,7 +47,9 @@ export const PersonalInformationSection = ({
                   <Input placeholder="John" {...field} />
                 </FormControl>
 
-                <FormMessage className="h-4 text-xs" />
+                <div className="min-h-[1.25rem]">
+                  <FormMessage className="text-xs" />
+                </div>
               </FormItem>
             )}
           />
@@ -62,7 +64,9 @@ export const PersonalInformationSection = ({
                   <Input placeholder="Smith" {...field} />
                 </FormControl>
 
-                <FormMessage className="h-4 text-xs" />
+                <div className="min-h-[1.25rem]">
+                  <FormMessage className="text-xs" />
+                </div>
               </FormItem>
             )}
           />
@@ -95,7 +99,9 @@ export const PersonalInformationSection = ({
                       name={field.name}
                     />
                   </FormControl>
-                  <FormMessage className="h-4 text-xs" />
+                  <div className="min-h-[1.25rem]">
+                  <FormMessage className="text-xs" />
+                </div>
                 </FormItem>
               );
             }}
@@ -111,7 +117,9 @@ export const PersonalInformationSection = ({
                   <Input placeholder="(555) 123-4567" {...field} />
                 </FormControl>
 
-                <FormMessage className="h-4 text-xs" />
+                <div className="min-h-[1.25rem]">
+                  <FormMessage className="text-xs" />
+                </div>
               </FormItem>
             )}
           />

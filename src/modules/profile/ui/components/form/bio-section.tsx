@@ -46,7 +46,9 @@ export const BioSection = ({ control }: BioSectionProps) => {
                 />
               </FormControl>
 
-              <FormMessage />
+              <div className="min-h-[1.25rem]">
+                <FormMessage className="text-xs" />
+              </div>
             </FormItem>
           )}
         />

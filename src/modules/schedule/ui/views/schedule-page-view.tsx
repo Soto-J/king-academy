@@ -12,7 +12,11 @@ import { ScheduleStats } from "@/modules/schedule/ui/components/schedule-stats";
 import { ScheduleTable } from "@/modules/schedule/ui/components/schedule-table";
 import { ScheduleDialog } from "../components/schedule-dialog";
 
-export const SchedulePageView = () => {
+interface SchedulePageViewProps {
+  isAdmin: boolean;
+}
+
+export const SchedulePageView = ({ isAdmin }: SchedulePageViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSchedule, setSelectedSchedule] =
     useState<ScheduleGetOne | null>(null);
@@ -49,6 +53,7 @@ export const SchedulePageView = () => {
         />
 
         <ScheduleTable
+          isAdmin={isAdmin}
           schedules={data}
           setSelectedSchedule={(schedule) => setSelectedSchedule(schedule)}
         />
