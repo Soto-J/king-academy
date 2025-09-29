@@ -65,10 +65,10 @@ export const ScheduleDialog = ({
         ? initialValues.date.toISOString().split("T")[0]
         : "",
       startTime: initialValues?.startTime
-        ? initialValues.startTime.toISOString().split("T")[1].slice(0, 5)
+        ? initialValues.startTime.toString().split("T")[1].slice(0, 5)
         : "",
       endTime: initialValues?.endTime
-        ? initialValues.endTime.toISOString().split("T")[1].slice(0, 5)
+        ? initialValues.endTime.toString().split("T")[1].slice(0, 5)
         : "",
     },
   });
