@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 import { scheduleData } from "../../data";
 
-import { ScheduleGetMany } from "@/modules/schedule/types";
+import { ScheduleGetMany, ScheduleGetOne } from "@/modules/schedule/types";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -20,7 +20,9 @@ import {
 
 interface ScheduleTableProps {
   schedules: ScheduleGetMany;
+  setSelectedSchedule: (schedule: ScheduleGetOne) => void;
 }
+
 export const ScheduleTable = ({ schedules }: ScheduleTableProps) => {
   const totalGames = scheduleData.length;
 
@@ -64,56 +66,56 @@ export const ScheduleTable = ({ schedules }: ScheduleTableProps) => {
           </TableHeader>
 
           <TableBody>
-            {scheduleData.map((game, index) => {
-              const isHomeGame = game.homeTeam === "King Academy";
-              const isUpcoming = new Date(game.date) >= new Date();
+            {schedules.map((schedule, index) => {
+              const isHomeschedule = schedule.homeTeam === "King Academy";
+              const isUpcoming = new Date(schedule.date) >= new Date();
 
               return (
                 <TableRow
-                  key={game.id}
+                  key={schedule.id}
                   className={cn(
                     "border-border/10 hover:bg-muted/30 h-16",
                     index % 2 === 0 ? "bg-secondary" : "bg-accent",
                   )}
                 >
                   <TableCell className="text-foreground pl-6 font-medium">
-                    {game.id}
+                    {schedule.id}
                   </TableCell>
                   <TableCell className="text-foreground font-medium">
-                    {game.date}
+                    {schedule.date.toISOString()}
                   </TableCell>
                   <TableCell className="text-muted-foreground">
-                    {game.time}
+                    {schedule.startTime.toString()}
                   </TableCell>
                   <TableCell className="text-muted-foreground hidden md:table-cell">
-                    {game.endTime}
+                    {schedule.endTime.toString()}
                   </TableCell>
                   <TableCell className="text-muted-foreground hidden lg:table-cell">
-                    {game.division}
+                    {schedule.division}
                   </TableCell>
                   <TableCell
                     className={cn(
-                      game.visitingTeam === "King Academy"
+                      schedule.visitingTeam === "King Academy"
                         ? "text-primary font-semibold"
                         : "text-muted-foreground",
                     )}
                   >
-                    {game.visitingTeam}
+                    {schedule.visitingTeam}
                   </TableCell>
                   <TableCell
                     className={cn(
-                      game.homeTeam === "King Academy"
+                      schedule.homeTeam === "King Academy"
                         ? "text-primary font-semibold"
                         : "text-muted-foreground",
                     )}
                   >
-                    {game.homeTeam}
+                    {schedule.homeTeam}
                   </TableCell>
 
                   <TableCell className="text-muted-foreground hidden sm:table-cell">
                     <div className="flex items-center gap-1">
                       <MapPin className="h-3 w-3" />
-                      {game.location}
+                      {schedule.location}
                     </div>
                   </TableCell>
 
@@ -121,12 +123,12 @@ export const ScheduleTable = ({ schedules }: ScheduleTableProps) => {
                     <div className="flex flex-col items-end gap-1">
                       <span
                         className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                          isHomeGame
+                          isHomeschedule
                             ? "bg-green-500/10 text-green-600"
                             : "bg-blue-500/10 text-blue-600"
                         }`}
                       >
-                        {isHomeGame ? "HOME" : "AWAY"}
+                        {isHomeschedule ? "HOME" : "AWAY"}
                       </span>
 
                       {isUpcoming && (

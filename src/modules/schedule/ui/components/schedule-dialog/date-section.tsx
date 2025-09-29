@@ -1,18 +1,11 @@
 import { z } from "zod";
-
-import { Trophy } from "lucide-react";
 import { Control } from "react-hook-form";
+import { Calendar, Clock } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import {
   FormControl,
   FormField,
@@ -20,7 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 
 interface DateSectionProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
@@ -31,37 +23,55 @@ export const DateSection = ({ control }: DateSectionProps) => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
-          <Trophy className="text-primary h-5 w-5" />
-
-          <span>Date</span>
+          <Calendar className="text-primary h-5 w-5" />
+          Schedule
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <FormField
           name="date"
           control={control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Date</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                Game Date
+              </FormLabel>
 
-              <Input {...field} type="date" />
-              <FormMessage />
+              <FormControl>
+                <Input
+                  {...field}
+                  type="date"
+                  className="w-fit text-center font-medium"
+                />
+              </FormControl>
+
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
 
-        <div className="grid grid-cols-2 justify-items-start gap-x-2">
+        <div className="grid grid-cols-2">
           <FormField
             name="startTime"
             control={control}
             render={({ field }) => (
-              <FormItem className="">
-                <FormLabel>Start time</FormLabel>
+              <FormItem>
+                <FormLabel className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-green-600" />
+                  Start Time
+                </FormLabel>
 
-                <Input {...field} type="time" />
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="time"
+                    className="w-fit text-center font-medium"
+                  />
+                </FormControl>
 
-                <FormMessage />
+                <FormMessage className="text-xs" />
               </FormItem>
             )}
           />
@@ -71,11 +81,20 @@ export const DateSection = ({ control }: DateSectionProps) => {
             control={control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="endTime">End time</FormLabel>
+                <FormLabel className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-red-600" />
+                  End Time
+                </FormLabel>
 
-                <Input {...field} type="time" />
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="time"
+                    className="w-fit text-center font-medium"
+                  />
+                </FormControl>
 
-                <FormMessage />
+                <FormMessage className="text-xs" />
               </FormItem>
             )}
           />
