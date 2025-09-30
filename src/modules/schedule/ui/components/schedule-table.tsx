@@ -1,9 +1,9 @@
 "use client";
 
 import { useConfirm } from "@/hooks/use-confirm";
+import { format, parse } from "date-fns";
 import { toast } from "sonner";
 import { Calendar, Edit3, MapPin, Trash } from "lucide-react";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
@@ -28,12 +28,14 @@ interface ScheduleTableProps {
   isAdmin: boolean;
   schedules: ScheduleGetMany;
   setSelectedSchedule: (schedule: ScheduleGetOne) => void;
+  onOpenDialog: () => void;
 }
 
 export const ScheduleTable = ({
   isAdmin,
   schedules,
   setSelectedSchedule,
+  onOpenDialog,
 }: ScheduleTableProps) => {
   const [ConfirmationDialog, confirmDelete] = useConfirm({
     title: "Delete Schedule",
@@ -60,11 +62,11 @@ export const ScheduleTable = ({
 
   const onEdit = (schedule: ScheduleGetOne) => {
     setSelectedSchedule(schedule);
+    onOpenDialog();
   };
 
   const onDelete = async (scheduleId: string) => {
     const OK = await confirmDelete();
-
     if (!OK) return;
 
     deleteSchedule.mutate({ scheduleId });
@@ -93,7 +95,9 @@ export const ScheduleTable = ({
               <TableRow className="border-border/20">
                 <TableHead className="text-muted-foreground">Game #</TableHead>
                 <TableHead className="text-muted-foreground">Date</TableHead>
-                <TableHead className="text-muted-foreground">Time</TableHead>
+                <TableHead className="text-muted-foreground">
+                  Start Time
+                </TableHead>
                 <TableHead className="text-muted-foreground">
                   End Time
                 </TableHead>
@@ -139,15 +143,19 @@ export const ScheduleTable = ({
                       {schedule.gameNumber}
                     </TableCell>
                     <TableCell className="text-foreground font-medium">
-                      {schedule.date
-                        ? new Date(schedule.date).toLocaleDateString()
-                        : "TBD"}
+                      {format(schedule.date, "MM/dd/yy")}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {schedule.startTime}
+                      {format(
+                        parse(schedule.startTime, "HH:mm:ss", new Date()),
+                        "h:mm a",
+                      )}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {schedule.endTime}
+                      {format(
+                        parse(schedule.endTime, "HH:mm:ss", new Date()),
+                        "h:mm a",
+                      )}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
                       {schedule.division}

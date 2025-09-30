@@ -40,6 +40,7 @@ export const GameInfo = ({ control }: GameInfoProps) => {
                 <FormControl>
                   <Input
                     placeholder="1"
+                    type="number"
                     {...field}
                     className="text-center font-medium"
                   />

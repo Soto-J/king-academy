@@ -32,18 +32,23 @@ export const SchedulePageView = ({ isAdmin }: SchedulePageViewProps) => {
   const upcomingGames = data.filter(
     (game) => new Date(game.date) >= new Date(),
   ).length;
-
   return (
     <>
       <ScheduleDialog
         onOpenDialog={isOpen}
-        onCloseDialog={() => setIsOpen(false)}
+        onCloseDialog={() => {
+          setIsOpen(false);
+          setSelectedSchedule(null);
+        }}
         initialValues={selectedSchedule}
         mode={selectedSchedule ? "Edit" : "Create"}
       />
 
       <div className="space-y-8">
-        <ScheduleHeader onOpenDialog={() => setIsOpen(true)} />
+        <ScheduleHeader
+          isAdmin={isAdmin}
+          onOpenDialog={() => setIsOpen(true)}
+        />
 
         <ScheduleStats
           totalGames={totalGames}
@@ -56,6 +61,7 @@ export const SchedulePageView = ({ isAdmin }: SchedulePageViewProps) => {
           isAdmin={isAdmin}
           schedules={data}
           setSelectedSchedule={(schedule) => setSelectedSchedule(schedule)}
+          onOpenDialog={() => setIsOpen(true)}
         />
       </div>
     </>
