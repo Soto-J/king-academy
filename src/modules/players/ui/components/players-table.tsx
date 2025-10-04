@@ -43,8 +43,6 @@ export const PlayersTable = ({ data }: PlayersTableProps) => {
     status: player.isActive ? "Active" : "Inactive",
   }));
 
-  const averageBattingAvg = "N/A";
-
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">

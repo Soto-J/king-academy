@@ -13,7 +13,6 @@ import { auth } from "@/lib/auth/auth";
 import { loadSearchParams } from "@/modules/players/server/params";
 
 import { PlayersPageView } from "@/modules/players/ui/views/players-page-view";
-import { PlayersSearchFilter } from "@/modules/players/ui/components/players-search-filter";
 import { PlayersHeader } from "@/modules/players/ui/components/players-header";
 
 interface PlayersPageProps {
