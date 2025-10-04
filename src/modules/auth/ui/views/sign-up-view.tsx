@@ -101,7 +101,7 @@ export const SignUpView = () => {
   return (
     <div className="">
       <Card className="bg-card/50 overflow-hidden border-0 p-0 shadow-2xl backdrop-blur-sm">
-        <CardContent className="grid p-0 md:grid-cols-2">
+        <CardContent className="grid md:p-0 md:grid-cols-2">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -256,7 +256,7 @@ export const SignUpView = () => {
                   <div className="text-muted-foreground text-center text-sm">
                     Already have an account?{" "}
                     <Link
-                      href="/sign-up"
+                      href="/sign-in"
                       className="text-primary hover:text-brand-red font-semibold underline-offset-4 transition-colors duration-300 hover:underline"
                     >
                       Sign In

@@ -18,7 +18,7 @@ import {
 // CONSTANTS & ENUMS
 // ============================================================================
 
-export const roles = ["admin", "user"] as const;
+export const ROLES = ["admin", "user"] as const;
 
 export const BATTING_STANCE = ["right", "left", "switch"] as const;
 export const THROWING_ARM = BATTING_STANCE;
@@ -50,7 +50,7 @@ export const user = mysqlTable("user", {
     .$defaultFn(() => false)
     .notNull(),
 
-  role: mysqlEnum("role", roles).default("user").notNull(),
+  role: mysqlEnum("role", ROLES).default("user").notNull(),
   banned: boolean("banned"),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
