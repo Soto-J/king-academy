@@ -213,7 +213,7 @@ export const ScheduleTable = ({
                             variant="outline"
                             size="sm"
                             onClick={() => onEdit(schedule)}
-                            className="h-8 w-8 p-0"
+                            className="h-6 w-6"
                           >
                             <Edit3 className="h-4 w-4" />
                           </Button>
@@ -222,7 +222,7 @@ export const ScheduleTable = ({
                             variant="destructive"
                             size="sm"
                             onClick={() => onDelete(schedule.id)}
-                            className="h-8 w-8 p-0"
+                            className="h-6 w-6"
                           >
                             <Trash className="h-4 w-4" />
                           </Button>

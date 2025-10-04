@@ -72,12 +72,12 @@ export const DashboardSidebar = () => {
       href: "/profile",
       roles: ["user", "admin"],
     },
-    {
-      icon: Settings,
-      label: "Settings",
-      href: "/settings",
-      roles: ["user", "admin"],
-    },
+    // {
+    //   icon: Settings,
+    //   label: "Settings",
+    //   href: "/settings",
+    //   roles: ["user", "admin"],
+    // },
   ];
 
   const navigationItems = useFilterNavigationItems(navigationItemsConfig);

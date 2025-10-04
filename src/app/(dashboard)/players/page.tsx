@@ -13,6 +13,7 @@ import { auth } from "@/lib/auth/auth";
 import { loadSearchParams } from "@/modules/players/server/params";
 
 import { PlayersPageView } from "@/modules/players/ui/views/players-page-view";
+import { PlayersHeader } from "@/modules/players/ui/components/players-header";
 
 interface PlayersPageProps {
   searchParams: Promise<SearchParams>;
@@ -29,13 +30,17 @@ const PlayersPage = async ({ searchParams }: PlayersPageProps) => {
     trpc.players.getMany.queryOptions({ ...filters }),
   );
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense fallback={<p>Loading...</p>}>
-        <ErrorBoundary fallback={<p>Error...</p>}>
-          <PlayersPageView />
-        </ErrorBoundary>
-      </Suspense>
-    </HydrationBoundary>
+    <>
+      <PlayersHeader />
+
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Suspense fallback={<p>Loading...</p>}>
+          <ErrorBoundary fallback={<p>Error...</p>}>
+            <PlayersPageView />
+          </ErrorBoundary>
+        </Suspense>
+      </HydrationBoundary>
+    </>
   );
 };
 
