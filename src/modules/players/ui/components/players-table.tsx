@@ -45,20 +45,15 @@ export const PlayersTable = ({ data }: PlayersTableProps) => {
 
   const averageBattingAvg = "N/A";
 
-  console.log({ players });
   return (
     <div className="space-y-8">
-      <h1 className="text-foreground text-3xl font-bold">Players</h1>
-      <p className="text-muted-foreground mt-2">
-        Manage and track all players in the King Academy program
-      </p>
-
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <Card className="from-primary/10 to-primary/5 border-border/20 bg-gradient-to-br">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-muted-foreground text-sm font-medium">
               Total Players
             </CardTitle>
+
             <User className="text-primary h-4 w-4" />
           </CardHeader>
 
@@ -80,20 +75,6 @@ export const PlayersTable = ({ data }: PlayersTableProps) => {
           <CardContent>
             <div className="text-foreground text-2xl font-bold">
               {data.totalActive}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="from-primary/10 to-primary/5 border-border/20 bg-gradient-to-br">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-muted-foreground text-sm font-medium">
-              Avg Batting
-            </CardTitle>
-            <Calendar className="text-primary h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-foreground text-2xl font-bold">
-              {averageBattingAvg}
             </div>
           </CardContent>
         </Card>
