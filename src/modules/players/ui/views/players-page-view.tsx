@@ -8,7 +8,10 @@ import { usePlayersFilters } from "@/modules/players/hooks/use-players-filter";
 import { PlayersTable } from "@/modules/players/ui/components/players-table";
 import { PlayersPagination } from "@/modules/players/ui/components/players-pagination";
 
-export const PlayersPageView = () => {
+interface PlayersPageViewProps {
+  isAdmin: boolean;
+}
+export const PlayersPageView = ({ isAdmin }: PlayersPageViewProps) => {
   const [filters, setFilters] = usePlayersFilters();
 
   const trpc = useTRPC();
@@ -16,10 +19,9 @@ export const PlayersPageView = () => {
     trpc.players.getMany.queryOptions({ ...filters }),
   );
 
-  console.log({ data });
   return (
     <>
-      <PlayersTable data={data} />
+      <PlayersTable isAdmin={isAdmin} data={data} />
 
       <PlayersPagination
         page={filters.page}

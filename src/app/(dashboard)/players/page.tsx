@@ -10,7 +10,7 @@ import { getQueryClient, trpc } from "@/trpc/server";
 
 import { auth } from "@/lib/auth/auth";
 
-import { loadSearchParams } from "@/modules/players/server/params";
+import { loadSearchParams } from "@/modules/players/params";
 
 import { PlayersPageView } from "@/modules/players/ui/views/players-page-view";
 import { PlayersHeader } from "@/modules/players/ui/components/players-header";
@@ -23,6 +23,7 @@ const PlayersPage = async ({ searchParams }: PlayersPageProps) => {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) redirect("/sign-in");
 
+  const isAdmin = session.user.role === "admin";
   const filters = await loadSearchParams(searchParams);
 
   const queryClient = getQueryClient();
@@ -36,7 +37,7 @@ const PlayersPage = async ({ searchParams }: PlayersPageProps) => {
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<p>Loading...</p>}>
           <ErrorBoundary fallback={<p>Error...</p>}>
-            <PlayersPageView />
+            <PlayersPageView isAdmin={isAdmin} />
           </ErrorBoundary>
         </Suspense>
       </HydrationBoundary>
