@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/auth-client";
 
 import { AuthBrandPannel } from "../components/auth-brand-pannel";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: "First name required." }),
@@ -38,6 +39,7 @@ const formSchema = z.object({
 export const SignUpView = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -88,6 +90,8 @@ export const SignUpView = () => {
         onSuccess: () => {
           setIsPending(false);
           setError(null);
+
+          router.push("/");
         },
 
         onError: ({ error }) => {
@@ -101,7 +105,7 @@ export const SignUpView = () => {
   return (
     <div className="">
       <Card className="bg-card/50 overflow-hidden border-0 p-0 shadow-2xl backdrop-blur-sm">
-        <CardContent className="grid md:p-0 md:grid-cols-2">
+        <CardContent className="grid md:grid-cols-2 md:p-0">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
