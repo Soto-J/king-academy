@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/auth-client";
 
 import { AuthBrandPannel } from "../components/auth-brand-pannel";
+<<<<<<< HEAD
 import {
   Field,
   FieldError,
@@ -24,6 +25,9 @@ import {
   FieldLabel,
   FieldSet,
 } from "@/components/ui/field";
+=======
+import { useRouter } from "next/navigation";
+>>>>>>> main
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: "First name required." }),
@@ -37,6 +41,7 @@ const formSchema = z.object({
 export const SignUpView = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -87,6 +92,8 @@ export const SignUpView = () => {
         onSuccess: () => {
           setIsPending(false);
           setError(null);
+
+          router.push("/");
         },
 
         onError: ({ error }) => {
@@ -101,6 +108,7 @@ export const SignUpView = () => {
     <div className="">
       <Card className="bg-card/50 overflow-hidden border-0 p-0 shadow-2xl backdrop-blur-sm">
         <CardContent className="grid md:grid-cols-2 md:p-0">
+<<<<<<< HEAD
           <div className="mx-auto flex w-full max-w-sm flex-col gap-8 p-6">
             <div className="pb-2 text-center">
               <Crown className="text-primary mx-auto h-8 w-8" />
@@ -113,6 +121,9 @@ export const SignUpView = () => {
               </p>
             </div>
 
+=======
+          <Form {...form}>
+>>>>>>> main
             <form
               className="space-y-4 px-6 text-center"
               onSubmit={form.handleSubmit(onSubmit)}
@@ -245,6 +256,7 @@ export const SignUpView = () => {
                       </Field>
                     )}
                   />
+<<<<<<< HEAD
                 </FieldGroup>
               </FieldSet>
 
@@ -270,6 +282,59 @@ export const SignUpView = () => {
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="border-muted-foreground/20 w-full border-t" />
+=======
+
+                  {!!error && (
+                    <Alert className="bg-brand-red/10 border-brand-red/30 rounded-lg">
+                      <OctagonAlertIcon className="text-brand-red h-4 w-4" />
+                      <AlertTitle className="text-brand-red font-semibold">
+                        {error}
+                      </AlertTitle>
+                    </Alert>
+                  )}
+
+                  <Button
+                    type="submit"
+                    variant="cta"
+                    disabled={isPending}
+                    className="h-12 w-full rounded-lg text-base font-semibold transition-all duration-300 hover:shadow-lg"
+                  >
+                    {isPending ? "Signing up..." : "Sign Up"}
+                    <CircleDot className="ml-2 h-4 w-4" />
+                  </Button>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="border-muted-foreground/20 w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="bg-card text-muted-foreground px-4 font-medium">
+                        Or continue with
+                      </span>
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={() => onGoogleSubmit()}
+                    disabled={isPending}
+                    variant="outline"
+                    type="button"
+                    className="hover:border-primary h-12 w-full rounded-lg border-2 transition-all duration-300"
+                  >
+                    <FaGoogle className="h-4 w-4" />
+                    <span className="ml-2">Continue with Google</span>
+                  </Button>
+
+                  <div className="text-muted-foreground text-center text-sm">
+                    Already have an account?{" "}
+                    <Link
+                      href="/sign-in"
+                      className="text-primary hover:text-brand-red font-semibold underline-offset-4 transition-colors duration-300 hover:underline"
+                    >
+                      Sign In
+                    </Link>
+                  </div>
+>>>>>>> main
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="bg-card text-muted-foreground px-4 font-medium">

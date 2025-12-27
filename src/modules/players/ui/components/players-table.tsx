@@ -2,7 +2,7 @@
 
 import { User, Award, Calendar } from "lucide-react";
 
-import { GetPlayers } from "@/modules/players/server/types";
+import { GetPlayers } from "@/modules/players/types";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -15,12 +15,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TableActions } from "./table-actions";
 
 interface PlayersTableProps {
+  isAdmin: boolean;
   data: GetPlayers;
 }
 
-export const PlayersTable = ({ data }: PlayersTableProps) => {
+export const PlayersTable = ({ isAdmin, data }: PlayersTableProps) => {
   const calculateAge = (dob: Date | null) => {
     if (!dob) return "N/A";
 
@@ -34,13 +36,9 @@ export const PlayersTable = ({ data }: PlayersTableProps) => {
   };
 
   const players = data.players.map((player) => ({
-    id: player.id,
-    name: player.name || "N/A",
+    ...player,
     position: player.position || "N/A",
-    age: calculateAge(player.dob),
-    team: player.school || "N/A",
     battingAvg: "N/A",
-    status: player.isActive ? "Active" : "Inactive",
   }));
 
   return (
@@ -105,11 +103,16 @@ export const PlayersTable = ({ data }: PlayersTableProps) => {
                 <TableHead className="text-muted-foreground text-right">
                   Status
                 </TableHead>
+                {isAdmin && (
+                  <TableHead className="text-muted-foreground text-right">
+                    Actions
+                  </TableHead>
+                )}
               </TableRow>
             </TableHeader>
 
             <TableBody>
-              {players.map((player) => (
+              {data.players.map((player) => (
                 <TableRow
                   key={player.id}
                   className="border-border/10 hover:bg-muted/20"
@@ -121,32 +124,40 @@ export const PlayersTable = ({ data }: PlayersTableProps) => {
                     {player.position}
                   </TableCell>
                   <TableCell className="text-muted-foreground">
-                    {player.age}
+                    {calculateAge(player.dob)}
                   </TableCell>
                   <TableCell className="text-muted-foreground">
-                    {player.team}
+                    {player.school}
                   </TableCell>
                   <TableCell className="text-foreground text-right font-mono">
-                    {player.battingAvg}
+                    N/A
                   </TableCell>
                   <TableCell className="text-right">
                     <span
                       className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                        player.status === "Active"
+                        player.isActive
                           ? "bg-primary/10 text-primary"
                           : "bg-destructive/10 text-destructive"
                       }`}
                     >
-                      {player.status}
+                      {player.isActive ? "Active" : "Inactive"}
                     </span>
                   </TableCell>
+                  {isAdmin && (
+                    <TableCell className="text-right">
+                      <TableActions player={player} />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
 
             <TableFooter>
               <TableRow className="border-border/20">
-                <TableCell colSpan={5} className="text-muted-foreground">
+                <TableCell
+                  colSpan={isAdmin ? 6 : 5}
+                  className="text-muted-foreground"
+                >
                   Total Players
                 </TableCell>
                 <TableCell className="text-foreground text-right font-medium">
