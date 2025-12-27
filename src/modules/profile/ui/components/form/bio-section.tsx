@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Control } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 import { FileText } from "lucide-react";
 
@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface BioSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -31,25 +32,23 @@ export const BioSection = ({ control }: BioSectionProps) => {
       </CardHeader>
 
       <CardContent>
-        <FormField
+        <Controller
           name="bio"
           control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Player Bio</FormLabel>
-              
-              <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder="Tell us about your baseball journey, achievements, goals..."
-                  className="min-h-[100px] resize-none"
-                />
-              </FormControl>
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel>Player Bio</FieldLabel>
 
-              <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
-              </div>
-            </FormItem>
+              <Textarea
+                {...field}
+                placeholder="Tell us about your baseball journey, achievements, goals..."
+                className="min-h-25 resize-none"
+              />
+              
+              {fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} className="text-xs" />
+              )}
+            </Field>
           )}
         />
       </CardContent>

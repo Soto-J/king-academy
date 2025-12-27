@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { MapPin } from "lucide-react";
-import { Control } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
@@ -16,13 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormLabel, FormMessage } from "@/components/ui/form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface AddressSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -40,69 +35,56 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <FormField
+        <Controller
           name="address.street"
           control={control}
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Street Address</FormLabel>
+            <Field>
+              <FieldLabel>Street Address</FieldLabel>
 
-              <FormControl>
-                <Input
-                  placeholder="123 Main Street"
-                  {...field}
-                />
-              </FormControl>
+              <Input placeholder="123 Main Street" {...field} />
 
-              <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
+              <div className="min-h-5">
+                <FieldError className="text-xs" />
               </div>
-            </FormItem>
+            </Field>
           )}
         />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <FormField
+          <Controller
             name="address.city"
             control={control}
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>City</FormLabel>
+              <Field>
+                <FormLabel htmlFor="city">City</FormLabel>
 
-                <FormControl>
-                  <Input
-                    placeholder="City"
-                    {...field}
-                    // value={field.value || ""}
-                  />
-                </FormControl>
+                <Input placeholder="City" {...field} />
 
-                <div className="min-h-[1.25rem]">
-                  <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
-              </div>
+                <div className="min-h-5">
+                  <div className="min-h-5">
+                    <FieldError className="text-xs" />
+                  </div>
                 </div>
-              </FormItem>
+              </Field>
             )}
           />
 
-          <FormField
+          <Controller
             name="address.state"
             control={control}
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>State</FormLabel>
+              <Field>
+                <FieldLabel>State</FieldLabel>
 
                 <Select
                   onValueChange={field.onChange}
                   value={field.value || ""}
                 >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select state" />
-                    </SelectTrigger>
-                  </FormControl>
-                  
+                  <SelectTrigger>
+                    <SelectValue {...field} placeholder="Select state" />
+                  </SelectTrigger>
+
                   <SelectContent>
                     {US_STATES.map((state) => (
                       <SelectItem key={state.value} value={state.value}>
@@ -112,36 +94,34 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                   </SelectContent>
                 </Select>
 
-                <div className="min-h-[1.25rem]">
-                  <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
-              </div>
+                <div className="min-h-5">
+                  <div className="min-h-5">
+                    <FieldError className="text-xs" />
+                  </div>
                 </div>
-              </FormItem>
+              </Field>
             )}
           />
 
-          <FormField
+          <Controller
             name="address.zipcode"
             control={control}
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>ZIP Code</FormLabel>
+              <Field>
+                <FieldLabel>ZIP Code</FieldLabel>
 
-                <FormControl>
-                  <Input
-                    placeholder="12345"
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
+                <Input
+                  placeholder="12345"
+                  {...field}
+                  value={field.value || ""}
+                />
 
-                <div className="min-h-[1.25rem]">
-                  <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
-              </div>
+                <div className="min-h-5">
+                  <div className="min-h-5">
+                    <FieldError className="text-xs" />
+                  </div>
                 </div>
-              </FormItem>
+              </Field>
             )}
           />
         </div>

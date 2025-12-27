@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { Trophy } from "lucide-react";
-import { Control, UseFormWatch } from "react-hook-form";
+import { Control, Controller, UseFormWatch } from "react-hook-form";
 
 import { POSITIONS, BATTING_STANCE, THROWING_ARM } from "@/db/schema";
 
@@ -15,13 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface BaseballInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -54,22 +48,20 @@ export const BaseballInformationSection = ({
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <FormField
+        <Controller
           name="primaryPosition"
           control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Primary Position</FormLabel>
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel>Primary Position</FieldLabel>
 
               <Select
                 onValueChange={field.onChange}
                 value={field.value || undefined}
               >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select primary position" />
-                  </SelectTrigger>
-                </FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select primary position" />
+                </SelectTrigger>
 
                 <SelectContent>
                   {POSITIONS.map((position) => (
@@ -80,19 +72,19 @@ export const BaseballInformationSection = ({
                 </SelectContent>
               </Select>
 
-              <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
-              </div>
-            </FormItem>
+              {fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} className="text-xs" />
+              )}
+            </Field>
           )}
         />
 
-        <FormField
+        <Controller
           name="positions"
           control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Positions (check all that apply)</FormLabel>
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel>Positions (check all that apply)</FieldLabel>
 
               <div className="mt-2 grid grid-cols-2 gap-3">
                 {POSITIONS.map((position) => (
@@ -125,31 +117,31 @@ export const BaseballInformationSection = ({
                 ))}
               </div>
 
-              <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
-              </div>
-            </FormItem>
+              {fieldState.invalid && (
+                <div className="min-h-5">
+                  <FieldError errors={[fieldState.error]} className="text-xs" />
+                </div>
+              )}
+            </Field>
           )}
         />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-3">
-            <FormField
+            <Controller
               name="battingStance"
               control={control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Batting Stance</FormLabel>
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel>Batting Stance</FieldLabel>
 
                   <Select
                     onValueChange={field.onChange}
                     value={field.value || undefined}
                   >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select batting stance" />
-                      </SelectTrigger>
-                    </FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select batting stance" />
+                    </SelectTrigger>
 
                     <SelectContent>
                       {BATTING_STANCE.map((stance) => (
@@ -160,31 +152,34 @@ export const BaseballInformationSection = ({
                     </SelectContent>
                   </Select>
 
-                  <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
-              </div>
-                </FormItem>
+                  {fieldState.invalid && (
+                    <div className="min-h-5">
+                      <FieldError
+                        errors={[fieldState.error]}
+                        className="text-xs"
+                      />
+                    </div>
+                  )}
+                </Field>
               )}
             />
           </div>
 
           <div className="space-y-3">
-            <FormField
+            <Controller
               name="throwingArm"
               control={control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Throwing Arm</FormLabel>
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel>Throwing Arm</FieldLabel>
 
                   <Select
                     onValueChange={field.onChange}
                     value={field.value || undefined}
                   >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select throwing arm" />
-                      </SelectTrigger>
-                    </FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select throwing arm" />
+                    </SelectTrigger>
 
                     <SelectContent>
                       {THROWING_ARM.map((arm) => (
@@ -195,10 +190,15 @@ export const BaseballInformationSection = ({
                     </SelectContent>
                   </Select>
 
-                  <div className="min-h-[1.25rem]">
-                <FormMessage className="text-xs" />
-              </div>
-                </FormItem>
+                  {fieldState.invalid && (
+                    <div className="min-h-5">
+                      <FieldError
+                        errors={[fieldState.error]}
+                        className="text-xs"
+                      />
+                    </div>
+                  )}
+                </Field>
               )}
             />
           </div>
