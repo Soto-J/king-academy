@@ -261,7 +261,6 @@ export const SignUpView = () => {
                 type="submit"
                 variant="cta"
                 disabled={isPending}
-                onClick={() => onSubmit}
                 className="h-12 w-full rounded-lg text-base font-semibold transition-all duration-300 hover:shadow-lg"
               >
                 {isPending ? "Creating account..." : "Create Account"}
