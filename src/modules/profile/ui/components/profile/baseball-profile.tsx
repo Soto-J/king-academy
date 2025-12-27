@@ -66,7 +66,7 @@ export const BaseballProfile = ({ baseballProfile }: BaseballProfileProps) => {
 
               <span className="text-sm font-semibold">Throwing Arm</span>
             </div>
-            
+
             <p className="text-foreground text-lg font-bold">
               {baseballProfile?.throwingArm
                 ? formatStanceLabel(baseballProfile.throwingArm)

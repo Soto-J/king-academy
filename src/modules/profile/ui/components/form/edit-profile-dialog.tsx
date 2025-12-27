@@ -8,13 +8,12 @@ import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-import { ProfileGetOne } from "../../../types";
+import { ProfileGetOne } from "@/modules/profile/types";
+import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
-import { Form } from "@/components/ui/form";
-import { ProfileFormSchema } from "../../../schemas";
 
 import { PersonalInformationSection } from "./personal-information-section";
 import { AddressSection } from "./address-section";
@@ -112,43 +111,38 @@ export const EditProfileDialog = ({
       isOpen={onOpenDialog}
       onOpenChange={onCloseDialog}
     >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <ScrollArea className="h-[500px] pr-4">
-            <div className="space-y-6">
-              <PersonalInformationSection control={form.control} />
-
-              <AddressSection control={form.control} />
-
-              <BaseballInformationSection
-                control={form.control}
-                watch={form.watch}
-              />
-
-              <BioSection control={form.control} />
-            </div>
-          </ScrollArea>
-
-          <div className="flex items-center justify-between border-t pt-6">
-            <Button
-              type="button"
-              variant="outline"
-              disabled={editProfile.isPending}
-              onClick={onCloseDialog}
-            >
-              Cancel
-            </Button>
-
-            <Button
-              type="submit"
-              disabled={editProfile.isPending}
-              className="bg-primary hover:bg-primary/90"
-            >
-              {editProfile.isPending ? "Updating..." : "Update Profile"}
-            </Button>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <ScrollArea className="h-[500px] pr-4">
+          <div className="space-y-6">
+            <PersonalInformationSection control={form.control} />
+            <AddressSection control={form.control} />
+            <BaseballInformationSection
+              control={form.control}
+              watch={form.watch}
+            />
+            <BioSection control={form.control} />
           </div>
-        </form>
-      </Form>
+        </ScrollArea>
+
+        <div className="flex items-center justify-between border-t pt-6">
+          <Button
+            type="button"
+            variant="outline"
+            disabled={editProfile.isPending}
+            onClick={onCloseDialog}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            type="submit"
+            disabled={editProfile.isPending}
+            className="bg-primary hover:bg-primary/90"
+          >
+            {editProfile.isPending ? "Updating..." : "Update Profile"}
+          </Button>
+        </div>
+      </form>
     </ResponsiveDialog>
   );
 };

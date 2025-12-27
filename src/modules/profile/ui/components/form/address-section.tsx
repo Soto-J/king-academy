@@ -16,7 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FormControl, FormLabel, FormMessage } from "@/components/ui/form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface AddressSectionProps {
@@ -57,7 +56,7 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
             control={control}
             render={({ field }) => (
               <Field>
-                <FormLabel htmlFor="city">City</FormLabel>
+                <FieldLabel htmlFor="city">City</FieldLabel>
 
                 <Input placeholder="City" {...field} />
 

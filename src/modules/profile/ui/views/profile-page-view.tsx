@@ -17,6 +17,7 @@ export const ProfilePageView = () => {
   if (!data) {
     return <div>No User Data Found</div>;
   }
+  
   return (
     <>
       <EditProfileDialog

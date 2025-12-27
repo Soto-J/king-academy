@@ -11,13 +11,6 @@ import { ProfileFormSchema } from "../../../schemas";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Input } from "@/components/ui/input";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface PersonalInformationSectionProps {

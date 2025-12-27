@@ -5,9 +5,15 @@ import { Control, Controller, UseFormWatch } from "react-hook-form";
 
 import { POSITIONS, BATTING_STANCE, THROWING_ARM } from "@/db/schema";
 
-import { ProfileFormSchema } from "../../../schemas";
+import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -15,7 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface BaseballInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -126,83 +131,79 @@ export const BaseballInformationSection = ({
           )}
         />
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div className="space-y-3">
-            <Controller
-              name="battingStance"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>Batting Stance</FieldLabel>
+        <FieldGroup className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Controller
+            name="battingStance"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field className="space-y-3">
+                <FieldLabel>Batting Stance</FieldLabel>
 
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value || undefined}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select batting stance" />
-                    </SelectTrigger>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || undefined}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select batting stance" />
+                  </SelectTrigger>
 
-                    <SelectContent>
-                      {BATTING_STANCE.map((stance) => (
-                        <SelectItem key={stance} value={stance}>
-                          {formatStanceLabel(stance)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <SelectContent>
+                    {BATTING_STANCE.map((stance) => (
+                      <SelectItem key={stance} value={stance}>
+                        {formatStanceLabel(stance)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-                  {fieldState.invalid && (
-                    <div className="min-h-5">
-                      <FieldError
-                        errors={[fieldState.error]}
-                        className="text-xs"
-                      />
-                    </div>
-                  )}
-                </Field>
-              )}
-            />
-          </div>
+                {fieldState.invalid && (
+                  <div className="min-h-5">
+                    <FieldError
+                      errors={[fieldState.error]}
+                      className="text-xs"
+                    />
+                  </div>
+                )}
+              </Field>
+            )}
+          />
 
-          <div className="space-y-3">
-            <Controller
-              name="throwingArm"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>Throwing Arm</FieldLabel>
+          <Controller
+            name="throwingArm"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field className="space-y-3">
+                <FieldLabel>Throwing Arm</FieldLabel>
 
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value || undefined}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select throwing arm" />
-                    </SelectTrigger>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || undefined}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select throwing arm" />
+                  </SelectTrigger>
 
-                    <SelectContent>
-                      {THROWING_ARM.map((arm) => (
-                        <SelectItem key={arm} value={arm}>
-                          {formatStanceLabel(arm)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <SelectContent>
+                    {THROWING_ARM.map((arm) => (
+                      <SelectItem key={arm} value={arm}>
+                        {formatStanceLabel(arm)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-                  {fieldState.invalid && (
-                    <div className="min-h-5">
-                      <FieldError
-                        errors={[fieldState.error]}
-                        className="text-xs"
-                      />
-                    </div>
-                  )}
-                </Field>
-              )}
-            />
-          </div>
-        </div>
+                {fieldState.invalid && (
+                  <div className="min-h-5">
+                    <FieldError
+                      errors={[fieldState.error]}
+                      className="text-xs"
+                    />
+                  </div>
+                )}
+              </Field>
+            )}
+          />
+        </FieldGroup>
       </CardContent>
     </Card>
   );

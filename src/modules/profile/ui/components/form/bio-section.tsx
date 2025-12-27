@@ -4,17 +4,10 @@ import { Control, Controller } from "react-hook-form";
 
 import { FileText } from "lucide-react";
 
-import { ProfileFormSchema } from "../../../schemas";
+import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface BioSectionProps {
@@ -44,7 +37,7 @@ export const BioSection = ({ control }: BioSectionProps) => {
                 placeholder="Tell us about your baseball journey, achievements, goals..."
                 className="min-h-25 resize-none"
               />
-              
+
               {fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} className="text-xs" />
               )}
