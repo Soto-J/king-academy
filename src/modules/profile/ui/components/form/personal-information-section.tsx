@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Control } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 import { format } from "date-fns";
 
@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 interface PersonalInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -37,109 +38,130 @@ export const PersonalInformationSection = ({
 
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <FormField
+          <Controller
             name="firstName"
             control={control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="John" {...field} />
-                </FormControl>
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel>First Name</FieldLabel>
 
-                <div className="min-h-[1.25rem]">
-                  <FormMessage className="text-xs" />
-                </div>
-              </FormItem>
+                <Input placeholder="John" {...field} />
+
+                {fieldState.invalid && (
+                  <div className="min-h-5">
+                    <FieldError
+                      errors={[fieldState.error]}
+                      className="text-xs"
+                    />
+                  </div>
+                )}
+              </Field>
             )}
           />
 
-          <FormField
+          <Controller
             name="lastName"
             control={control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Smith" {...field} />
-                </FormControl>
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel>Last Name</FieldLabel>
 
-                <div className="min-h-[1.25rem]">
-                  <FormMessage className="text-xs" />
-                </div>
-              </FormItem>
+                <Input placeholder="Smith" {...field} />
+
+                {fieldState.invalid && (
+                  <div className="min-h-5">
+                    <FieldError
+                      errors={[fieldState.error]}
+                      className="text-xs"
+                    />
+                  </div>
+                )}
+              </Field>
             )}
           />
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <FormField
+          <Controller
             name="dateOfBirth"
             control={control}
-            render={({ field }) => {
+            render={({ field, fieldState }) => {
               const displayValue =
                 field.value instanceof Date
                   ? field.value.toISOString().split("T")[0]
                   : field.value || "";
 
               return (
-                <FormItem>
-                  <FormLabel>Date of Birth</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="date"
-                      value={displayValue}
-                      onChange={(e) => {
-                        const v = e.target.value;
-                        if (!v) return field.onChange(null);
+                <Field>
+                  <FieldLabel htmlFor="dob">Date of Birth</FieldLabel>
 
-                        field.onChange(new Date(v + "T00:00:00.000Z"));
-                      }}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                    />
-                  </FormControl>
-                  <div className="min-h-[1.25rem]">
-                  <FormMessage className="text-xs" />
-                </div>
-                </FormItem>
+                  <Input
+                    id="dob"
+                    type="date"
+                    value={displayValue}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      if (!v) return field.onChange(null);
+
+                      field.onChange(new Date(v + "T00:00:00.000Z"));
+                    }}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                  />
+
+                  {fieldState.invalid && (
+                    <div className="min-h-5">
+                      <FieldError
+                        errors={[fieldState.error]}
+                        className="text-xs"
+                      />
+                    </div>
+                  )}
+                </Field>
               );
             }}
           />
 
-          <FormField
+          <Controller
             name="phoneNumber"
             control={control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number</FormLabel>
-                <FormControl>
-                  <Input placeholder="(555) 123-4567" {...field} />
-                </FormControl>
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel>Phone Number</FieldLabel>
 
-                <div className="min-h-[1.25rem]">
-                  <FormMessage className="text-xs" />
-                </div>
-              </FormItem>
+                <Input placeholder="(555) 123-4567" {...field} />
+
+                {fieldState.invalid && (
+                  <div className="min-h-5">
+                    <FieldError
+                      errors={[fieldState.error]}
+                      className="text-xs"
+                    />
+                  </div>
+                )}
+              </Field>
             )}
           />
         </div>
 
-        <FormField
+        <Controller
           name="school"
           control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex items-center gap-2">
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel className="flex items-center gap-2">
                 <GraduationCap className="h-4 w-4" />
                 School
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Your school or university" {...field} />
-              </FormControl>
+              </FieldLabel>
 
-              <FormMessage className="h-4 text-xs" />
-            </FormItem>
+              <Input placeholder="Your school or university" {...field} />
+
+              {fieldState.invalid && (
+                <div className="min-h-5">
+                  <FieldError errors={[fieldState.error]} className="text-xs" />
+                </div>
+              )}
+            </Field>
           )}
         />
       </CardContent>
