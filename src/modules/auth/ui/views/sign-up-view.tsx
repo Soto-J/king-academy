@@ -110,7 +110,7 @@ export const SignUpView = () => {
         <CardContent className="grid md:grid-cols-2 md:p-0">
           <div className="mx-auto flex w-full max-w-sm flex-col gap-8 p-6">
             <AuthHeader
-              title="Let's get startedk"
+              title="Let's get started"
               description="Create your King Academy account"
             />
 
