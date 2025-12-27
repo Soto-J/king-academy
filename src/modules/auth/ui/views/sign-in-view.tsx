@@ -7,16 +7,18 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
-import { CircleDot, Crown, OctagonAlertIcon } from "lucide-react";
+import { CircleDot, OctagonAlertIcon } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
 
-import { Alert, AlertTitle } from "@/components/ui/alert";
+import { AuthHeader } from "@/modules/auth/ui/components/auth-header";
+import { AuthBrandPannel } from "@/modules/auth/ui/components/auth-brand-pannel";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Card, CardContent } from "@/components/ui/card";
 import { authClient } from "@/lib/auth/auth-client";
 
-import { AuthBrandPannel } from "../components/auth-brand-pannel";
 import {
   Field,
   FieldError,
@@ -26,7 +28,7 @@ import {
 } from "@/components/ui/field";
 
 const formSchema = z.object({
-  email: z.email(),
+  email: z.string().email({ message: "Invalid email address." }),
   password: z.string().min(1, { message: "Password is required" }),
 });
 
@@ -86,20 +88,14 @@ export const SignInView = () => {
   };
 
   return (
-    <div className="">
+    <>
       <Card className="bg-card/50 overflow-hidden border-0 p-0 shadow-2xl backdrop-blur-sm">
         <CardContent className="grid md:grid-cols-2 md:p-0">
           <div className="mx-auto flex w-full max-w-sm flex-col gap-8 p-6">
-            <div className="pb-2 text-center">
-              <Crown className="text-primary mx-auto h-8 w-8" />
-              <h1 className="from-primary to-primary/70 bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent">
-                Welcome Back
-              </h1>
-
-              <p className="text-muted-foreground text-lg">
-                Access your King Academy dashboard
-              </p>
-            </div>
+            <AuthHeader
+              title="Welcome Back"
+              description="Access your King Academy dashboard"
+            />
 
             <form
               className="space-y-4 px-6 text-center"
@@ -185,7 +181,7 @@ export const SignInView = () => {
                 type="submit"
                 variant="cta"
                 disabled={isPending}
-                className="h-12 w-full rounded-lg text-base font-semibold transition-all duration-300 hover:shadow-lg"
+                className="mt-8 h-12 w-full rounded-lg text-base font-semibold transition-all duration-300 hover:shadow-lg"
               >
                 {isPending ? "Signing in..." : "Sign In"}
                 <CircleDot className="ml-2 h-4 w-4" />
@@ -245,6 +241,6 @@ export const SignInView = () => {
           Privacy Policy
         </Link>
       </div>
-    </div>
+    </>
   );
 };

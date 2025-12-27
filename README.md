@@ -20,6 +20,84 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Testing
+
+This project uses [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/react) for unit and integration testing.
+
+### Running Tests
+
+```bash
+# Run tests in watch mode
+npm test
+
+# Run tests once
+npm test -- --run
+
+# Run tests with UI
+npm test:ui
+
+# Run tests with coverage report
+npm test:coverage
+```
+
+### Test Structure
+
+Tests are located next to the components they test with the `.test.tsx` or `.test.ts` extension:
+
+```
+src/
+  modules/
+    auth/
+      ui/
+        views/
+          sign-in-view.tsx
+          sign-in-view.test.tsx
+          sign-up-view.tsx
+          sign-up-view.test.tsx
+```
+
+### Writing Tests
+
+Example test structure:
+
+```typescript
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "@/test/test-utils";
+import userEvent from "@testing-library/user-event";
+
+describe("ComponentName", () => {
+  it("should render correctly", () => {
+    render(<ComponentName />);
+    expect(screen.getByText("Expected Text")).toBeInTheDocument();
+  });
+
+  it("should handle user interactions", async () => {
+    const user = userEvent.setup();
+    render(<ComponentName />);
+
+    await user.click(screen.getByRole("button"));
+    expect(/* assertion */).toBeTruthy();
+  });
+});
+```
+
+### Mocking
+
+- **Next.js Router**: Automatically mocked in test files
+- **Auth Client**: Mock using `vi.mock("@/lib/auth/auth-client")`
+- **Components**: Mock child components to isolate tests
+
+### Test Coverage
+
+Current test coverage includes:
+
+- Authentication views (sign-in, sign-up)
+- Form validation
+- User interactions
+- API calls with correct data
+- Loading states
+- Navigation links
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
