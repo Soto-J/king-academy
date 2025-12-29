@@ -17,14 +17,11 @@ import { ac, admin, user } from "./permission";
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "mysql",
-    schema: {
-      ...dbSchema,
-    },
+    schema: { ...dbSchema },
   }),
-
-  emailAndPassword: {
-    enabled: true,
-  },
+  trustedOrigins: ["http://localhost:3000/"],
+  
+  emailAndPassword: { enabled: true },
   socialProviders: {
     google: {
       clientId: env.GOOGLE_CLIENT_ID,

@@ -32,7 +32,7 @@ import {
 const formSchema = z.object({
   firstName: z.string().min(1, { message: "First name required." }),
   lastName: z.string().min(1, { message: "Last name required." }),
-  email: z.string().email({ message: "Invalid email address." }),
+  email: z.email(),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters." }),
@@ -177,7 +177,7 @@ export const SignUpView = () => {
                         {fieldState.invalid && (
                           <FieldError
                             errors={[fieldState.error]}
-                            className="text-start text-sm"
+                            className="mt-3 text-start text-sm"
                           />
                         )}
                       </Field>
@@ -203,7 +203,7 @@ export const SignUpView = () => {
                           placeholder="coach@kingacademy.com"
                           data-lpignore="true"
                           aria-invalid={fieldState.invalid}
-                          className="focus:border-primary -mb-4 h-12 rounded-lg border-2 text-base transition-all duration-300"
+                          className="focus:border-primary h-12 rounded-lg border-2 text-base transition-all duration-300"
                         />
 
                         {fieldState.invalid && (
