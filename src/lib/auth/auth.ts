@@ -19,7 +19,6 @@ export const auth = betterAuth({
     provider: "mysql",
     schema: { ...dbSchema },
   }),
-  trustedOrigins: ["http://localhost:3000/"],
   
   emailAndPassword: { enabled: true },
   socialProviders: {
