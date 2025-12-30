@@ -1,8 +1,8 @@
 import { Toaster } from "sonner";
 
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { DashboardSidebar } from "@/modules/dashboard/ui/components/dashboard-sidebar";
-import { SidebarToggle } from "@/modules/dashboard/ui/components/sidebar-toggle";
+import { DashboardSidebar } from "@/modules/dashboard/ui/components/sidebar/dashboard-sidebar";
+import { SidebarToggle } from "@/modules/dashboard/ui/components/sidebar/sidebar-toggle";
 import { auth } from "@/lib/auth/auth";
 import { headers } from "next/headers";
 

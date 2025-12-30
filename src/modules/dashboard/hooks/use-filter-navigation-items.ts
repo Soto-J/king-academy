@@ -1,35 +1,27 @@
-import { SessionData } from "@/lib/auth/auth";
+import { UserTable } from "@/db/types";
 import { LucideIcon } from "lucide-react";
 
-export type UserRole = "public" | "user" | "admin";
-
-export interface NavigationItem {
+export type NavigationItem = {
   icon: LucideIcon;
   label: string;
-  href: string;
-  roles: UserRole[];
-  requiresAuth?: boolean;
-  requiresAdmin?: boolean;
-}
+  href: `/${string}`;
+  roles?: readonly UserTable["role"][];
+};
+
+const ROLE_ACCESS: Record<UserTable["role"], readonly UserTable["role"][]> = {
+  user: ["user"],
+  admin: ["user", "admin"],
+} as const;
 
 export const useFilterNavigationItems = (
-  items: NavigationItem[],
-  session: SessionData | null,
-): NavigationItem[] => {
-  const isAuthenticated = !!session?.user;
-  const isAdmin = session?.user?.role === "admin";
-
+  items: readonly NavigationItem[],
+  userRole: UserTable["role"] | null,
+) => {
   return items.filter((item) => {
-    if (item.roles.includes("public")) return true;
+    if (!item.roles) return true;
 
-    if (!isAuthenticated) {
-      return item.roles.includes("public");
-    }
+    if (!userRole) return false;
 
-    if (isAdmin) {
-      return item.roles.includes("admin") || item.roles.includes("user");
-    }
-
-    return item.roles.includes("user");
+    return item.roles.some((r) => ROLE_ACCESS[userRole].includes(r));
   });
 };

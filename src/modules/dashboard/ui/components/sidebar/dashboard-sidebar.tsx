@@ -1,28 +1,21 @@
 "use client";
 
 import { Activity } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import { cn } from "@/lib/utils";
 
-import {
-  Calendar,
-  ChevronRight,
-  Home,
-  Images,
-  Settings,
-  User as UserIcon,
-  Users,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 import type { SessionData } from "@/lib/auth/auth";
-import {
-  useFilterNavigationItems,
-  type NavigationItem,
-} from "@/modules/dashboard/hooks/use-filter-navigation-items";
+import { useFilterNavigationItems } from "@/modules/dashboard/hooks/use-filter-navigation-items";
 
+import {
+  navigationItemsConfig,
+  personalItemsConfig,
+} from "@/modules/dashboard/ui/navigation-items";
+
+import { DashboardHeader } from "@/modules/dashboard/ui/components/dashboard-header";
 import { Separator } from "@/components/ui/separator";
 import { DashboardUserButton } from "./dashboard-user-button";
 import {
@@ -31,11 +24,10 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/modules/dashboard/ui/components/sidebar";
 
 interface DashboardSidebarProps {
   session: SessionData | null;
@@ -44,79 +36,18 @@ interface DashboardSidebarProps {
 export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
   const pathname = usePathname();
 
-  const navigationItemsConfig: NavigationItem[] = [
-    {
-      icon: Home,
-      label: "Home",
-      href: "/",
-      roles: ["public", "user", "admin"],
-    },
-    {
-      icon: Images,
-      label: "Gallery",
-      href: "/gallery",
-      roles: ["public", "user", "admin"],
-    },
-    {
-      icon: Calendar,
-      label: "Schedule",
-      href: "/schedule",
-      roles: ["user", "admin"],
-    },
-    {
-      icon: Users,
-      label: "Players",
-      href: "/players",
-      roles: ["admin"],
-    },
-  ];
-
-  const personalItemsConfig: NavigationItem[] = [
-    {
-      icon: UserIcon,
-      label: "My Profile",
-      href: "/profile",
-      roles: ["user", "admin"],
-    },
-    // {
-    //   icon: Settings,
-    //   label: "Settings",
-    //   href: "/settings",
-    //   roles: ["user", "admin"],
-    // },
-  ];
-
   const isAuthenticated = !!session?.user;
+  const role =
+    session?.user?.role === "admin" || session?.user?.role === "user"
+      ? session.user.role
+      : null;
 
-  const navigationItems = useFilterNavigationItems(
-    navigationItemsConfig,
-    session,
-  );
-  const personalItems = useFilterNavigationItems(personalItemsConfig, session);
+  const navigationItems = useFilterNavigationItems(navigationItemsConfig, role);
+  const personalItems = useFilterNavigationItems(personalItemsConfig, role);
 
   return (
     <Sidebar className="shadow-2xl">
-      <SidebarHeader className="p-6 pt-10">
-        <Link href="/" className="group flex gap-x-3">
-          <Image
-            src="/logo.jpg"
-            alt="King Academy Logo"
-            width={42}
-            height={42}
-            priority
-            className="rounded object-cover ring-2 ring-white/20 transition-all group-hover:scale-105"
-          />
-
-          <div>
-            <h1 className="text-sidebar-foreground text-lg font-bold">
-              King Academy
-            </h1>
-            <p className="text-sidebar-foreground/70 text-xs">
-              Baseball Excellence
-            </p>
-          </div>
-        </Link>
-      </SidebarHeader>
+      <DashboardHeader title="King Academy" description="Baseball Excellence" />
 
       <Separator className="via-primary/50 my-4 h-px bg-gradient-to-r from-transparent to-transparent" />
 
