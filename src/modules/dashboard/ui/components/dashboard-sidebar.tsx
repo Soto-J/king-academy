@@ -16,11 +16,9 @@ import {
   Users,
 } from "lucide-react";
 
-import {
-  useAuthorization,
-  useFilterNavigationItems,
-  type NavigationItem,
-} from "@/modules/dashboard/hooks/use-authorization";
+import { type NavigationItem } from "@/modules/dashboard/hooks/use-authorization";
+import type { SessionData } from "@/lib/auth/auth";
+import { Activity } from "react";
 
 import { Separator } from "@/components/ui/separator";
 import { DashboardUserButton } from "./dashboard-user-button";
@@ -35,8 +33,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import type { SessionData } from "@/lib/auth/auth";
-import { Activity } from "react";
 
 interface DashboardSidebarProps {
   session: SessionData | null;
