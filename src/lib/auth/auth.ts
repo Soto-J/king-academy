@@ -71,3 +71,6 @@ export const auth = betterAuth({
     }),
   },
 });
+
+// Full session response from auth.api.getSession()
+export type SessionData = typeof auth.$Infer.Session;

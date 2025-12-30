@@ -34,18 +34,13 @@ export interface NavigationItem {
   requiresAdmin?: boolean;
 }
 
-export const useAuthorization = (): AuthState => {
+export const useAuthorization = () => {
   const { data: sessionData, isPending } = authClient.useSession();
 
-  const isAuthenticated = !!sessionData?.user;
-  const isAdmin = isAuthenticated && sessionData?.user?.role === "admin";
-  const isUser = isAuthenticated && sessionData?.user?.role === "user";
-
   return {
-    isLoading: isPending,
-    isAuthenticated,
-    isAdmin,
-    isUser,
+    isAuthenticated: !!sessionData?.user,
+    isAdmin: sessionData?.user?.role === "admin",
+    isUser: sessionData?.user?.role === "user",
     user: sessionData?.user || null,
   };
 };
