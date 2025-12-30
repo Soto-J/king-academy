@@ -17,11 +17,11 @@ import {
   Users,
 } from "lucide-react";
 
+import type { SessionData } from "@/lib/auth/auth";
 import {
   useFilterNavigationItems,
   type NavigationItem,
 } from "@/modules/dashboard/hooks/use-filter-navigation-items";
-import type { SessionData } from "@/lib/auth/auth";
 
 import { Separator } from "@/components/ui/separator";
 import { DashboardUserButton } from "./dashboard-user-button";
@@ -92,7 +92,7 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
     navigationItemsConfig,
     session,
   );
-  const peronsalItems = useFilterNavigationItems(personalItemsConfig, session);
+  const personalItems = useFilterNavigationItems(personalItemsConfig, session);
 
   return (
     <Sidebar className="shadow-2xl">
@@ -128,36 +128,34 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
 
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
-              {navigationItems.map(({ href, label, icon: Icon }) => {
-                return (
-                  <SidebarMenuItem key={href}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={pathname === href}
-                      className={cn(
-                        "relative overflow-hidden rounded-lg transition-all duration-300",
-                        pathname === href
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-md"
-                          : "hover:bg-sidebar-accent/50 text-sidebar-foreground",
-                      )}
+              {navigationItems.map(({ href, label, icon: Icon }) => (
+                <SidebarMenuItem key={href}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname === href}
+                    className={cn(
+                      "relative overflow-hidden rounded-lg transition-all duration-300",
+                      pathname === href
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-md"
+                        : "hover:bg-sidebar-accent/50 text-sidebar-foreground",
+                    )}
+                  >
+                    <Link
+                      href={href}
+                      className="flex items-center gap-3 px-3 py-2.5 font-medium"
                     >
-                      <Link
-                        href={href}
-                        className="flex items-center gap-3 px-3 py-2.5 font-medium"
-                      >
-                        <Icon size={18} />
-                        <span>{label}</span>
-                        {pathname === href && (
-                          <ChevronRight
-                            className="text-primary ml-auto"
-                            size={16}
-                          />
-                        )}
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
+                      <Icon size={18} />
+                      <span>{label}</span>
+                      {pathname === href && (
+                        <ChevronRight
+                          className="text-primary ml-auto"
+                          size={16}
+                        />
+                      )}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -172,7 +170,7 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
 
             <SidebarGroupContent>
               <SidebarMenu className="space-y-2">
-                {peronsalItems.map(({ href, label, icon: Icon }) => (
+                {personalItems.map(({ href, label, icon: Icon }) => (
                   <SidebarMenuItem key={href}>
                     <SidebarMenuButton
                       asChild
