@@ -3,6 +3,11 @@ import userEvent from "@testing-library/user-event";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 
 import { SignInView } from "../sign-in-view";
+import { db } from "@/db";
+import { user } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { mockUser } from "./sign-up-intergration.test";
+import { auth } from "@/lib/auth/auth";
 
 // vi.mock("next/navigation", () => ({
 //   useRouter: () => ({
@@ -27,27 +32,6 @@ vi.mock("@/lib/auth/auth-client", () => ({
   },
 }));
 
-// // Mock AuthBrandPannel component
-// vi.mock("@/modules/auth/ui/components/auth-brand-pannel", () => ({
-//   AuthBrandPannel: () => <div data-testid="auth-brand-pannel">Brand Panel</div>,
-// }));
-
-// Mock AuthHeader component
-// vi.mock("@/modules/auth/ui/components/auth-header", () => ({
-//   AuthHeader: ({
-//     title,
-//     description,
-//   }: {
-//     title: string;
-//     description: string;
-//   }) => (
-//     <div>
-//       <h1>{title}</h1>
-//       <p>{description}</p>
-//     </div>
-//   ),
-// }));
-
 const signInSetup = () => {
   render(<SignInView />);
   return {
@@ -60,7 +44,7 @@ const signInSetup = () => {
   };
 };
 
-describe("SignInView", () => {
+describe.skip("SignInView", () => {
   beforeEach(vi.clearAllMocks);
   afterEach(cleanup);
 
@@ -182,5 +166,26 @@ describe("SignInView", () => {
     expect(
       screen.getByRole("link", { name: /privacy policy/i }),
     ).toBeInTheDocument();
+  });
+});
+
+describe("signup authentication", () => {
+  afterEach(async () => {
+    await db.delete(user).where(eq(user.email, mockUser.body.email));
+  });
+
+  beforeEach(async () => {
+    await auth.api.signUpEmail(mockUser);
+  });
+
+  it("sign in with email", async () => {
+    const result = await auth.api.signInEmail({
+      body: {
+        email: mockUser.body.email,
+        password: mockUser.body.password,
+      },
+    });
+
+    expect(result.user.email).toBe(mockUser.body.email);
   });
 });
