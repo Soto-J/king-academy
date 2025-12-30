@@ -1,5 +1,7 @@
 "use client";
 
+import { UserTable } from "@/db/types";
+import { SessionData } from "@/lib/auth/auth";
 import { LucideIcon } from "lucide-react";
 
 export type UserRole = "public" | "user" | "admin";
@@ -9,19 +11,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   isAdmin: boolean;
   isUser: boolean;
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    role?: string | null;
-    image?: string | null;
-    emailVerified?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-    banned?: boolean | null;
-    banReason?: string | null;
-    banExpires?: Date | null;
-  } | null;
+  user: UserTable | null;
 }
 
 export interface NavigationItem {
@@ -32,6 +22,28 @@ export interface NavigationItem {
   requiresAuth?: boolean;
   requiresAdmin?: boolean;
 }
+
+export const useFilterNavigationItems = (
+  items: NavigationItem[],
+  session: SessionData | null,
+): NavigationItem[] => {
+  const isAuthenticated = !!session?.user;
+  const isAdmin = session?.user.role === "admin";
+
+  return items.filter((item) => {
+    if (item.roles.includes("public")) return true;
+
+    if (!isAuthenticated) {
+      return item.roles.includes("public");
+    }
+
+    if (isAdmin) {
+      return item.roles.includes("admin") || item.roles.includes("user");
+    }
+
+    return item.roles.includes("user");
+  });
+};
 
 export const canAccessRoute = (
   requiredRoles: UserRole[],

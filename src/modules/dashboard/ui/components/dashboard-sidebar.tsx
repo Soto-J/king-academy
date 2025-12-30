@@ -1,5 +1,6 @@
 "use client";
 
+import { Activity } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,9 +17,11 @@ import {
   Users,
 } from "lucide-react";
 
-import { type NavigationItem } from "@/modules/dashboard/hooks/use-authorization";
+import {
+  useFilterNavigationItems,
+  type NavigationItem,
+} from "@/modules/dashboard/hooks/use-filter-navigation-items";
 import type { SessionData } from "@/lib/auth/auth";
-import { Activity } from "react";
 
 import { Separator } from "@/components/ui/separator";
 import { DashboardUserButton } from "./dashboard-user-button";
@@ -84,9 +87,12 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
   ];
 
   const isAuthenticated = !!session?.user;
-  const isAdmin = session?.user?.role === "admin";
-  const isUser = session?.user?.role === "user";
-  const user = session?.user || null;
+
+  const navigationItems = useFilterNavigationItems(
+    navigationItemsConfig,
+    session,
+  );
+  const peronsalItems = useFilterNavigationItems(personalItemsConfig, session);
 
   return (
     <Sidebar className="shadow-2xl">
@@ -122,39 +128,42 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
 
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
-              {navigationItemsConfig.map(({ href, label, icon: Icon }) => (
-                <SidebarMenuItem key={href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === href}
-                    className={cn(
-                      "relative overflow-hidden rounded-lg transition-all duration-300",
-                      pathname === href
-                        ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-md"
-                        : "hover:bg-sidebar-accent/50 text-sidebar-foreground",
-                    )}
-                  >
-                    <Link
-                      href={href}
-                      className="flex items-center gap-3 px-3 py-2.5 font-medium"
-                    >
-                      <Icon size={18} />
-                      <span>{label}</span>
-                      {pathname === href && (
-                        <ChevronRight
-                          className="text-primary ml-auto"
-                          size={16}
-                        />
+              {navigationItems.map(({ href, label, icon: Icon }) => {
+                return (
+                  <SidebarMenuItem key={href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={pathname === href}
+                      className={cn(
+                        "relative overflow-hidden rounded-lg transition-all duration-300",
+                        pathname === href
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-md"
+                          : "hover:bg-sidebar-accent/50 text-sidebar-foreground",
                       )}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                    >
+                      <Link
+                        href={href}
+                        className="flex items-center gap-3 px-3 py-2.5 font-medium"
+                      >
+                        <Icon size={18} />
+                        <span>{label}</span>
+                        {pathname === href && (
+                          <ChevronRight
+                            className="text-primary ml-auto"
+                            size={16}
+                          />
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
         <Separator className="via-primary/50 my-4 h-px bg-gradient-to-r from-transparent to-transparent" />
+
         <Activity mode={isAuthenticated ? "visible" : "hidden"}>
           <SidebarGroup className="space-y-4">
             <h3 className="text-muted-foreground px-2 text-xs font-semibold tracking-wider uppercase">
@@ -163,7 +172,7 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
 
             <SidebarGroupContent>
               <SidebarMenu className="space-y-2">
-                {personalItemsConfig.map(({ href, label, icon: Icon }) => (
+                {peronsalItems.map(({ href, label, icon: Icon }) => (
                   <SidebarMenuItem key={href}>
                     <SidebarMenuButton
                       asChild
