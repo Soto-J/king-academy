@@ -13,8 +13,12 @@ vi.mock("@/lib/auth/auth-client", () => ({
       email: vi.fn((_, callbacks) => {
         callbacks.onSuccess();
       }),
+      Social: vi.fn(),
     },
-    signIn: { social: vi.fn().mockRejectedValue({}) },
+    signIn: {
+      email: vi.fn(),
+      social: vi.fn().mockRejectedValue({}),
+    },
   },
 }));
 
@@ -48,11 +52,11 @@ const signUpSetup = () => {
   };
 };
 
-describe.skip("SignUpView", () => {
+describe("SignUpView", () => {
   beforeEach(vi.clearAllMocks);
   afterEach(cleanup);
 
-  it("renders sign-up form with all required fields", () => {
+  it.skip("renders sign-up form with all required fields", () => {
     const {
       firstNameInput,
       lastNameInput,
@@ -73,7 +77,7 @@ describe.skip("SignUpView", () => {
     expect(signUpButton).toBeInTheDocument();
   });
 
-  it("renders Google sign-up button", () => {
+  it.skip("renders Google sign-up button", () => {
     signUpSetup();
 
     expect(
@@ -81,7 +85,7 @@ describe.skip("SignUpView", () => {
     ).toBeInTheDocument();
   });
 
-  it("displays validation error for empty first name", async () => {
+  it.skip("displays validation error for empty first name", async () => {
     const { user, signUpButton } = signUpSetup();
 
     await user.click(signUpButton);
@@ -91,7 +95,7 @@ describe.skip("SignUpView", () => {
     });
   });
 
-  it("displays validation error for empty last name", async () => {
+  it.skip("displays validation error for empty last name", async () => {
     const { user, firstNameInput, signUpButton } = signUpSetup();
 
     await user.type(firstNameInput, "John");
@@ -102,7 +106,7 @@ describe.skip("SignUpView", () => {
     });
   });
 
-  it("displays validation error for invalid email", async () => {
+  it.skip("displays validation error for invalid email", async () => {
     const { user, firstNameInput, lastNameInput, emailInput, signUpButton } =
       signUpSetup();
 
@@ -117,7 +121,7 @@ describe.skip("SignUpView", () => {
     });
   });
 
-  it("displays validation error for short password", async () => {
+  it.skip("displays validation error for short password", async () => {
     const {
       user,
       firstNameInput,
@@ -139,7 +143,7 @@ describe.skip("SignUpView", () => {
     });
   });
 
-  it("calls authClient.signUp.email with correct values on form submission", async () => {
+  it.skip("calls authClient.signUp.email with correct values on form submission", async () => {
     const {
       user,
       firstNameInput,
@@ -171,7 +175,7 @@ describe.skip("SignUpView", () => {
     });
   });
 
-  it("shows loading state during sign-up", async () => {
+  it.skip("shows loading state during sign-up", async () => {
     const {
       user,
       firstNameInput,
@@ -192,7 +196,7 @@ describe.skip("SignUpView", () => {
     });
   });
 
-  it("calls authClient.signIn.social when Google button is clicked", async () => {
+  it.skip("calls authClient.signIn.social when Google button is clicked", async () => {
     const { authClient } = await import("@/lib/auth/auth-client");
 
     const { user } = signUpSetup();
@@ -214,7 +218,7 @@ describe.skip("SignUpView", () => {
     });
   });
 
-  it("renders link to sign-in page", () => {
+  it.skip("renders link to sign-in page", () => {
     signUpSetup();
 
     const signInLink = screen.getByRole("link", { name: /sign in/i });
@@ -229,7 +233,7 @@ describe.skip("SignUpView", () => {
     expect(screen.getByRole("link", { name: /privacy policy/i }));
   });
 
-  it("concatenates first and last name correctly", async () => {
+  it.skip("concatenates first and last name correctly", async () => {
     const {
       user,
       firstNameInput,
@@ -259,7 +263,7 @@ describe.skip("SignUpView", () => {
     });
   });
 
-  it("redirects to home page after email signup", async () => {
+  it.skip("redirects to home page after email signup", async () => {
     const {
       user,
       firstNameInput,
@@ -280,19 +284,18 @@ describe.skip("SignUpView", () => {
   });
 
   it("creates user via email signup", async () => {
-    // await authClient.signUp.email({});
-    // const {
-    //   user,
-    //   firstNameInput,
-    //   lastNameInput,
-    //   emailInput,
-    //   passwordInput,
-    //   signUpButton,
-    // } = signUpSetup();
-    // await user.type(firstNameInput, "Jane");
-    // await user.type(lastNameInput, "Smith");
-    // await user.type(emailInput, "jane@example.com");
-    // await user.type(passwordInput, "password123");
-    // await user.click(signUpButton);
+    // const user = await authClient.signUp.email({
+    //   name: "John Doe",
+    //   email: "test@testing.com",
+    //   password: "12345678",
+    // });
   });
 });
+
+// const user1 = await auth.api.signUpEmail({
+//   body: {
+//     name: "John Doe",
+//     email: "test@testing.com",
+//     password: "12345678",
+//   },
+// });
