@@ -27,27 +27,6 @@ vi.mock("@/lib/auth/auth-client", () => ({
   },
 }));
 
-// // Mock AuthBrandPannel component
-// vi.mock("@/modules/auth/ui/components/auth-brand-pannel", () => ({
-//   AuthBrandPannel: () => <div data-testid="auth-brand-pannel">Brand Panel</div>,
-// }));
-
-// Mock AuthHeader component
-// vi.mock("@/modules/auth/ui/components/auth-header", () => ({
-//   AuthHeader: ({
-//     title,
-//     description,
-//   }: {
-//     title: string;
-//     description: string;
-//   }) => (
-//     <div>
-//       <h1>{title}</h1>
-//       <p>{description}</p>
-//     </div>
-//   ),
-// }));
-
 const signInSetup = () => {
   render(<SignInView />);
   return {

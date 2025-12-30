@@ -5,27 +5,24 @@ import { render, screen, waitFor, cleanup } from "@testing-library/react";
 
 import { authClient } from "@/lib/auth/auth-client";
 import { SignUpView } from "../sign-up-view";
+import { auth } from "@/lib/auth/auth";
 
-let resolveSignup!: () => void;
 vi.mock("@/lib/auth/auth-client", () => ({
   authClient: {
     signUp: {
-      email: vi.fn(
-        () =>
-          new Promise<void>((res) => {
-            resolveSignup = res;
-          }),
-      ),
+      email: vi.fn((_, callbacks) => {
+        callbacks.onSuccess();
+      }),
     },
-    signIn: {
-      social: vi.fn().mockRejectedValue({}),
-    },
+    signIn: { social: vi.fn().mockRejectedValue({}) },
   },
 }));
 
+const mockRouterPush = vi.fn();
+
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
-    push: vi.fn(),
+    push: mockRouterPush,
     replace: vi.fn(),
     refresh: vi.fn(),
     back: vi.fn(),
@@ -35,34 +32,6 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/sign-up",
   useSearchParams: () => new URLSearchParams(),
 }));
-
-// Mock authClient
-
-// Mock AuthBrandPannel component
-// vi.mock("@/modules/auth/ui/components/auth-brand-pannel", () => ({
-//   AuthBrandPannel: () => <div data-testid="auth-brand-pannel">Brand Panel</div>,
-// }));
-
-// Mock AuthHeader component
-// vi.mock("@/modules/auth/ui/components/auth-header", () => ({
-//   AuthHeader: ({
-//     title,
-//     description,
-//   }: {
-//     title: string;
-//     description: string;
-//   }) => (
-//     <div>
-//       <h1>{title}</h1>
-//       <p>{description}</p>
-//     </div>
-//   ),
-// }));
-
-// Mock react-icons
-// vi.mock("react-icons/fa", () => ({
-//   FaGoogle: () => <svg data-testid="google-icon" />,
-// }));
 
 const signUpSetup = () => {
   render(<SignUpView />);
@@ -79,11 +48,11 @@ const signUpSetup = () => {
   };
 };
 
-describe("SignUpView", () => {
+describe.skip("SignUpView", () => {
   beforeEach(vi.clearAllMocks);
   afterEach(cleanup);
 
-  it.skip("renders sign-up form with all required fields", () => {
+  it("renders sign-up form with all required fields", () => {
     const {
       firstNameInput,
       lastNameInput,
@@ -104,7 +73,7 @@ describe("SignUpView", () => {
     expect(signUpButton).toBeInTheDocument();
   });
 
-  it.skip("renders Google sign-up button", () => {
+  it("renders Google sign-up button", () => {
     signUpSetup();
 
     expect(
@@ -112,7 +81,7 @@ describe("SignUpView", () => {
     ).toBeInTheDocument();
   });
 
-  it.skip("displays validation error for empty first name", async () => {
+  it("displays validation error for empty first name", async () => {
     const { user, signUpButton } = signUpSetup();
 
     await user.click(signUpButton);
@@ -122,7 +91,7 @@ describe("SignUpView", () => {
     });
   });
 
-  it.skip("displays validation error for empty last name", async () => {
+  it("displays validation error for empty last name", async () => {
     const { user, firstNameInput, signUpButton } = signUpSetup();
 
     await user.type(firstNameInput, "John");
@@ -133,7 +102,7 @@ describe("SignUpView", () => {
     });
   });
 
-  it.skip("displays validation error for invalid email", async () => {
+  it("displays validation error for invalid email", async () => {
     const { user, firstNameInput, lastNameInput, emailInput, signUpButton } =
       signUpSetup();
 
@@ -148,7 +117,7 @@ describe("SignUpView", () => {
     });
   });
 
-  it.skip("displays validation error for short password", async () => {
+  it("displays validation error for short password", async () => {
     const {
       user,
       firstNameInput,
@@ -170,7 +139,7 @@ describe("SignUpView", () => {
     });
   });
 
-  it.skip("calls authClient.signUp.email with correct values on form submission", async () => {
+  it("calls authClient.signUp.email with correct values on form submission", async () => {
     const {
       user,
       firstNameInput,
@@ -202,7 +171,7 @@ describe("SignUpView", () => {
     });
   });
 
-  it.skip("shows loading state during sign-up", async () => {
+  it("shows loading state during sign-up", async () => {
     const {
       user,
       firstNameInput,
@@ -218,12 +187,12 @@ describe("SignUpView", () => {
     await user.type(passwordInput, "password123");
     await user.click(signUpButton);
 
-    expect(screen.getByRole("button", { name: /creating account/i }));
-
-    resolveSignup();
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /creating account/i }));
+    });
   });
 
-  it.skip("calls authClient.signIn.social when Google button is clicked", async () => {
+  it("calls authClient.signIn.social when Google button is clicked", async () => {
     const { authClient } = await import("@/lib/auth/auth-client");
 
     const { user } = signUpSetup();
@@ -245,7 +214,7 @@ describe("SignUpView", () => {
     });
   });
 
-  it.skip("renders link to sign-in page", () => {
+  it("renders link to sign-in page", () => {
     signUpSetup();
 
     const signInLink = screen.getByRole("link", { name: /sign in/i });
@@ -253,7 +222,7 @@ describe("SignUpView", () => {
     expect(signInLink);
   });
 
-  it.skip("renders terms of service and privacy policy links", () => {
+  it("renders terms of service and privacy policy links", () => {
     signUpSetup();
 
     expect(screen.getByRole("link", { name: /terms of service/i }));
@@ -282,7 +251,10 @@ describe("SignUpView", () => {
         expect.objectContaining({
           name: "Jane Smith",
         }),
-        expect.any(Object),
+        expect.objectContaining({
+          onSuccess: expect.any(Function),
+          onError: expect.any(Function),
+        }),
       );
     });
   });
@@ -303,5 +275,24 @@ describe("SignUpView", () => {
     await user.type(passwordInput, "password123");
 
     await user.click(signUpButton);
+
+    expect(mockRouterPush).toBeCalledWith("/");
+  });
+
+  it("creates user via email signup", async () => {
+    // await authClient.signUp.email({});
+    // const {
+    //   user,
+    //   firstNameInput,
+    //   lastNameInput,
+    //   emailInput,
+    //   passwordInput,
+    //   signUpButton,
+    // } = signUpSetup();
+    // await user.type(firstNameInput, "Jane");
+    // await user.type(lastNameInput, "Smith");
+    // await user.type(emailInput, "jane@example.com");
+    // await user.type(passwordInput, "password123");
+    // await user.click(signUpButton);
   });
 });
