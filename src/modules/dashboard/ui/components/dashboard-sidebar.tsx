@@ -1,5 +1,6 @@
 "use client";
 
+import { Activity } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,9 +17,11 @@ import {
   Users,
 } from "lucide-react";
 
-import { type NavigationItem } from "@/modules/dashboard/hooks/use-authorization";
 import type { SessionData } from "@/lib/auth/auth";
-import { Activity } from "react";
+import {
+  useFilterNavigationItems,
+  type NavigationItem,
+} from "@/modules/dashboard/hooks/use-filter-navigation-items";
 
 import { Separator } from "@/components/ui/separator";
 import { DashboardUserButton } from "./dashboard-user-button";
@@ -84,9 +87,12 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
   ];
 
   const isAuthenticated = !!session?.user;
-  const isAdmin = session?.user?.role === "admin";
-  const isUser = session?.user?.role === "user";
-  const user = session?.user || null;
+
+  const navigationItems = useFilterNavigationItems(
+    navigationItemsConfig,
+    session,
+  );
+  const personalItems = useFilterNavigationItems(personalItemsConfig, session);
 
   return (
     <Sidebar className="shadow-2xl">
@@ -122,7 +128,7 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
 
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
-              {navigationItemsConfig.map(({ href, label, icon: Icon }) => (
+              {navigationItems.map(({ href, label, icon: Icon }) => (
                 <SidebarMenuItem key={href}>
                   <SidebarMenuButton
                     asChild
@@ -155,6 +161,7 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
         </SidebarGroup>
 
         <Separator className="via-primary/50 my-4 h-px bg-gradient-to-r from-transparent to-transparent" />
+
         <Activity mode={isAuthenticated ? "visible" : "hidden"}>
           <SidebarGroup className="space-y-4">
             <h3 className="text-muted-foreground px-2 text-xs font-semibold tracking-wider uppercase">
@@ -163,7 +170,7 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
 
             <SidebarGroupContent>
               <SidebarMenu className="space-y-2">
-                {personalItemsConfig.map(({ href, label, icon: Icon }) => (
+                {personalItems.map(({ href, label, icon: Icon }) => (
                   <SidebarMenuItem key={href}>
                     <SidebarMenuButton
                       asChild
