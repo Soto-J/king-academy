@@ -13,7 +13,7 @@ import { useFilterNavigationItems } from "@/modules/dashboard/hooks/use-filter-n
 import {
   navigationItemsConfig,
   personalItemsConfig,
-} from "@/modules/dashboard/ui//navigation-items";
+} from "@/modules/dashboard/ui/navigation-items";
 
 import { DashboardHeader } from "@/modules/dashboard/ui/components/dashboard-header";
 import { Separator } from "@/components/ui/separator";
@@ -47,7 +47,7 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
 
   return (
     <Sidebar className="shadow-2xl">
-      <DashboardHeader title="King Academy" description="Baseball Excellense" />
+      <DashboardHeader title="King Academy" description="Baseball Excellence" />
 
       <Separator className="via-primary/50 my-4 h-px bg-gradient-to-r from-transparent to-transparent" />
 

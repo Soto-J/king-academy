@@ -52,7 +52,10 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
 
                   {fieldState.invalid && (
                     <div className="min-h-5">
-                      <FieldError className="text-xs" />
+                      <FieldError
+                        errors={[fieldState.error]}
+                        className="text-xs"
+                      />
                     </div>
                   )}
                 </Field>
@@ -71,7 +74,10 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
 
                     {fieldState.invalid && (
                       <div className="min-h-5">
-                        <FieldError className="text-xs" />
+                        <FieldError
+                          errors={[fieldState.error]}
+                          className="text-xs"
+                        />
                       </div>
                     )}
                   </Field>
@@ -104,7 +110,10 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
 
                     {fieldState.invalid && (
                       <div className="min-h-5">
-                        <FieldError className="text-xs" />
+                        <FieldError
+                          errors={[fieldState.error]}
+                          className="text-xs"
+                        />
                       </div>
                     )}
                   </Field>
@@ -126,7 +135,10 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
 
                     {fieldState.invalid && (
                       <div className="min-h-5">
-                        <FieldError className="text-xs" />
+                        <FieldError
+                          errors={[fieldState.error]}
+                          className="text-xs"
+                        />
                       </div>
                     )}
                   </Field>

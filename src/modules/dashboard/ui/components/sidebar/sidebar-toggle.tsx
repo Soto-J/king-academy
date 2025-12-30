@@ -3,7 +3,7 @@
 import { PanelLeftCloseIcon, PanelLeftIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useSidebar } from "@/components/ui/sidebar";
+import { useSidebar } from "@/modules/dashboard/ui/components/sidebar";
 
 export const SidebarToggle = () => {
   const { toggleSidebar, state, isMobile } = useSidebar();
