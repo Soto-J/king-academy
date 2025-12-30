@@ -87,9 +87,6 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
     // },
   ];
 
-  const navigationItems = useFilterNavigationItems(navigationItemsConfig);
-  const personalItems = useFilterNavigationItems(personalItemsConfig);
-
   const isAuthenticated = !!session?.user;
   const isAdmin = session?.user?.role === "admin";
   const isUser = session?.user?.role === "user";
