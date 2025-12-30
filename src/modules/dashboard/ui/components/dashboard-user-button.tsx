@@ -4,6 +4,10 @@ import { useRouter } from "next/navigation";
 
 import { ChevronDownIcon, LogOutIcon } from "lucide-react";
 
+import { useIsMobile } from "@/hooks/use-mobile";
+import { authClient } from "@/lib/auth/auth-client";
+
+import type { SessionData } from "@/lib/auth/auth";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -24,13 +28,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { authClient } from "@/lib/auth/auth-client";
 
-export const DashboardUserButton = () => {
+interface DashboardUserButtonProps {
+  session: SessionData | null;
+}
+
+export const DashboardUserButton = ({ session }: DashboardUserButtonProps) => {
   const router = useRouter();
   const isMobile = useIsMobile();
-  const { data: session, isPending } = authClient.useSession();
 
   const onSignout = () => {
     authClient.signOut({
@@ -39,14 +44,6 @@ export const DashboardUserButton = () => {
       },
     });
   };
-
-  if (isPending) {
-    return (
-      <div className="text-muted-foreground flex w-full items-center justify-center p-3 text-sm">
-        Loading...
-      </div>
-    );
-  }
 
   if (!session) {
     return (
