@@ -14,13 +14,14 @@ import { loadSearchParams } from "@/modules/players/params";
 
 import { PlayersPageView } from "@/modules/players/ui/views/players-page-view";
 import { PlayersHeader } from "@/modules/players/ui/components/players-header";
+import { getCurrentSession } from "@/lib/get-session";
 
 interface PlayersPageProps {
   searchParams: Promise<SearchParams>;
 }
 
 const PlayersPage = async ({ searchParams }: PlayersPageProps) => {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await getCurrentSession();
   if (!session) redirect("/sign-in");
 
   const isAdmin = session.user.role === "admin";

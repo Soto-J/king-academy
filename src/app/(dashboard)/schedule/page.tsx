@@ -1,17 +1,16 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient, trpc } from "@/trpc/server";
 
-import { auth } from "@/lib/auth/auth";
+import { getCurrentSession } from "@/lib/get-session";
 
 import { SchedulePageView } from "@/modules/schedule/ui/views/schedule-page-view";
 
 const SchedulePage = async () => {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await getCurrentSession();
   if (!session) redirect("/sign-in");
 
   const isAdmin = session.user.role === "admin";

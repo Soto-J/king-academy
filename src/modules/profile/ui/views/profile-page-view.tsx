@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { EditProfileDialog } from "../components/form/edit-profile-dialog";
-import { Profile } from "../components/profile";
+import { EditProfileDialog } from "@/modules/profile/ui/components/edit-profile-dialog";
+import { Profile } from "@/modules/profile/ui/components/profile";
 
 export const ProfilePageView = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +17,7 @@ export const ProfilePageView = () => {
   if (!data) {
     return <div>No User Data Found</div>;
   }
-  
+
   return (
     <>
       <EditProfileDialog

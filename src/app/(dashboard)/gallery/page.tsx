@@ -9,6 +9,7 @@ import { GaleryPageView } from "@/modules/galery/ui/views/galery-page-view";
 const GalleryPage = () => {
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(trpc.gallery.loadImages.queryOptions({}));
+  
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<p>Loading...</p>}>
