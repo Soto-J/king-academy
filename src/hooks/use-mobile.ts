@@ -12,9 +12,17 @@ export function useIsMobile() {
     const onChange = () => {
       setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     };
-    mql.addEventListener("change", onChange);
+
+    // Set initial value
     setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    return () => mql.removeEventListener("change", onChange);
+
+    // Add event listener
+    mql.addEventListener("change", onChange);
+
+    // Clean up: remove event listener when component unmounts
+    return () => {
+      mql.removeEventListener("change", onChange);
+    };
   }, []);
 
   return !!isMobile;

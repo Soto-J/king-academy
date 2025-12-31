@@ -14,7 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 import { GalleryModal } from "../components/gallery-modal";
 
-export const GaleryPageView = () => {
+export const GalleryPageView = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   const trpc = useTRPC();
