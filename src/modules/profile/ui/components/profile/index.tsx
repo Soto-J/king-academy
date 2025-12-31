@@ -1,11 +1,12 @@
-import { ProfileGetOne } from "../../types";
-import { Card, CardContent } from "@/components/ui/card";
+import { ProfileGetOne } from "@/modules/profile/types";
 
-import { ProfileHeader } from "./profile/profile-header";
-import { ProfileBio } from "./profile/profile-bio";
-import { BaseballProfile } from "./profile/baseball-profile";
-import { PersonalDetails } from "./profile/personal-details";
-import { ProfileLocation } from "./profile/profile-location";
+import { ProfileHeader } from "./profile-header";
+import { ProfileBio } from "./profile-bio";
+import { BaseballProfile } from "./baseball-profile";
+import { PersonalDetails } from "./personal-details";
+import { ProfileLocation } from "./profile-location";
+
+import { Card, CardContent } from "@/components/ui/card";
 
 interface ProfileProps {
   data: ProfileGetOne;

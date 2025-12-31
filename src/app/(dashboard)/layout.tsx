@@ -1,10 +1,13 @@
 import { Toaster } from "sonner";
 
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { getCurrentSession } from "@/lib/get-session";
+
 import { DashboardSidebar } from "@/modules/dashboard/ui/components/sidebar/dashboard-sidebar";
 import { SidebarToggle } from "@/modules/dashboard/ui/components/sidebar/sidebar-toggle";
-import { auth } from "@/lib/auth/auth";
-import { headers } from "next/headers";
+import {
+  SidebarProvider,
+  SidebarInset,
+} from "@/modules/dashboard/ui/components/sidebar";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -13,7 +16,7 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await getCurrentSession();
 
   return (
     <SidebarProvider>
