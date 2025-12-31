@@ -111,9 +111,9 @@ export const EditProfileDialog = ({
       isOpen={onOpenDialog}
       onOpenChange={onCloseDialog}
     >
-      <form onSubmit={form.handleSubmit(onSubmit)} className="overflow-hidden">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="overflow-hidden h-full">
         <ScrollArea className="h-80 md:h-110">
-          <div className="space-y-6 pb-2">
+          <div className="space-y-6">
             <PersonalInformationSection control={form.control} />
             <AddressSection control={form.control} />
             <BaseballInformationSection
