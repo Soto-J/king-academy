@@ -1,4 +1,5 @@
 "use client";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
   Dialog,
@@ -11,12 +12,9 @@ import {
   Drawer,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { ScrollArea } from "./ui/scroll-area";
 
 interface ResponsiveDialogProps {
   children: React.ReactNode;
@@ -52,7 +50,7 @@ export const ResponsiveDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-full justify-center">
+      <DialogContent className="flex flex-col max-h-full justify-center">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
