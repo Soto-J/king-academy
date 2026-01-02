@@ -20,12 +20,12 @@ export const galleryProcedure = createTRPCRouter({
       // const end = start + input.limit;
 
       const images = await db.select().from(galleryImageTable);
-
+   
       return images.map((img, index) => ({
         src: cloudinary.url(img.publicId, {
           secure: true,
           quality: "auto",
-          format: "auto",
+          auto_format: "auto",
           width: 1600,
         }),
         alt: `Gallery image ${index + 1}`,

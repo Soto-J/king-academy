@@ -19,6 +19,7 @@ import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
+
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const GalleryPageView = () => {
