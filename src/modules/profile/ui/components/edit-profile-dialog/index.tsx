@@ -11,8 +11,6 @@ import { useTRPC } from "@/trpc/client";
 import { ProfileGetOne } from "@/modules/profile/types";
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 
 import { PersonalInformationSection } from "./personal-information-section";
@@ -21,13 +19,13 @@ import { BaseballInformationSection } from "./baseball-information-section";
 import { BioSection } from "./bio-section";
 
 interface EditProfileDialogProps {
-  onOpenDialog: boolean;
+  isOpen: boolean;
   onCloseDialog: () => void;
   initialValues: ProfileGetOne;
 }
 
 export const EditProfileDialog = ({
-  onOpenDialog,
+  isOpen,
   onCloseDialog,
   initialValues,
 }: EditProfileDialogProps) => {
@@ -108,42 +106,20 @@ export const EditProfileDialog = ({
     <ResponsiveDialog
       title="Edit Profile"
       description="Update your baseball profile information"
-      isOpen={onOpenDialog}
+      isOpen={isOpen}
+      isPending={editProfile.isPending}
       onOpenChange={onCloseDialog}
+      onClose={onCloseDialog}
     >
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="h-full overflow-hidden"
-      >
-        <ScrollArea className="h-170">
-          <div className="space-y-6">
-            <PersonalInformationSection control={form.control} />
-            <AddressSection control={form.control} />
-            <BaseballInformationSection
-              control={form.control}
-              watch={form.watch}
-            />
-            <BioSection control={form.control} />
-          </div>
-        </ScrollArea>
-
-        <div className="flex items-center justify-between border-t pt-6">
-          <Button
-            type="button"
-            variant="outline"
-            disabled={editProfile.isPending}
-            onClick={onCloseDialog}
-          >
-            Cancel
-          </Button>
-
-          <Button
-            type="submit"
-            disabled={editProfile.isPending}
-            className="bg-primary hover:bg-primary/90"
-          >
-            {editProfile.isPending ? "Updating..." : "Update Profile"}
-          </Button>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="space-y-6 overflow-y-auto">
+          <PersonalInformationSection control={form.control} />
+          <AddressSection control={form.control} />
+          <BaseballInformationSection
+            control={form.control}
+            watch={form.watch}
+          />
+          <BioSection control={form.control} />
         </div>
       </form>
     </ResponsiveDialog>

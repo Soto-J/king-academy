@@ -22,7 +22,7 @@ export const ProfilePageView = () => {
     <>
       <EditProfileDialog
         initialValues={data}
-        onOpenDialog={isOpen}
+        isOpen={isOpen}
         onCloseDialog={() => setIsOpen(false)}
       />
 
