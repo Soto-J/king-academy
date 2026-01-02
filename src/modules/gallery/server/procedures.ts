@@ -25,7 +25,7 @@ export const galleryProcedure = createTRPCRouter({
         src: cloudinary.url(img.publicId, {
           secure: true,
           quality: "auto",
-          fetch_format: "auto",
+          format: "auto",
           width: 1600,
         }),
         alt: `Gallery image ${index + 1}`,
