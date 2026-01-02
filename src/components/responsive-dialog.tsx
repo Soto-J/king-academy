@@ -1,4 +1,5 @@
 "use client";
+
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
@@ -36,7 +37,7 @@ export const ResponsiveDialog = ({
   if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={onOpenChange}>
-        <DrawerContent className="h-full">
+        <DrawerContent className="max-h-full pb-4">
           <DrawerHeader>
             <DrawerTitle>{title}</DrawerTitle>
             <DrawerDescription>{description}</DrawerDescription>

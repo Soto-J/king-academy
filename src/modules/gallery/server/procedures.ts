@@ -1,8 +1,11 @@
+import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { z } from "zod";
 
-import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+import { db } from "@/db";
+import { galleryImageTable } from "@/db/schema";
+import type { Photo } from "react-photo-album";
 
-import { imageFiles } from "../constants";
+import { cloudinary } from "@/lib/cloudinary";
 
 export const galleryProcedure = createTRPCRouter({
   loadImages: baseProcedure
@@ -12,14 +15,22 @@ export const galleryProcedure = createTRPCRouter({
         limit: z.number().default(20),
       }),
     )
-    .query(({ input }) => {
-      const start = (input.page - 1) * input.limit;
-      const end = start + input.limit;
+    .query(async ({ input }) => {
+      // const start = (input.page - 1) * input.limit;
+      // const end = start + input.limit;
 
-      return imageFiles.map((filename, index) => ({
-        src: `/images/${filename}`,
-        alt: `Gallery image ${index + 1} from June 29, 2024`,
-        id: `img-${index}`,
-      }));
+      const images = await db.select().from(galleryImageTable);
+
+      return images.map((img, index) => ({
+        src: cloudinary.url(img.publicId, {
+          secure: true,
+          quality: "auto",
+          format: "auto",
+          width: 1600,
+        }),
+        alt: `Gallery image ${index + 1}`,
+        width: img.width,
+        height: img.height,
+      })) as Photo[];
     }),
 });

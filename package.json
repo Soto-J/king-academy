@@ -15,7 +15,9 @@
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "auth:generate": "npx @better-auth/cli@latest generate --config ./src/lib/auth/auth.ts"
+    "auth:generate": "npx @better-auth/cli@latest generate --config ./src/lib/auth/auth.ts",
+    "backfill:images": "tsx scripts/backfill-images.ts",
+    "upload:images": "tsx scripts/upload-gallery.ts"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.4",
@@ -38,6 +40,7 @@
     "better-auth": "^1.4.9",
     "class-variance-authority": "^0.7.1",
     "client-only": "^0.0.1",
+    "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
@@ -58,12 +61,14 @@
     "react-error-boundary": "^6.0.1",
     "react-hook-form": "^7.69.0",
     "react-icons": "^5.5.0",
-    "react-masonry-css": "^1.0.16",
+    "react-photo-album": "^3.4.0",
     "server-only": "^0.0.1",
+    "sharp": "^0.34.5",
     "sonner": "^2.0.7",
     "superjson": "^2.2.6",
     "tailwind-merge": "^3.4.0",
     "vaul": "^1.1.2",
+    "yet-another-react-lightbox": "^3.28.0",
     "zod": "^4.2.1"
   },
   "devDependencies": {
