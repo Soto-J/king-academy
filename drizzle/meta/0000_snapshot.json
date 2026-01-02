@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "da038fba-1d8c-4c98-87a5-a9767367190f",
+  "id": "21ab97fd-cc5c-4e7d-8ea5-eb6fb9fd8c6a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -132,7 +132,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "varchar(21)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -146,7 +146,7 @@
         },
         "profile_id": {
           "name": "profile_id",
-          "type": "varchar(36)",
+          "type": "varchar(21)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -234,7 +234,14 @@
           ]
         }
       },
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "address_profile_id_unique": {
+          "name": "address_profile_id_unique",
+          "columns": [
+            "profile_id"
+          ]
+        }
+      },
       "checkConstraint": {}
     },
     "baseball_profile": {
@@ -242,14 +249,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "varchar(21)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "profile_id": {
           "name": "profile_id",
-          "type": "varchar(36)",
+          "type": "varchar(21)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -310,7 +317,83 @@
           ]
         }
       },
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "baseball_profile_profile_id_unique": {
+          "name": "baseball_profile_profile_id_unique",
+          "columns": [
+            "profile_id"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "gallery_image": {
+      "name": "gallery_image",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(21)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "public_id": {
+          "name": "public_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "width": {
+          "name": "width",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "height": {
+          "name": "height",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "gallery_image_id": {
+          "name": "gallery_image_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "gallery_image_public_id_unique": {
+          "name": "gallery_image_public_id_unique",
+          "columns": [
+            "public_id"
+          ]
+        }
+      },
       "checkConstraint": {}
     },
     "position": {
@@ -318,14 +401,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "varchar(21)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "baseball_profile_id": {
           "name": "baseball_profile_id",
-          "type": "varchar(36)",
+          "type": "varchar(21)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -395,7 +478,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "varchar(21)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -486,6 +569,12 @@
         }
       },
       "uniqueConstraints": {
+        "profile_user_id_unique": {
+          "name": "profile_user_id_unique",
+          "columns": [
+            "user_id"
+          ]
+        },
         "profile_phone_number_unique": {
           "name": "profile_phone_number_unique",
           "columns": [
@@ -500,7 +589,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "varchar(21)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -509,35 +598,35 @@
           "name": "game_number",
           "type": "int",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "division": {
           "name": "division",
           "type": "varchar(20)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "home_team": {
           "name": "home_team",
           "type": "varchar(20)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "visiting_team": {
           "name": "visiting_team",
           "type": "varchar(20)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "location": {
           "name": "location",
           "type": "varchar(20)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "date": {
@@ -547,9 +636,16 @@
           "notNull": true,
           "autoincrement": false
         },
-        "endTime": {
-          "name": "endTime",
-          "type": "timestamp",
+        "start_time": {
+          "name": "start_time",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "end_time": {
+          "name": "end_time",
+          "type": "time",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -582,7 +678,14 @@
           ]
         }
       },
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "schedule_game_number_unique": {
+          "name": "schedule_game_number_unique",
+          "columns": [
+            "game_number"
+          ]
+        }
+      },
       "checkConstraint": {}
     },
     "session": {

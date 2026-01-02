@@ -115,7 +115,7 @@ export const verification = mysqlTable("verification", {
 // ============================================================================
 
 export const profileTable = mysqlTable("profile", {
-  id: varchar("id", { length: 36 })
+  id: varchar("id", { length: 21 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
@@ -135,11 +135,11 @@ export const profileTable = mysqlTable("profile", {
 });
 
 export const baseballProfileTable = mysqlTable("baseball_profile", {
-  id: varchar("id", { length: 36 })
+  id: varchar("id", { length: 21 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  profileId: varchar("profile_id", { length: 36 })
+  profileId: varchar("profile_id", { length: 21 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .unique()
     .notNull(),
@@ -152,11 +152,11 @@ export const baseballProfileTable = mysqlTable("baseball_profile", {
 });
 
 export const positionTable = mysqlTable("position", {
-  id: varchar("id", { length: 36 })
+  id: varchar("id", { length: 21 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
-  baseballProfileId: varchar("baseball_profile_id", { length: 36 })
+  baseballProfileId: varchar("baseball_profile_id", { length: 21 })
     .references(() => baseballProfileTable.id, { onDelete: "cascade" })
     .notNull(),
 
@@ -168,14 +168,14 @@ export const positionTable = mysqlTable("position", {
 });
 
 export const addressTable = mysqlTable("address", {
-  id: varchar("id", { length: 36 })
+  id: varchar("id", { length: 21 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
   userId: varchar("user_id", { length: 36 })
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
-  profileId: varchar("profile_id", { length: 36 })
+  profileId: varchar("profile_id", { length: 21 })
     .references(() => profileTable.id, { onDelete: "cascade" })
     .unique()
     .notNull(),
@@ -194,7 +194,7 @@ export const addressTable = mysqlTable("address", {
 // ============================================================================
 
 export const scheduleTable = mysqlTable("schedule", {
-  id: varchar("id", { length: 36 })
+  id: varchar("id", { length: 21 })
     .primaryKey()
     .$default(() => nanoid())
     .notNull(),
@@ -210,6 +210,23 @@ export const scheduleTable = mysqlTable("schedule", {
   date: timestamp("date").notNull(),
   startTime: time("start_time").notNull(),
   endTime: time("end_time").notNull(),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+// ============================================================================
+// IMAGES
+// ============================================================================
+export const galleryImageTable = mysqlTable("gallery_image", {
+  id: varchar("id", { length: 21 })
+    .primaryKey()
+    .$default(() => nanoid())
+    .notNull(),
+  publicId: varchar("public_id", { length: 255 }).unique().notNull(),
+
+  width: int("width").notNull(),
+  height: int("height").notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),

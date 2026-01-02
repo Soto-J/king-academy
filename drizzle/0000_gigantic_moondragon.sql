@@ -16,31 +16,44 @@ CREATE TABLE `account` (
 );
 --> statement-breakpoint
 CREATE TABLE `address` (
-	`id` varchar(36) NOT NULL,
+	`id` varchar(21) NOT NULL,
 	`user_id` varchar(36) NOT NULL,
-	`profile_id` varchar(36) NOT NULL,
+	`profile_id` varchar(21) NOT NULL,
 	`street` varchar(20),
 	`city` varchar(20),
 	`state` char(2),
 	`zip_code` char(5),
 	`created_at` timestamp NOT NULL DEFAULT (now()),
 	`updated_at` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
-	CONSTRAINT `address_id` PRIMARY KEY(`id`)
+	CONSTRAINT `address_id` PRIMARY KEY(`id`),
+	CONSTRAINT `address_profile_id_unique` UNIQUE(`profile_id`)
 );
 --> statement-breakpoint
 CREATE TABLE `baseball_profile` (
-	`id` varchar(36) NOT NULL,
-	`profile_id` varchar(36) NOT NULL,
+	`id` varchar(21) NOT NULL,
+	`profile_id` varchar(21) NOT NULL,
 	`battingStance` enum('right','left','switch'),
 	`throwingArm` enum('right','left','switch'),
 	`created_at` timestamp NOT NULL DEFAULT (now()),
 	`updated_at` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
-	CONSTRAINT `baseball_profile_id` PRIMARY KEY(`id`)
+	CONSTRAINT `baseball_profile_id` PRIMARY KEY(`id`),
+	CONSTRAINT `baseball_profile_profile_id_unique` UNIQUE(`profile_id`)
+);
+--> statement-breakpoint
+CREATE TABLE `gallery_image` (
+	`id` varchar(21) NOT NULL,
+	`public_id` varchar(255) NOT NULL,
+	`width` int NOT NULL,
+	`height` int NOT NULL,
+	`created_at` timestamp NOT NULL DEFAULT (now()),
+	`updated_at` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `gallery_image_id` PRIMARY KEY(`id`),
+	CONSTRAINT `gallery_image_public_id_unique` UNIQUE(`public_id`)
 );
 --> statement-breakpoint
 CREATE TABLE `position` (
-	`id` varchar(36) NOT NULL,
-	`baseball_profile_id` varchar(36) NOT NULL,
+	`id` varchar(21) NOT NULL,
+	`baseball_profile_id` varchar(21) NOT NULL,
 	`position` enum('pitcher','catcher','first_base','second_base','third_base','short_stop','left_field','center_field','right_field','designated_hitter','bench') NOT NULL,
 	`is_primary` boolean NOT NULL DEFAULT false,
 	`created_at` timestamp NOT NULL DEFAULT (now()),
@@ -49,7 +62,7 @@ CREATE TABLE `position` (
 );
 --> statement-breakpoint
 CREATE TABLE `profile` (
-	`id` varchar(36) NOT NULL,
+	`id` varchar(21) NOT NULL,
 	`user_id` varchar(36) NOT NULL,
 	`school` varchar(100),
 	`bio` text,
@@ -59,21 +72,24 @@ CREATE TABLE `profile` (
 	`created_at` timestamp NOT NULL DEFAULT (now()),
 	`updated_at` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
 	CONSTRAINT `profile_id` PRIMARY KEY(`id`),
+	CONSTRAINT `profile_user_id_unique` UNIQUE(`user_id`),
 	CONSTRAINT `profile_phone_number_unique` UNIQUE(`phone_number`)
 );
 --> statement-breakpoint
 CREATE TABLE `schedule` (
-	`id` varchar(36) NOT NULL,
-	`game_number` int,
-	`division` varchar(20),
-	`home_team` varchar(20),
-	`visiting_team` varchar(20),
-	`location` varchar(20),
+	`id` varchar(21) NOT NULL,
+	`game_number` int NOT NULL,
+	`division` varchar(20) NOT NULL,
+	`home_team` varchar(20) NOT NULL,
+	`visiting_team` varchar(20) NOT NULL,
+	`location` varchar(20) NOT NULL,
 	`date` timestamp NOT NULL,
-	`endTime` timestamp NOT NULL,
+	`start_time` time NOT NULL,
+	`end_time` time NOT NULL,
 	`created_at` timestamp NOT NULL DEFAULT (now()),
 	`updated_at` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
-	CONSTRAINT `schedule_id` PRIMARY KEY(`id`)
+	CONSTRAINT `schedule_id` PRIMARY KEY(`id`),
+	CONSTRAINT `schedule_game_number_unique` UNIQUE(`game_number`)
 );
 --> statement-breakpoint
 CREATE TABLE `session` (
