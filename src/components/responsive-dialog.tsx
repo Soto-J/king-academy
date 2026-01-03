@@ -36,7 +36,7 @@ export const ResponsiveDialog = ({
 
   if (isMobile) {
     return (
-      <Drawer open={isOpen} onOpenChange={onOpenChange}>
+      <Drawer open={isOpen} onOpenChange={onOpenChange} autoFocus>
         <DrawerContent className="flex h-[90vh] w-full max-w-full flex-col">
           <DrawerHeader>
             <DrawerTitle>{title}</DrawerTitle>

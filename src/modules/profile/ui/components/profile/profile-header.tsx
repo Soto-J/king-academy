@@ -70,19 +70,29 @@ export const ProfileHeader = ({
 
   return (
     <Card className="from-primary/15 via-secondary/5 to-primary/15 border-border/20 relative overflow-hidden border bg-gradient-to-br shadow-xl backdrop-blur-sm">
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/5 to-transparent" />
       <div className="from-brand-red via-primary to-brand-red absolute top-0 left-0 h-1 w-full bg-gradient-to-r" />
 
-      <CardContent className="relative pt-10 pb-8">
-        <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
-          <div className="relative">
-            <Avatar className="ring-primary/20 h-28 w-28 shadow-lg ring-4">
+      {isOwnProfile && onEditClick && (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onEditClick}
+          className="border-border/20 bg-card/70 text-foreground hover:bg-card hover:text-foreground absolute right-6 gap-2"
+        >
+          <Edit className="h-4 w-4" />
+          Edit
+        </Button>
+      )}
+      <CardContent className="pt-10 pb-8">
+        <div className="flex items-start gap-6 md:flex-row md:items-center">
+          <div className="">
+            <Avatar className="ring-primary/20 h-20 w-20 shadow-lg ring-4 lg:h-28 lg:w-28">
               <AvatarImage
                 src={data.user.image || undefined}
                 alt={data.user.name}
               />
 
-              <AvatarFallback className="from-primary/10 to-primary/20 text-primary bg-gradient-to-br text-2xl font-bold">
+              <AvatarFallback className="from-primary/10 to-primary/20 text-primary bg-gradient-to-br font-bold lg:text-2xl">
                 {getInitials(data.user.name)}
               </AvatarFallback>
             </Avatar>
@@ -97,14 +107,15 @@ export const ProfileHeader = ({
             )}
           </div>
 
-          <div className="flex-1 space-y-3">
+          <div className="flex-1 space-y-1">
             <div className="flex items-start justify-between">
               <div className="space-y-2">
-                <div className="flex items-center gap-4">
-                  <h1 className="text-foreground text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">
+                <div className="flex items-center gap-1 lg:gap-4">
+                  <Star className="fill-primary/20 text-primary h-6 w-6 lg:h-8 lg:w-8" />
+
+                  <h1 className="text-foreground truncate text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">
                     {data.user.name}
                   </h1>
-                  <Star className="fill-primary/20 text-primary h-7 w-7" />
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-3">
@@ -143,18 +154,6 @@ export const ProfileHeader = ({
                   )}
                 </div>
               </div>
-
-              {isOwnProfile && onEditClick && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={onEditClick}
-                  className="border-border/20 bg-card/70 text-foreground hover:bg-card hover:text-foreground gap-2"
-                >
-                  <Edit className="h-4 w-4" />
-                  Edit Profile
-                </Button>
-              )}
             </div>
 
             <div className="text-muted-foreground flex flex-wrap gap-2 text-sm sm:gap-4">
