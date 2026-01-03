@@ -103,15 +103,15 @@ export const EditProfileDialog = ({
   }
 
   return (
-    <ResponsiveDialog
-      title="Edit Profile"
-      description="Update your baseball profile information"
-      isOpen={isOpen}
-      isPending={editProfile.isPending}
-      onOpenChange={onCloseDialog}
-      onClose={onCloseDialog}
-    >
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      <ResponsiveDialog
+        title="Edit Profile"
+        description="Update your baseball profile information"
+        isOpen={isOpen}
+        isPending={editProfile.isPending}
+        onOpenChange={onCloseDialog}
+        onClose={onCloseDialog}
+      >
         <div className="space-y-6 overflow-y-auto">
           <PersonalInformationSection control={form.control} />
           <AddressSection control={form.control} />
@@ -121,7 +121,7 @@ export const EditProfileDialog = ({
           />
           <BioSection control={form.control} />
         </div>
-      </form>
-    </ResponsiveDialog>
+      </ResponsiveDialog>
+    </form>
   );
 };
