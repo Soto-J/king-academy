@@ -91,8 +91,6 @@ export const EditPlayerDialog = ({
       title="Edit Member"
       description={`${initialValues.name}'s profile`}
       isOpen={onOpenDialog}
-      isPending={editProfile.isPending}
-      onClose={onCloseDialog}
       onOpenChange={onCloseDialog}
     >
       <form
