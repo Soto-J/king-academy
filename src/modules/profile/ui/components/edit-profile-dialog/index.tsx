@@ -17,6 +17,7 @@ import { PersonalInformationSection } from "./personal-information-section";
 import { AddressSection } from "./address-section";
 import { BaseballInformationSection } from "./baseball-information-section";
 import { BioSection } from "./bio-section";
+import { Button } from "@/components/ui/button";
 
 interface EditProfileDialogProps {
   isOpen: boolean;
@@ -103,16 +104,17 @@ export const EditProfileDialog = ({
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      <ResponsiveDialog
-        title="Edit Profile"
-        description="Update your baseball profile information"
-        isOpen={isOpen}
-        isPending={editProfile.isPending}
-        onOpenChange={onCloseDialog}
-        onClose={onCloseDialog}
+    <ResponsiveDialog
+      title="Edit Profile"
+      description="Update your baseball profile information"
+      isOpen={isOpen}
+      onOpenChange={onCloseDialog}
+    >
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex h-full min-h-0 flex-col"
       >
-        <div className="space-y-6 overflow-y-auto">
+        <div className="min-h-0 flex-1 space-y-6 overflow-y-auto pr-2">
           <PersonalInformationSection control={form.control} />
           <AddressSection control={form.control} />
           <BaseballInformationSection
@@ -121,7 +123,26 @@ export const EditProfileDialog = ({
           />
           <BioSection control={form.control} />
         </div>
-      </ResponsiveDialog>
-    </form>
+
+        <div className="mt-4 flex w-full items-center justify-between border-t pt-4">
+          <Button
+            type="button"
+            variant="outline"
+            disabled={editProfile.isPending}
+            onClick={onCloseDialog}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            type="submit"
+            disabled={editProfile.isPending}
+            className="bg-primary hover:bg-primary/90"
+          >
+            {editProfile.isPending ? "Updating..." : "Update Profile"}
+          </Button>
+        </div>
+      </form>
+    </ResponsiveDialog>
   );
 };
