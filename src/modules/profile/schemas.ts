@@ -8,6 +8,7 @@ export const ProfileFormSchema = z
     lastName: z.string().min(1, "Last name required."),
     dateOfBirth: z.date().nullish(),
     phoneNumber: z.string().optional(),
+    emergencyNumber: z.string().optional(),
     school: z.string().optional(),
 
     address: z.object({

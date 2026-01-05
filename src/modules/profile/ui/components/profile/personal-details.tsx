@@ -1,19 +1,15 @@
-import { format } from "date-fns";
+import { Activity } from "react";
 import { User, Phone, GraduationCap, Calendar } from "lucide-react";
 
 import { ProfileGetOne } from "@/modules/profile/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatDate, formatPhoneNumber } from "@/lib/utils";
 
 interface PersonalDetailsProps {
   profile: ProfileGetOne["profile"];
 }
 
 export const PersonalDetails = ({ profile }: PersonalDetailsProps) => {
-  const formatDate = (date: string | Date | null) => {
-    if (!date) return "Not specified";
-    return format(new Date(date), "MMMM d, yyyy");
-  };
-
   return (
     <Card className="from-muted/50 to-primary/10 border-border/20 bg-gradient-to-br shadow-md backdrop-blur-sm">
       <CardHeader className="from-primary/5 to-primary/10 bg-gradient-to-r">
@@ -24,7 +20,7 @@ export const PersonalDetails = ({ profile }: PersonalDetailsProps) => {
       </CardHeader>
 
       <CardContent className="space-y-4 pt-6">
-        {profile?.dateOfBirth && (
+        <Activity mode={profile?.dateOfBirth ? "visible" : "hidden"}>
           <div className="border-border/20 bg-card/50 rounded-lg border p-3 backdrop-blur-sm">
             <div className="text-primary mb-1 flex items-center gap-2">
               <Calendar className="h-4 w-4" />
@@ -36,9 +32,9 @@ export const PersonalDetails = ({ profile }: PersonalDetailsProps) => {
               {formatDate(profile.dateOfBirth)}
             </p>
           </div>
-        )}
+        </Activity>
 
-        {profile?.school && (
+        <Activity mode={profile?.school ? "visible" : "hidden"}>
           <div className="border-border/20 bg-card/50 rounded-lg border p-3 backdrop-blur-sm">
             <div className="text-primary mb-1 flex items-center gap-2">
               <GraduationCap className="h-4 w-4" />
@@ -48,19 +44,21 @@ export const PersonalDetails = ({ profile }: PersonalDetailsProps) => {
 
             <p className="text-foreground font-medium">{profile.school}</p>
           </div>
-        )}
+        </Activity>
 
-        {profile?.phoneNumber && (
+        <Activity mode={profile?.phoneNumber ? "visible" : "hidden"}>
           <div className="border-border/20 bg-card/50 rounded-lg border p-3 backdrop-blur-sm">
             <div className="text-primary mb-1 flex items-center gap-2">
               <Phone className="h-4 w-4" />
 
               <span className="text-sm font-semibold">Phone</span>
             </div>
-            
-            <p className="text-foreground font-medium">{profile.phoneNumber}</p>
+
+            <p className="text-foreground font-medium">
+              {formatPhoneNumber(profile.phoneNumber ?? "")}
+            </p>
           </div>
-        )}
+        </Activity>
       </CardContent>
     </Card>
   );

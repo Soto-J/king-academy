@@ -85,27 +85,16 @@ export const ProfileHeader = ({
       )}
       <CardContent className="pt-10 pb-8">
         <div className="flex items-start gap-6 md:flex-row md:items-center">
-          <div>
-            <Avatar className="ring-primary/20 h-20 w-20 shadow-lg ring-4 lg:h-28 lg:w-28">
-              <AvatarImage
-                src={data.user.image || undefined}
-                alt={data.user.name}
-              />
+          <Avatar className="ring-primary/20 h-20 w-20 shadow-lg ring-4 lg:h-28 lg:w-28">
+            <AvatarImage
+              src={data.user.image || undefined}
+              alt={data.user.name}
+            />
 
-              <AvatarFallback className="from-primary/10 to-primary/20 text-primary bg-gradient-to-br font-bold lg:text-2xl">
-                {getInitials(data.user.name)}
-              </AvatarFallback>
-            </Avatar>
-
-            {/* {data.baseballProfile?.positions?.[0] && (
-              <Badge className="bg-primary text-primary-foreground absolute -bottom-2 left-1/2 -translate-x-1/2 transform shadow-md">
-                <Trophy className="mr-1 h-3 w-3" />
-                {formatPositionLabel(
-                  data.baseballProfile.positions[0].position,
-                )}
-              </Badge>
-            )} */}
-          </div>
+            <AvatarFallback className="from-primary/10 to-primary/20 text-primary bg-gradient-to-br font-bold lg:text-2xl">
+              {getInitials(data.user.name)}
+            </AvatarFallback>
+          </Avatar>
 
           <div className="flex-1 space-y-4">
             <div className="flex items-center gap-1 lg:gap-4">
@@ -131,20 +120,6 @@ export const ProfileHeader = ({
                   Age {age}
                 </Badge>
               )}
-
-              {data.profile?.phoneNumber && (
-                <div className="bg-card/60 border-border/10 flex items-center gap-2 rounded-full border px-3 py-1">
-                  <Phone className="text-primary h-4 w-4" />
-                  {data.profile.phoneNumber}
-                </div>
-              )}
-
-              {/* {data.profile?.school && (
-                <div className="bg-card/60 border-border/10 flex items-center gap-2 rounded-full border px-3 py-1">
-                  <GraduationCap className="text-primary h-4 w-4" />
-                  {data.profile.school}
-                </div>
-              )} */}
             </div>
           </div>
         </div>

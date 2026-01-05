@@ -44,6 +44,7 @@ export const EditProfileDialog = ({
         ? new Date(initialValues.profile.dateOfBirth)
         : null,
       phoneNumber: initialValues.profile?.phoneNumber || "",
+      emergencyNumber: initialValues.profile?.emergencyNumber || "",
       school: initialValues.profile?.school || "",
       address: {
         street: initialValues.profile.address?.street || "",

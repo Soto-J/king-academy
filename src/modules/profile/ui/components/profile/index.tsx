@@ -7,6 +7,7 @@ import { PersonalDetails } from "./personal-details";
 import { ProfileLocation } from "./profile-location";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Activity } from "react";
 
 interface ProfileProps {
   data: ProfileGetOne;
@@ -39,7 +40,10 @@ export const Profile = ({
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="space-y-6 xl:col-span-2">
-          {data.profile?.bio && <ProfileBio bio={data.profile.bio} />}
+          <Activity mode={data.profile?.bio ? "visible" : "hidden"}>
+            <ProfileBio bio={data.profile.bio} />
+          </Activity>
+          
           <BaseballProfile baseballProfile={data.baseballProfile} />
         </div>
 

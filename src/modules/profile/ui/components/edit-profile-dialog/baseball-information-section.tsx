@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { FormErrorMessage } from "@/components/form-error-message";
 
 interface BaseballInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -77,9 +78,7 @@ export const BaseballInformationSection = ({
                 </SelectContent>
               </Select>
 
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} className="text-xs" />
-              )}
+              <FormErrorMessage error={fieldState.error} />
             </Field>
           )}
         />
@@ -122,11 +121,7 @@ export const BaseballInformationSection = ({
                 ))}
               </div>
 
-              {fieldState.invalid && (
-                <div className="min-h-5">
-                  <FieldError errors={[fieldState.error]} className="text-xs" />
-                </div>
-              )}
+              <FormErrorMessage error={fieldState.error} />
             </Field>
           )}
         />
@@ -156,14 +151,7 @@ export const BaseballInformationSection = ({
                   </SelectContent>
                 </Select>
 
-                {fieldState.invalid && (
-                  <div className="min-h-5">
-                    <FieldError
-                      errors={[fieldState.error]}
-                      className="text-xs"
-                    />
-                  </div>
-                )}
+                <FormErrorMessage error={fieldState.error} />
               </Field>
             )}
           />
@@ -192,14 +180,7 @@ export const BaseballInformationSection = ({
                   </SelectContent>
                 </Select>
 
-                {fieldState.invalid && (
-                  <div className="min-h-5">
-                    <FieldError
-                      errors={[fieldState.error]}
-                      className="text-xs"
-                    />
-                  </div>
-                )}
+                <FormErrorMessage error={fieldState.error} />
               </Field>
             )}
           />

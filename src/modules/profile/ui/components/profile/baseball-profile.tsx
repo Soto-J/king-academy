@@ -6,22 +6,26 @@ import { GiBaseballGlove } from "react-icons/gi";
 import { ProfileGetOne } from "@/modules/profile/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+const formatPositionLabel = (position: string | null) => {
+  return position
+    ? position
+        .split("_")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    : "not specified";
+};
+
+const formatStanceLabel = (stance: string | null) => {
+  return stance
+    ? stance.charAt(0).toUpperCase() + stance.slice(1)
+    : "not specified";
+};
+
 interface BaseballProfileProps {
   baseballProfile: ProfileGetOne["baseballProfile"];
 }
 
 export const BaseballProfile = ({ baseballProfile }: BaseballProfileProps) => {
-  const formatPositionLabel = (position: string) => {
-    return position
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
-
-  const formatStanceLabel = (stance: string) => {
-    return stance.charAt(0).toUpperCase() + stance.slice(1);
-  };
-
   return (
     <Card className="from-muted/50 to-primary/10 border-border/20 bg-gradient-to-br shadow-md backdrop-blur-sm">
       <CardHeader className="from-primary/5 to-primary/10 bg-gradient-to-r">
@@ -40,9 +44,7 @@ export const BaseballProfile = ({ baseballProfile }: BaseballProfileProps) => {
             </div>
 
             <p className="text-foreground text-lg font-bold">
-              {baseballProfile?.positions?.[0]
-                ? formatPositionLabel(baseballProfile.positions[0].position)
-                : "Not specified"}
+              {formatPositionLabel(baseballProfile.positions[0].position)}
             </p>
           </div>
 
@@ -54,9 +56,7 @@ export const BaseballProfile = ({ baseballProfile }: BaseballProfileProps) => {
             </div>
 
             <p className="text-foreground text-lg font-bold">
-              {baseballProfile?.battingStance
-                ? formatStanceLabel(baseballProfile.battingStance)
-                : "Not specified"}
+              {formatStanceLabel(baseballProfile.battingStance)}
             </p>
           </div>
 
@@ -68,9 +68,7 @@ export const BaseballProfile = ({ baseballProfile }: BaseballProfileProps) => {
             </div>
 
             <p className="text-foreground text-lg font-bold">
-              {baseballProfile?.throwingArm
-                ? formatStanceLabel(baseballProfile.throwingArm)
-                : "Not specified"}
+              {formatStanceLabel(baseballProfile.throwingArm)}
             </p>
           </div>
         </div>

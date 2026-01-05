@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { and, eq, getTableColumns } from "drizzle-orm";
 
+import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
 import { db } from "@/db";
+
 import {
   addressTable,
   baseballProfileTable,
@@ -12,8 +13,9 @@ import {
   user,
 } from "@/db/schema";
 
-import { ProfileEditSchema } from "../schemas";
-import { TRPCError } from "@trpc/server";
+import { and, eq, getTableColumns } from "drizzle-orm";
+
+import { ProfileEditSchema } from "@/modules/profile/schemas";
 
 export const profileRouter = createTRPCRouter({
   getOne: protectedProcedure
@@ -62,6 +64,7 @@ export const profileRouter = createTRPCRouter({
           dateOfBirth: data.profile.dateOfBirth,
           isActive: data.profile.isActive,
           phoneNumber: data.profile.phoneNumber,
+          emergencyNumber: data.profile.emergencyNumber,
           address: {
             street: data.address.street,
             state: data.address.state,
@@ -80,90 +83,60 @@ export const profileRouter = createTRPCRouter({
   edit: protectedProcedure
     .input(ProfileEditSchema)
     .mutation(async ({ ctx, input }) => {
-      if (ctx.auth.user.id !== input.userId) {
+      const { userId } = input;
+
+      if (ctx.auth.user.id !== userId) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Cannot edit other users profile.",
         });
       }
 
-      const {
-        userId,
-        firstName,
-        lastName,
-        address,
-        dateOfBirth,
-        phoneNumber,
-        school,
-        bio,
-        positions,
-        primaryPosition,
-        battingStance,
-        throwingArm,
-      } = input;
-
       await db
         .update(user)
-        .set({
-          name: `${firstName} ${lastName}`,
-        })
+        .set({ name: `${input.firstName} ${input.lastName}` })
         .where(and(eq(user.id, userId), eq(user.id, ctx.auth.user.id)));
+
+      const profileValues = {
+        school: input.school,
+        bio: input.bio,
+        dateOfBirth: input.dateOfBirth,
+        phoneNumber: input.phoneNumber,
+        emergencyNumber: input.emergencyNumber,
+      };
 
       await db
         .insert(profileTable)
-        .values({
-          userId,
-          school,
-          bio,
-          dateOfBirth,
-          phoneNumber,
-        })
-        .onDuplicateKeyUpdate({
-          set: {
-            school,
-            bio,
-            dateOfBirth,
-            phoneNumber,
-          },
-        });
+        .values({ userId, ...profileValues })
+        .onDuplicateKeyUpdate({ set: profileValues });
 
       const [userProfile] = await db
         .select({ id: profileTable.id })
         .from(profileTable)
         .where(eq(profileTable.userId, userId));
 
+      const addressValues = {
+        street: input.address?.street || "",
+        city: input.address?.city || "",
+        state: input.address?.state || "",
+        zipCode: input.address?.zipcode || "",
+      };
       await db
         .insert(addressTable)
-        .values({
-          userId,
-          profileId: userProfile.id,
-          street: address?.street || "",
-          city: address?.city || "",
-          state: address?.state || "",
-          zipCode: address?.zipcode || "",
-        })
-        .onDuplicateKeyUpdate({
-          set: {
-            street: address?.street || "",
-            city: address?.city || "",
-            state: address?.state || "",
-            zipCode: address?.zipcode || "",
-          },
-        });
+        .values({ userId, profileId: userProfile.id, ...addressValues })
+        .onDuplicateKeyUpdate({ set: addressValues });
 
+      const baseballValues = {
+        battingStance: input.battingStance,
+        throwingArm: input.throwingArm,
+      };
       await db
         .insert(baseballProfileTable)
         .values({
           profileId: userProfile.id,
-          battingStance,
-          throwingArm,
+          ...baseballValues,
         })
-        .onDuplicateKeyUpdate({
-          set: {
-            battingStance,
-            throwingArm,
-          },
-        });
+        .onDuplicateKeyUpdate({ set: baseballValues });
 
       const [baseballProfile] = await db
         .select({ id: baseballProfileTable.id })
@@ -174,11 +147,13 @@ export const profileRouter = createTRPCRouter({
         .delete(positionTable)
         .where(eq(positionTable.baseballProfileId, baseballProfile.id));
 
+      const { positions, primaryPosition } = input;
+
       if (positions.length > 0) {
         await db.insert(positionTable).values(
           positions.map((position) => ({
             baseballProfileId: baseballProfile.id,
-            position: position,
+            position,
             isPrimary: position === primaryPosition,
           })),
         );

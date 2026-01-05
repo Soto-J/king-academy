@@ -129,6 +129,7 @@ export const profileTable = mysqlTable("profile", {
   dateOfBirth: date("date_of_birth"),
   isActive: boolean("is_active").default(false).notNull(),
   phoneNumber: char("phone_number", { length: 16 }).unique(),
+  emergencyNumber: char("emergency_number", { length: 16 }),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
