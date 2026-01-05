@@ -3,10 +3,12 @@ import { FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface ProfileBioProps {
-  bio: string;
+  bio: string | null;
 }
 
 export const ProfileBio = ({ bio }: ProfileBioProps) => {
+  if (!bio) return null;
+
   return (
     <Card className="from-muted/50 to-primary/10 border-border/20 bg-gradient-to-br shadow-md backdrop-blur-sm">
       <CardHeader className="from-primary/5 to-primary/10 bg-gradient-to-r">

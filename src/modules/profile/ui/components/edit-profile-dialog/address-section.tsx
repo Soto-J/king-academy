@@ -18,11 +18,11 @@ import {
 } from "@/components/ui/select";
 import {
   Field,
-  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSet,
 } from "@/components/ui/field";
+import { FormErrorMessage } from "@/components/form-error-message";
 
 interface AddressSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -50,14 +50,7 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
 
                   <Input placeholder="123 Main Street" {...field} />
 
-                  {fieldState.invalid && (
-                    <div className="min-h-5">
-                      <FieldError
-                        errors={[fieldState.error]}
-                        className="text-xs"
-                      />
-                    </div>
-                  )}
+                  <FormErrorMessage error={fieldState.error} />
                 </Field>
               )}
             />
@@ -72,14 +65,7 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
 
                     <Input placeholder="City" {...field} />
 
-                    {fieldState.invalid && (
-                      <div className="min-h-5">
-                        <FieldError
-                          errors={[fieldState.error]}
-                          className="text-xs"
-                        />
-                      </div>
-                    )}
+                    <FormErrorMessage error={fieldState.error} />
                   </Field>
                 )}
               />
@@ -108,14 +94,7 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                       </SelectContent>
                     </Select>
 
-                    {fieldState.invalid && (
-                      <div className="min-h-5">
-                        <FieldError
-                          errors={[fieldState.error]}
-                          className="text-xs"
-                        />
-                      </div>
-                    )}
+                    <FormErrorMessage error={fieldState.error} />
                   </Field>
                 )}
               />
@@ -133,14 +112,7 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                       value={field.value || ""}
                     />
 
-                    {fieldState.invalid && (
-                      <div className="min-h-5">
-                        <FieldError
-                          errors={[fieldState.error]}
-                          className="text-xs"
-                        />
-                      </div>
-                    )}
+                    <FormErrorMessage error={fieldState.error} />
                   </Field>
                 )}
               />

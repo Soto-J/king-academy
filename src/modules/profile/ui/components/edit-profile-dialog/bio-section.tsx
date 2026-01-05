@@ -1,14 +1,14 @@
 import { z } from "zod";
-
 import { Control, Controller } from "react-hook-form";
 
 import { FileText } from "lucide-react";
 
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
+import { FormErrorMessage } from "@/components/form-error-message";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Field, FieldLabel } from "@/components/ui/field";
 
 interface BioSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -38,9 +38,7 @@ export const BioSection = ({ control }: BioSectionProps) => {
                 className="min-h-25 resize-none"
               />
 
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} className="text-xs" />
-              )}
+              <FormErrorMessage error={fieldState.error} />
             </Field>
           )}
         />

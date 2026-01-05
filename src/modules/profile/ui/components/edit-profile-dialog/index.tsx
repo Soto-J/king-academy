@@ -12,12 +12,12 @@ import { ProfileGetOne } from "@/modules/profile/types";
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { ResponsiveDialog } from "@/components/responsive-dialog";
+import { Button } from "@/components/ui/button";
 
 import { PersonalInformationSection } from "./personal-information-section";
 import { AddressSection } from "./address-section";
 import { BaseballInformationSection } from "./baseball-information-section";
 import { BioSection } from "./bio-section";
-import { Button } from "@/components/ui/button";
 
 interface EditProfileDialogProps {
   isOpen: boolean;
@@ -44,6 +44,7 @@ export const EditProfileDialog = ({
         ? new Date(initialValues.profile.dateOfBirth)
         : null,
       phoneNumber: initialValues.profile?.phoneNumber || "",
+      emergencyNumber: initialValues.profile?.emergencyNumber || "",
       school: initialValues.profile?.school || "",
       address: {
         street: initialValues.profile.address?.street || "",

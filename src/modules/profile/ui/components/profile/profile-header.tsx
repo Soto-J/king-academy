@@ -85,75 +85,24 @@ export const ProfileHeader = ({
       )}
       <CardContent className="pt-10 pb-8">
         <div className="flex items-start gap-6 md:flex-row md:items-center">
-          <div className="">
-            <Avatar className="ring-primary/20 h-20 w-20 shadow-lg ring-4 lg:h-28 lg:w-28">
-              <AvatarImage
-                src={data.user.image || undefined}
-                alt={data.user.name}
-              />
+          <Avatar className="ring-primary/20 h-20 w-20 shadow-lg ring-4 lg:h-28 lg:w-28">
+            <AvatarImage
+              src={data.user.image || undefined}
+              alt={data.user.name}
+            />
 
-              <AvatarFallback className="from-primary/10 to-primary/20 text-primary bg-gradient-to-br font-bold lg:text-2xl">
-                {getInitials(data.user.name)}
-              </AvatarFallback>
-            </Avatar>
+            <AvatarFallback className="from-primary/10 to-primary/20 text-primary bg-gradient-to-br font-bold lg:text-2xl">
+              {getInitials(data.user.name)}
+            </AvatarFallback>
+          </Avatar>
 
-            {data.baseballProfile?.positions?.[0] && (
-              <Badge className="bg-primary text-primary-foreground absolute -bottom-2 left-1/2 -translate-x-1/2 transform shadow-md">
-                <Trophy className="mr-1 h-3 w-3" />
-                {formatPositionLabel(
-                  data.baseballProfile.positions[0].position,
-                )}
-              </Badge>
-            )}
-          </div>
+          <div className="flex-1 space-y-4">
+            <div className="flex items-center gap-1 lg:gap-4">
+              <Star className="fill-primary/20 text-primary h-6 w-6 lg:h-8 lg:w-8" />
 
-          <div className="flex-1 space-y-1">
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-1 lg:gap-4">
-                  <Star className="fill-primary/20 text-primary h-6 w-6 lg:h-8 lg:w-8" />
-
-                  <h1 className="text-foreground truncate text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">
-                    {data.user.name}
-                  </h1>
-                </div>
-
-                <div className="mt-4 flex flex-wrap gap-3">
-                  {age && (
-                    <Badge
-                      variant="secondary"
-                      className="bg-primary/10 text-primary border-primary/20"
-                    >
-                      <Calendar className="mr-1 h-3 w-3" />
-                      Age {age}
-                    </Badge>
-                  )}
-
-                  {data.baseballProfile?.battingStance && (
-                    <Badge
-                      variant="secondary"
-                      className="bg-secondary/50 text-secondary-foreground"
-                    >
-                      <Target className="mr-1 h-3 w-3" />
-                      {formatStanceLabel(
-                        data.baseballProfile.battingStance,
-                      )}{" "}
-                      Batter
-                    </Badge>
-                  )}
-
-                  {data.baseballProfile?.throwingArm && (
-                    <Badge
-                      variant="secondary"
-                      className="bg-accent/70 text-accent-foreground"
-                    >
-                      <Zap className="mr-1 h-3 w-3" />
-                      {formatStanceLabel(data.baseballProfile.throwingArm)}{" "}
-                      Thrower
-                    </Badge>
-                  )}
-                </div>
-              </div>
+              <h1 className="text-foreground truncate text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">
+                {data.user.name}
+              </h1>
             </div>
 
             <div className="text-muted-foreground flex flex-wrap gap-2 text-sm sm:gap-4">
@@ -162,18 +111,14 @@ export const ProfileHeader = ({
                 {data.user.email}
               </div>
 
-              {data.profile?.phoneNumber && (
-                <div className="bg-card/60 border-border/10 flex items-center gap-2 rounded-full border px-3 py-1">
-                  <Phone className="text-primary h-4 w-4" />
-                  {data.profile.phoneNumber}
-                </div>
-              )}
-
-              {data.profile?.school && (
-                <div className="bg-card/60 border-border/10 flex items-center gap-2 rounded-full border px-3 py-1">
-                  <GraduationCap className="text-primary h-4 w-4" />
-                  {data.profile.school}
-                </div>
+              {age && (
+                <Badge
+                  variant="secondary"
+                  className="bg-card/60 border-border/10 flex items-center gap-2 rounded-full border px-3 py-1"
+                >
+                  <Calendar className="mr-1 h-3 w-3" />
+                  Age {age}
+                </Badge>
               )}
             </div>
           </div>
