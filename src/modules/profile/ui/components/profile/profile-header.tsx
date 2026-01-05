@@ -139,12 +139,12 @@ export const ProfileHeader = ({
                 </div>
               )}
 
-              {data.profile?.school && (
+              {/* {data.profile?.school && (
                 <div className="bg-card/60 border-border/10 flex items-center gap-2 rounded-full border px-3 py-1">
                   <GraduationCap className="text-primary h-4 w-4" />
                   {data.profile.school}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
