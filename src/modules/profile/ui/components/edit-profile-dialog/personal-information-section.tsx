@@ -36,12 +36,13 @@ export const PersonalInformationSection = ({
               control={control}
               render={({ field, fieldState }) => (
                 <Field>
-                  <FieldLabel>First Name</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>First Name</FieldLabel>
 
                   <Input
+                    {...field}
+                    id={field.name}
                     placeholder="John"
                     autoComplete="given-name"
-                    {...field}
                   />
 
                   <FormErrorMessage error={fieldState.error} />
@@ -54,9 +55,10 @@ export const PersonalInformationSection = ({
               control={control}
               render={({ field, fieldState }) => (
                 <Field>
-                  <FieldLabel>Last Name</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Last Name</FieldLabel>
 
                   <Input
+                    id={field.name}
                     placeholder="Smith"
                     autoComplete="family-name"
                     {...field}
@@ -67,6 +69,7 @@ export const PersonalInformationSection = ({
               )}
             />
           </FieldGroup>
+
           <Controller
             name="dateOfBirth"
             control={control}
@@ -78,12 +81,12 @@ export const PersonalInformationSection = ({
 
               return (
                 <Field>
-                  <FieldLabel htmlFor="dob">Date of Birth</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Date of Birth</FieldLabel>
 
                   <Input
-                    id="dob"
-                    type="date"
                     {...field}
+                    id={field.name}
+                    type="date"
                     value={displayValue}
                     max={new Date().toISOString().slice(0, 10)}
                     onChange={(e) => {
@@ -106,13 +109,14 @@ export const PersonalInformationSection = ({
               control={control}
               render={({ field, fieldState }) => (
                 <Field>
-                  <FieldLabel>Phone Number</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
 
                   <Input
+                    {...field}
+                    id={field.name}
                     placeholder="(555) 123-4567"
                     inputMode="tel"
                     autoComplete="tel"
-                    {...field}
                     value={formatPhoneNumber(field.value ?? "")}
                     onChange={(e) => {
                       const digits = e.target.value.replace(/\D/g, "");
@@ -130,13 +134,14 @@ export const PersonalInformationSection = ({
               control={control}
               render={({ field, fieldState }) => (
                 <Field>
-                  <FieldLabel>Emergency Number</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Emergency Number</FieldLabel>
 
                   <Input
+                    {...field}
+                    id={field.name}
                     placeholder="(555) 123-4567"
                     inputMode="tel"
                     autoComplete="tel"
-                    {...field}
                     value={formatPhoneNumber(field.value ?? "")}
                     onChange={(e) => {
                       const digits = e.target.value.replace(/\D/g, "");
@@ -155,12 +160,19 @@ export const PersonalInformationSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <Field>
-                <FieldLabel className="flex items-center gap-2">
+                <FieldLabel
+                  htmlFor={field.name}
+                  className="flex items-center gap-2"
+                >
                   <GraduationCap className="h-4 w-4" />
                   School
                 </FieldLabel>
 
-                <Input placeholder="Your school or university" {...field} />
+                <Input
+                  {...field}
+                  id={field.name}
+                  placeholder="Your school or university"
+                />
 
                 <FormErrorMessage error={fieldState.error} />
               </Field>

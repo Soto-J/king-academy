@@ -7,6 +7,8 @@ import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { US_STATES } from "@/modules/profile/constants";
 
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { FormErrorMessage } from "@/components/form-error-message";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -16,13 +18,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-} from "@/components/ui/field";
-import { FormErrorMessage } from "@/components/form-error-message";
 
 interface AddressSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -46,9 +41,13 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
               control={control}
               render={({ field, fieldState }) => (
                 <Field>
-                  <FieldLabel>Street Address</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>Street Address</FieldLabel>
 
-                  <Input placeholder="123 Main Street" {...field} />
+                  <Input
+                    {...field}
+                    id={field.name}
+                    placeholder="123 Main Street"
+                  />
 
                   <FormErrorMessage error={fieldState.error} />
                 </Field>
@@ -61,9 +60,9 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 control={control}
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel htmlFor="city">City</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>City</FieldLabel>
 
-                    <Input placeholder="City" {...field} />
+                    <Input {...field} id={field.name} placeholder="City" />
 
                     <FormErrorMessage error={fieldState.error} />
                   </Field>
@@ -75,13 +74,13 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 control={control}
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel>State</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>State</FieldLabel>
 
                     <Select
                       onValueChange={field.onChange}
                       value={field.value || ""}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger id={field.name}>
                         <SelectValue {...field} placeholder="Select state" />
                       </SelectTrigger>
 
@@ -104,11 +103,12 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
                 control={control}
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel>ZIP Code</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>ZIP Code</FieldLabel>
 
                     <Input
-                      placeholder="12345"
                       {...field}
+                      id={field.name}
+                      placeholder="12345"
                       value={field.value || ""}
                     />
 

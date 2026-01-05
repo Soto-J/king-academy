@@ -5,6 +5,8 @@ import { Control, Controller, UseFormWatch } from "react-hook-form";
 
 import { POSITIONS, BATTING_STANCE, THROWING_ARM } from "@/db/schema";
 
+import { formatPositionLabel, formatStanceLabel } from "@/lib/utils";
+
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { FormErrorMessage } from "@/components/form-error-message";
@@ -28,17 +30,6 @@ export const BaseballInformationSection = ({
   control,
   watch,
 }: BaseballInformationSectionProps) => {
-  const formatPositionLabel = (position: string) => {
-    return position
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
-
-  const formatStanceLabel = (stance: string) => {
-    return stance.charAt(0).toUpperCase() + stance.slice(1);
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -55,14 +46,19 @@ export const BaseballInformationSection = ({
           control={control}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Primary Position</FieldLabel>
+              <FieldLabel htmlFor="primaryPosition">
+                Primary Position
+              </FieldLabel>
 
               <Select
                 onValueChange={field.onChange}
                 value={field.value || undefined}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select primary position" />
+                  <SelectValue
+                    id="primaryPosition"
+                    placeholder="Select primary position"
+                  />
                 </SelectTrigger>
 
                 <SelectContent>
@@ -105,7 +101,7 @@ export const BaseballInformationSection = ({
                               field.value.filter((p) => p !== position),
                             )
                       }
-                      className="border-border rounded"
+                      className="border-border size-3"
                     />
 
                     <label
@@ -129,15 +125,18 @@ export const BaseballInformationSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <Field className="space-y-3">
-                <FieldLabel>Batting Stance</FieldLabel>
+                <FieldLabel htmlFor={field.name}>Batting Stance</FieldLabel>
 
                 <Select
                   {...field}
                   onValueChange={field.onChange}
                   value={field.value || undefined}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select batting stance" />
+                  <SelectTrigger id={field.name}>
+                    <SelectValue
+                      id={field.name}
+                      placeholder="Select batting stance"
+                    />
                   </SelectTrigger>
 
                   <SelectContent>
@@ -159,14 +158,14 @@ export const BaseballInformationSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <Field className="space-y-3">
-                <FieldLabel>Throwing Arm</FieldLabel>
+                <FieldLabel htmlFor={field.name}>Throwing Arm</FieldLabel>
 
                 <Select
                   {...field}
                   onValueChange={field.onChange}
                   value={field.value || undefined}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger id={field.name}>
                     <SelectValue placeholder="Select throwing arm" />
                   </SelectTrigger>
 

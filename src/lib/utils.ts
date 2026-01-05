@@ -18,3 +18,18 @@ export const formatDate = (date: string | Date | null) => {
   if (!date) return "Not specified";
   return format(new Date(date), "MMMM d, yyyy");
 };
+
+export const formatPositionLabel = (position: string | null) => {
+  return position
+    ? position
+        .split("_")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    : "not specified";
+};
+
+export const formatStanceLabel = (stance: string | null) => {
+  return stance
+    ? stance.charAt(0).toUpperCase() + stance.slice(1)
+    : "not specified";
+};

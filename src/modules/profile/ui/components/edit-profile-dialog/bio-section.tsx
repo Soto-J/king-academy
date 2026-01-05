@@ -30,10 +30,11 @@ export const BioSection = ({ control }: BioSectionProps) => {
           control={control}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Player Bio</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Player Bio</FieldLabel>
 
               <Textarea
                 {...field}
+                id={field.name}
                 placeholder="Tell us about your baseball journey, achievements, goals..."
                 className="min-h-25 resize-none"
               />

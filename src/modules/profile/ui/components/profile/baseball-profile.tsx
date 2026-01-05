@@ -5,21 +5,7 @@ import { GiBaseballGlove } from "react-icons/gi";
 
 import { ProfileGetOne } from "@/modules/profile/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-const formatPositionLabel = (position: string | null) => {
-  return position
-    ? position
-        .split("_")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ")
-    : "not specified";
-};
-
-const formatStanceLabel = (stance: string | null) => {
-  return stance
-    ? stance.charAt(0).toUpperCase() + stance.slice(1)
-    : "not specified";
-};
+import { formatPositionLabel, formatStanceLabel } from "@/lib/utils";
 
 interface BaseballProfileProps {
   baseballProfile: ProfileGetOne["baseballProfile"];
@@ -44,7 +30,7 @@ export const BaseballProfile = ({ baseballProfile }: BaseballProfileProps) => {
             </div>
 
             <p className="text-foreground text-lg font-bold">
-              {formatPositionLabel(baseballProfile.positions[0].position)}
+              {formatPositionLabel(baseballProfile.positions[0]?.position)}
             </p>
           </div>
 
