@@ -1,19 +1,16 @@
 import { z } from "zod";
-
 import { Control, Controller } from "react-hook-form";
-
-import { format } from "date-fns";
 
 import { User, GraduationCap } from "lucide-react";
 
+import { formatPhoneNumber } from "@/lib/utils";
+
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
+import { FormErrorMessage } from "@/components/form-error-message";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { Input } from "@/components/ui/input";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
-import { FormErrorMessage } from "@/components/form-error-message";
-import { formatPhoneNumber } from "@/lib/utils";
 
 interface PersonalInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -86,18 +83,15 @@ export const PersonalInformationSection = ({
                   <Input
                     id="dob"
                     type="date"
+                    {...field}
                     value={displayValue}
+                    max={new Date().toISOString().slice(0, 10)}
                     onChange={(e) => {
                       const v = e.target.value;
                       if (!v) return field.onChange(null);
 
                       field.onChange(new Date(v + "T00:00:00.000Z"));
                     }}
-                    onBlur={field.onBlur}
-                    name={field.name}
-                    ref={field.ref}
-                    max={new Date().toISOString().slice(0, 10)}
-          
                   />
 
                   <FormErrorMessage error={fieldState.error} />
@@ -118,6 +112,7 @@ export const PersonalInformationSection = ({
                     placeholder="(555) 123-4567"
                     inputMode="tel"
                     autoComplete="tel"
+                    {...field}
                     value={formatPhoneNumber(field.value ?? "")}
                     onChange={(e) => {
                       const digits = e.target.value.replace(/\D/g, "");
@@ -141,6 +136,7 @@ export const PersonalInformationSection = ({
                     placeholder="(555) 123-4567"
                     inputMode="tel"
                     autoComplete="tel"
+                    {...field}
                     value={formatPhoneNumber(field.value ?? "")}
                     onChange={(e) => {
                       const digits = e.target.value.replace(/\D/g, "");

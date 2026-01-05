@@ -1,15 +1,14 @@
 import { z } from "zod";
-
 import { Control, Controller } from "react-hook-form";
 
 import { FileText } from "lucide-react";
 
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
+import { FormErrorMessage } from "@/components/form-error-message";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel } from "@/components/ui/field";
-import { FormErrorMessage } from "@/components/form-error-message";
 
 interface BioSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;

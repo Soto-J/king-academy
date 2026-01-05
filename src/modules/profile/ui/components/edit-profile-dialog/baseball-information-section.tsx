@@ -7,13 +7,10 @@ import { POSITIONS, BATTING_STANCE, THROWING_ARM } from "@/db/schema";
 
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
+import { FormErrorMessage } from "@/components/form-error-message";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -21,7 +18,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FormErrorMessage } from "@/components/form-error-message";
 
 interface BaseballInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -93,7 +89,8 @@ export const BaseballInformationSection = ({
               <div className="mt-2 grid grid-cols-2 gap-3">
                 {POSITIONS.map((position) => (
                   <div key={position} className="flex items-center space-x-2">
-                    <input
+                    <Input
+                      {...field}
                       type="checkbox"
                       id={position}
                       checked={
@@ -135,6 +132,7 @@ export const BaseballInformationSection = ({
                 <FieldLabel>Batting Stance</FieldLabel>
 
                 <Select
+                  {...field}
                   onValueChange={field.onChange}
                   value={field.value || undefined}
                 >
@@ -164,6 +162,7 @@ export const BaseballInformationSection = ({
                 <FieldLabel>Throwing Arm</FieldLabel>
 
                 <Select
+                  {...field}
                   onValueChange={field.onChange}
                   value={field.value || undefined}
                 >
