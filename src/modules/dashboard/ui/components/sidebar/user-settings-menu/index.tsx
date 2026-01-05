@@ -2,14 +2,17 @@
 
 import { useRouter } from "next/navigation";
 
-import { ChevronDownIcon, LogOutIcon } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { authClient } from "@/lib/auth/auth-client";
 
 import type { SessionData } from "@/lib/auth/auth";
-import { GeneratedAvatar } from "@/components/generated-avatar";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+
+import { AvatarUpload } from "@/components/avatar-upload";
+
+import { UserIdentity } from "./settings-header";
+
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -28,22 +31,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 
-interface DashboardUserButtonProps {
+interface UserSettingsMenuProps {
   session: SessionData | null;
 }
 
-export const DashboardUserButton = ({ session }: DashboardUserButtonProps) => {
+export const UserSettingsMenu = ({ session }: UserSettingsMenuProps) => {
   const router = useRouter();
   const isMobile = useIsMobile();
-
-  const onSignout = () => {
-    authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => router.push("/sign-in"),
-      },
-    });
-  };
 
   if (!session) {
     return (
@@ -53,28 +49,19 @@ export const DashboardUserButton = ({ session }: DashboardUserButtonProps) => {
     );
   }
 
+  const onSignout = () => {
+    authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => router.push("/sign-in"),
+      },
+    });
+  };
+
   if (isMobile) {
     return (
       <Drawer>
         <DrawerTrigger className="border-border/10 flex w-full items-center justify-between gap-x-2 overflow-hidden rounded-lg border bg-white/5 p-3 hover:bg-white/10">
-          {session.user.image ? (
-            <Avatar>
-              <AvatarImage src={session.user.image} />
-            </Avatar>
-          ) : (
-            <GeneratedAvatar
-              seed={session.user.name}
-              variant="initials"
-              className="size-8"
-            />
-          )}
-          <div className="flex min-w-0 flex-1 flex-col gap-0.5 overflow-hidden text-left">
-            <p className="w-full truncate text-sm capitalize">
-              {session.user.name}
-            </p>
-            <p className="w-full truncate text-xs">{session.user.email}</p>
-          </div>
-          <ChevronDownIcon className="size-4 shrink-0" />
+          <UserIdentity session={session} />
         </DrawerTrigger>
 
         <DrawerContent>
@@ -84,6 +71,10 @@ export const DashboardUserButton = ({ session }: DashboardUserButtonProps) => {
             </DrawerTitle>
             <DrawerDescription>{session.user.email}</DrawerDescription>
           </DrawerHeader>
+
+          <Separator className="mb-4" />
+
+          <AvatarUpload />
 
           <DrawerFooter>
             <Button variant="outline" onClick={onSignout}>
@@ -99,26 +90,7 @@ export const DashboardUserButton = ({ session }: DashboardUserButtonProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="border-border/10 flex w-full items-center justify-between gap-x-2 overflow-hidden rounded-lg border bg-white/5 p-3 hover:bg-white/10">
-        {session.user.image ? (
-          <Avatar>
-            <AvatarImage src={session.user.image} />
-          </Avatar>
-        ) : (
-          <GeneratedAvatar
-            seed={session.user.name}
-            variant="initials"
-            className="size-8"
-          />
-        )}
-
-        <div className="flex min-w-0 flex-1 flex-col gap-0.5 overflow-hidden text-left">
-          <p className="w-full truncate text-sm capitalize">
-            {session.user.name}
-          </p>
-          <p className="w-full truncate text-xs">{session.user.email}</p>
-        </div>
-
-        <ChevronDownIcon className="size-4 shrink-0" />
+        <UserIdentity session={session} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" side="right" className="w-72">
@@ -133,11 +105,20 @@ export const DashboardUserButton = ({ session }: DashboardUserButtonProps) => {
           </div>
         </DropdownMenuLabel>
 
-        <DropdownMenuSeparator className="my-1" />
+        <DropdownMenuSeparator className="my-4" />
+
+        <DropdownMenuItem
+          onSelect={(e) => e.preventDefault()}
+          className="flex cursor-pointer items-center justify-center"
+        >
+          <AvatarUpload />
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator className="my-2" />
 
         <DropdownMenuItem
           onClick={onSignout}
-          className="flex cursor-pointer items-center justify-between"
+          className="flex cursor-pointer items-center justify-between py-2"
         >
           <span>Logout</span>
           <LogOutIcon className="size-4" />

@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@import "uploadthing/tw/v4";
+@source "../../node_modules/@uploadthing/react/dist";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -58,7 +61,7 @@
   --muted-foreground: oklch(0.556 0.05 263.71);
   --accent: oklch(0.92 0.025 263.71);
   --accent-foreground: oklch(0.3 0.224 263.71);
-  
+
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0.01 263.71);
   --input: oklch(0.922 0.01 263.71);
@@ -69,7 +72,7 @@
   --chart-3: oklch(0.6 0.15 200);
   --chart-4: oklch(0.65 0.18 120);
   --chart-5: oklch(0.7 0.12 60);
-  
+
   --sidebar: oklch(0.15 0.05 263.71);
   --sidebar-foreground: oklch(0.95 0.008 263.71);
   --sidebar-primary: oklch(0.6 0.2 263.71);
@@ -106,7 +109,7 @@
   --chart-3: oklch(0.65 0.15 200);
   --chart-4: oklch(0.7 0.18 120);
   --chart-5: oklch(0.75 0.12 60);
-  
+
   --sidebar: oklch(0.15 0.025 263.71);
   --sidebar-foreground: oklch(0.9 0.015 263.71);
   --sidebar-primary: oklch(0.6 0.2 263.71);

@@ -17,7 +17,7 @@ import {
 
 import { DashboardHeader } from "@/modules/dashboard/ui/components/dashboard-header";
 import { Separator } from "@/components/ui/separator";
-import { DashboardUserButton } from "./dashboard-user-button";
+import { UserSettingsMenu } from "./user-settings-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -136,7 +136,7 @@ export const DashboardSidebar = ({ session }: DashboardSidebarProps) => {
       </SidebarContent>
 
       <SidebarFooter className="p-4 pb-8">
-        <DashboardUserButton session={session} />
+        <UserSettingsMenu session={session} />
       </SidebarFooter>
     </Sidebar>
   );
