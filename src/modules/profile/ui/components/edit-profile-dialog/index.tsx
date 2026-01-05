@@ -118,10 +118,7 @@ export const EditProfileDialog = ({
         <div className="min-h-0 flex-1 space-y-6 overflow-y-auto pr-2">
           <PersonalInformationSection control={form.control} />
           <AddressSection control={form.control} />
-          <BaseballInformationSection
-            control={form.control}
-            watch={form.watch}
-          />
+          <BaseballInformationSection control={form.control} />
           <BioSection control={form.control} />
         </div>
 

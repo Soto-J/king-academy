@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { Trophy } from "lucide-react";
-import { Control, Controller, UseFormWatch } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 import { POSITIONS, BATTING_STANCE, THROWING_ARM } from "@/db/schema";
 
@@ -23,12 +23,10 @@ import {
 
 interface BaseballInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
-  watch: UseFormWatch<z.infer<typeof ProfileFormSchema>>;
 }
 
 export const BaseballInformationSection = ({
   control,
-  watch,
 }: BaseballInformationSectionProps) => {
   return (
     <Card>
