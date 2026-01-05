@@ -4,6 +4,8 @@ import { User, Award, Calendar } from "lucide-react";
 
 import { GetPlayers } from "@/modules/players/types";
 
+import { TableActions } from "./table-actions";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -15,7 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TableActions } from "./table-actions";
 
 interface PlayersTableProps {
   isAdmin: boolean;
