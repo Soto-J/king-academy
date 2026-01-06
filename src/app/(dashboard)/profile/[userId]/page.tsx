@@ -1,4 +1,4 @@
-import { ProfileIdPageView } from "@/modules/profile/ui/views/profileid-page-view";
+import { ProfileIdPageView } from "@/modules/profile/ui/views/profile-id-page-view";
 
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";

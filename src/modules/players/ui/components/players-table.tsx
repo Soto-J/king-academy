@@ -3,6 +3,8 @@
 import { Activity } from "react";
 import { User, Award, Calendar } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 import { GetPlayers } from "@/modules/players/types";
 
 import { TableActions } from "./table-actions";
@@ -105,11 +107,12 @@ export const PlayersTable = ({ isAdmin, data }: PlayersTableProps) => {
                 <TableHead className="text-muted-foreground text-right">
                   Status
                 </TableHead>
-                {isAdmin && (
+
+                <Activity mode={isAdmin ? "visible" : "hidden"}>
                   <TableHead className="text-muted-foreground text-right">
                     Actions
                   </TableHead>
-                )}
+                </Activity>
               </TableRow>
             </TableHeader>
 
@@ -136,11 +139,12 @@ export const PlayersTable = ({ isAdmin, data }: PlayersTableProps) => {
                   </TableCell>
                   <TableCell className="text-right">
                     <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                      className={cn(
+                        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
                         player.isActive
                           ? "bg-primary/10 text-primary"
-                          : "bg-destructive/10 text-destructive"
-                      }`}
+                          : "bg-destructive/10 text-destructive",
+                      )}
                     >
                       {player.isActive ? "Active" : "Inactive"}
                     </span>

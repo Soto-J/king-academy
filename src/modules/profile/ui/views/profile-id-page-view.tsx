@@ -1,8 +1,9 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Profile } from "../components/profile";
 import { useTRPC } from "@/trpc/client";
+
+import { Profile } from "@/modules/profile/ui/components/profile";
 
 interface ProfileIdPageView {
   userId: string;
@@ -14,9 +15,5 @@ export const ProfileIdPageView = ({ userId }: ProfileIdPageView) => {
     trpc.profile.getOne.queryOptions({ userId }),
   );
 
-  return (
-    <div>
-      <Profile data={data} isOwnProfile={false} />
-    </div>
-  );
+  return <Profile data={data} isOwnProfile={false} />;
 };

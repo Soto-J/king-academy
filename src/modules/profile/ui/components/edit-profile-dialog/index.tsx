@@ -115,14 +115,14 @@ export const EditProfileDialog = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex h-full min-h-0 flex-col"
       >
-        <div className="min-h-0 flex-1 space-y-6 overflow-y-auto pr-2">
+        <div className="min-h-0 flex-1 space-y-6 overflow-y-auto pr-2 pb-4">
           <PersonalInformationSection control={form.control} />
           <AddressSection control={form.control} />
           <BaseballInformationSection control={form.control} />
           <BioSection control={form.control} />
         </div>
 
-        <div className="mt-4 flex w-full items-center justify-between border-t pt-4">
+        <div className="flex w-full shrink-0 items-center justify-between border-t pt-4 mt-4">
           <Button
             type="button"
             variant="outline"
