@@ -1,14 +1,11 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 
 import { SearchParams } from "nuqs";
 
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient, trpc } from "@/trpc/server";
-
-import { auth } from "@/lib/auth/auth";
 
 import { loadSearchParams } from "@/modules/players/params";
 

@@ -37,15 +37,13 @@ export const ResponsiveDialog = ({
   if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={onOpenChange} autoFocus>
-        <DrawerContent className="flex h-[90vh] w-full max-w-full flex-col">
+        <DrawerContent className="flex max-h-[90vh] w-full max-w-full flex-col p-4">
           <DrawerHeader>
             <DrawerTitle>{title}</DrawerTitle>
             <DrawerDescription>{description}</DrawerDescription>
           </DrawerHeader>
 
-          <div className="min-h-0 flex-1 overflow-y-auto p-4 pt-0">
-            {children}
-          </div>
+          {children}
         </DrawerContent>
       </Drawer>
     );
@@ -53,15 +51,13 @@ export const ResponsiveDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <div className="flex h-[90vh] flex-col overflow-hidden">
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
-          </DialogHeader>
+      <DialogContent className="flex max-h-[75vh] flex-col pr-4">
+        <DialogHeader className="py-4">
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </DialogHeader>
 
-          <div className="min-h-0 flex-1 overflow-y-auto pt-4">{children}</div>
-        </div>
+        {children}
       </DialogContent>
     </Dialog>
   );

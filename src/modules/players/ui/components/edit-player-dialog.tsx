@@ -95,7 +95,7 @@ export const EditPlayerDialog = ({
     >
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-h-[50vh] overflow-hidden"
+        className="h-full"
       >
         <div className="space-y-6 p-6">
           <Controller
@@ -120,7 +120,7 @@ export const EditPlayerDialog = ({
                   <div className="flex items-center space-x-3">
                     <span
                       className={cn(
-                        `text-sm font-medium transition-colors`,
+                        "text-sm font-medium transition-colors",
                         field.value
                           ? "text-green-700 dark:text-green-300"
                           : "text-gray-500 dark:text-gray-400",
