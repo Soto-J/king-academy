@@ -33,3 +33,27 @@ export const formatStanceLabel = (stance: string | null) => {
     ? stance.charAt(0).toUpperCase() + stance.slice(1)
     : "not specified";
 };
+
+export const getInitials = (name: string) => {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+};
+
+export const calculateAge = (birthDate: string | Date | null) => {
+  if (!birthDate) return null;
+
+  const today = new Date();
+  const birth = new Date(birthDate);
+
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+
+  return age;
+};
