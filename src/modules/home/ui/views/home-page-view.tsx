@@ -146,7 +146,7 @@ export const HomePageView = () => {
 
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button
-              disabled={!!session}
+              disabled={!!session?.user}
               size="lg"
               className="bg-primary hover:bg-primary/90 text-white shadow-lg"
             >

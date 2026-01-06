@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Activity } from "react";
 
 interface PlayersTableProps {
   isAdmin: boolean;
@@ -144,11 +145,12 @@ export const PlayersTable = ({ isAdmin, data }: PlayersTableProps) => {
                       {player.isActive ? "Active" : "Inactive"}
                     </span>
                   </TableCell>
-                  {isAdmin && (
+
+                  <Activity mode={isAdmin ? "visible" : "hidden"}>
                     <TableCell className="text-right">
                       <TableActions player={player} />
                     </TableCell>
-                  )}
+                  </Activity>
                 </TableRow>
               ))}
             </TableBody>
