@@ -56,12 +56,12 @@ export const ProfileHeader = ({
             <div className="flex items-center gap-1 lg:gap-4">
               <Star className="fill-primary/20 text-primary h-6 w-6 lg:h-8 lg:w-8" />
 
-              <h1 className="text-foreground truncate text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">
+              <h1 className="text-foreground truncate text-3xl leading-tight font-bold text-wrap sm:text-4xl lg:text-5xl">
                 {data.user.name}
               </h1>
             </div>
 
-            <div className="text-muted-foreground flex flex-wrap gap-2 text-sm sm:gap-4">
+            {/* <div className="text-muted-foreground flex flex-wrap gap-2 text-xs sm:gap-4">
               <div className="bg-card/60 border-border/10 flex items-center gap-2 rounded-full border px-3 py-1">
                 <Mail className="text-primary h-4 w-4" />
                 {data.user.email}
@@ -76,7 +76,7 @@ export const ProfileHeader = ({
                   Age {calculateAge(data.profile.dateOfBirth)}
                 </Badge>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </CardContent>

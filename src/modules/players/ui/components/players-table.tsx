@@ -1,5 +1,6 @@
 "use client";
 
+import { Activity } from "react";
 import { User, Award, Calendar } from "lucide-react";
 
 import { GetPlayers } from "@/modules/players/types";
@@ -144,11 +145,12 @@ export const PlayersTable = ({ isAdmin, data }: PlayersTableProps) => {
                       {player.isActive ? "Active" : "Inactive"}
                     </span>
                   </TableCell>
-                  {isAdmin && (
+
+                  <Activity mode={isAdmin ? "visible" : "hidden"}>
                     <TableCell className="text-right">
                       <TableActions player={player} />
                     </TableCell>
-                  )}
+                  </Activity>
                 </TableRow>
               ))}
             </TableBody>

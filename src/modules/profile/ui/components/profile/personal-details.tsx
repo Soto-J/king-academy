@@ -1,5 +1,5 @@
 import { Activity } from "react";
-import { User, Phone, GraduationCap, Calendar } from "lucide-react";
+import { User, Phone, GraduationCap, Calendar, Mail } from "lucide-react";
 
 import { ProfileGetOne } from "@/modules/profile/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,9 +7,10 @@ import { formatDate, formatPhoneNumber } from "@/lib/utils";
 
 interface PersonalDetailsProps {
   profile: ProfileGetOne["profile"];
+  email?: string;
 }
 
-export const PersonalDetails = ({ profile }: PersonalDetailsProps) => {
+export const PersonalDetails = ({ profile, email }: PersonalDetailsProps) => {
   return (
     <Card className="from-muted/50 to-primary/10 border-border/20 bg-gradient-to-br shadow-md backdrop-blur-sm">
       <CardHeader className="from-primary/5 to-primary/10 bg-gradient-to-r">
@@ -46,6 +47,17 @@ export const PersonalDetails = ({ profile }: PersonalDetailsProps) => {
           </div>
         </Activity>
 
+        <Activity mode={email ? "visible" : "hidden"}>
+          <div className="border-border/20 bg-card/50 rounded-lg border p-3 backdrop-blur-sm">
+            <div className="text-primary mb-1 flex items-center gap-2">
+              <Mail className="text-primary h-4 w-4" />
+
+              <span className="text-sm font-semibold">Email</span>
+            </div>
+
+            <p className="text-foreground font-medium">{email}</p>
+          </div>
+        </Activity>
         <Activity mode={profile?.phoneNumber ? "visible" : "hidden"}>
           <div className="border-border/20 bg-card/50 rounded-lg border p-3 backdrop-blur-sm">
             <div className="text-primary mb-1 flex items-center gap-2">

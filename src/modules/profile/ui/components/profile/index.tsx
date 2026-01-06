@@ -44,7 +44,7 @@ export const Profile = ({
         </div>
 
         <div className="space-y-6">
-          <PersonalDetails profile={data.profile} />
+          <PersonalDetails profile={data.profile} email={data.user.email} />
           <ProfileLocation address={data.profile?.address} />
         </div>
       </div>
