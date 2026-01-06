@@ -9,8 +9,6 @@ import { authClient } from "@/lib/auth/auth-client";
 
 import type { SessionData } from "@/lib/auth/auth";
 
-import { AvatarUpload } from "@/components/avatar-upload";
-
 import { UserIdentity } from "./settings-header";
 
 import { Button } from "@/components/ui/button";
@@ -31,7 +29,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
 
 interface UserSettingsMenuProps {
   session: SessionData | null;
@@ -72,10 +69,6 @@ export const UserSettingsMenu = ({ session }: UserSettingsMenuProps) => {
             <DrawerDescription>{session.user.email}</DrawerDescription>
           </DrawerHeader>
 
-          <Separator className="mb-4" />
-
-          <AvatarUpload />
-
           <DrawerFooter>
             <Button variant="outline" onClick={onSignout}>
               <LogOutIcon className="size-4 text-black" />
@@ -104,15 +97,6 @@ export const UserSettingsMenu = ({ session }: UserSettingsMenuProps) => {
             </span>
           </div>
         </DropdownMenuLabel>
-
-        <DropdownMenuSeparator className="my-4" />
-
-        <DropdownMenuItem
-          onSelect={(e) => e.preventDefault()}
-          className="flex cursor-pointer items-center justify-center"
-        >
-          <AvatarUpload />
-        </DropdownMenuItem>
 
         <DropdownMenuSeparator className="my-2" />
 

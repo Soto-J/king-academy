@@ -1,14 +1,7 @@
-import {
-  Phone,
-  GraduationCap,
-  Calendar,
-  Mail,
-  Trophy,
-  Target,
-  Edit,
-  Star,
-  Zap,
-} from "lucide-react";
+import { Activity } from "react";
+import { Calendar, Mail, Edit, Star } from "lucide-react";
+
+import { calculateAge, getInitials } from "@/lib/utils";
 
 import { ProfileGetOne } from "@/modules/profile/types";
 
@@ -16,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { AvatarUpload } from "@/components/avatar-upload";
 
 interface ProfileHeaderProps {
   data: ProfileGetOne;
@@ -28,51 +22,10 @@ export const ProfileHeader = ({
   onEditClick,
   isOwnProfile = false,
 }: ProfileHeaderProps) => {
-  const formatPositionLabel = (position: string) => {
-    return position
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
-
-  const formatStanceLabel = (stance: string) => {
-    return stance.charAt(0).toUpperCase() + stance.slice(1);
-  };
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
-
-  const calculateAge = (birthDate: string | Date | null) => {
-    if (!birthDate) return null;
-
-    const today = new Date();
-    const birth = new Date(birthDate);
-
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birth.getDate())
-    ) {
-      age--;
-    }
-
-    return age;
-  };
-
-  const age = calculateAge(data.profile?.dateOfBirth);
-
   return (
     <Card className="from-primary/15 via-secondary/5 to-primary/15 border-border/20 relative overflow-hidden border bg-gradient-to-br shadow-xl backdrop-blur-sm">
       <div className="from-brand-red via-primary to-brand-red absolute top-0 left-0 h-1 w-full bg-gradient-to-r" />
-
-      {isOwnProfile && onEditClick && (
+      <Activity mode={isOwnProfile && onEditClick ? "visible" : "hidden"}>
         <Button
           variant="outline"
           size="sm"
@@ -82,19 +35,22 @@ export const ProfileHeader = ({
           <Edit className="h-4 w-4" />
           Edit
         </Button>
-      )}
+      </Activity>
+
       <CardContent className="pt-10 pb-8">
         <div className="flex items-start gap-6 md:flex-row md:items-center">
-          <Avatar className="ring-primary/20 h-20 w-20 shadow-lg ring-4 lg:h-28 lg:w-28">
-            <AvatarImage
-              src={data.user.image || undefined}
-              alt={data.user.name}
-            />
+          <AvatarUpload showButton={false} isOwnProfile={isOwnProfile}>
+            <Avatar className="ring-primary/20 h-20 w-20 shadow-lg ring-4 lg:h-28 lg:w-28">
+              <AvatarImage
+                src={data.user.image || undefined}
+                alt={data.user.name}
+              />
 
-            <AvatarFallback className="from-primary/10 to-primary/20 text-primary bg-gradient-to-br font-bold lg:text-2xl">
-              {getInitials(data.user.name)}
-            </AvatarFallback>
-          </Avatar>
+              <AvatarFallback className="from-primary/10 to-primary/20 text-primary bg-gradient-to-br font-bold lg:text-2xl">
+                {getInitials(data.user.name)}
+              </AvatarFallback>
+            </Avatar>
+          </AvatarUpload>
 
           <div className="flex-1 space-y-4">
             <div className="flex items-center gap-1 lg:gap-4">
@@ -111,13 +67,13 @@ export const ProfileHeader = ({
                 {data.user.email}
               </div>
 
-              {age && (
+              {data.profile?.dateOfBirth && (
                 <Badge
                   variant="secondary"
                   className="bg-card/60 border-border/10 flex items-center gap-2 rounded-full border px-3 py-1"
                 >
                   <Calendar className="mr-1 h-3 w-3" />
-                  Age {age}
+                  Age {calculateAge(data.profile.dateOfBirth)}
                 </Badge>
               )}
             </div>
