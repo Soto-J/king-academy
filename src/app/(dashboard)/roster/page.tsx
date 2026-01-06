@@ -7,17 +7,17 @@ import { SearchParams } from "nuqs";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient, trpc } from "@/trpc/server";
 
-import { loadSearchParams } from "@/modules/players/params";
+import { loadSearchParams } from "@/modules/roster/params";
 
-import { PlayersPageView } from "@/modules/players/ui/views/players-page-view";
-import { PlayersHeader } from "@/modules/players/ui/components/players-header";
+import { RosterPageView } from "@/modules/roster/ui/views/roster-page-view";
+import { RosterHeader } from "@/modules/roster/ui/components/roster-header";
 import { getCurrentSession } from "@/lib/get-session";
 
-interface PlayersPageProps {
+interface RosterPageProps {
   searchParams: Promise<SearchParams>;
 }
 
-const PlayersPage = async ({ searchParams }: PlayersPageProps) => {
+const RosterPage = async ({ searchParams }: RosterPageProps) => {
   const session = await getCurrentSession();
   if (!session) redirect("/sign-in");
 
@@ -26,16 +26,17 @@ const PlayersPage = async ({ searchParams }: PlayersPageProps) => {
 
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(
-    trpc.players.getMany.queryOptions({ ...filters }),
+    trpc.roster.getMany.queryOptions({ ...filters }),
   );
+
   return (
     <>
-      <PlayersHeader />
+      <RosterHeader />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<p>Loading...</p>}>
           <ErrorBoundary fallback={<p>Error...</p>}>
-            <PlayersPageView isAdmin={isAdmin} />
+            <RosterPageView isAdmin={isAdmin} />
           </ErrorBoundary>
         </Suspense>
       </HydrationBoundary>
@@ -43,4 +44,4 @@ const PlayersPage = async ({ searchParams }: PlayersPageProps) => {
   );
 };
 
-export default PlayersPage;
+export default RosterPage;

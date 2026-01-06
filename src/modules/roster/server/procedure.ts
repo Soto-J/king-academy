@@ -11,9 +11,10 @@ import {
   profileTable,
   user,
 } from "@/db/schema";
+
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "../params";
 
-export const playersRouter = createTRPCRouter({
+export const rosterRouter = createTRPCRouter({
   getOne: protectedProcedure
     .input(z.object({ userId: z.string().min(1, "User ID required") }))
     .query(async ({ input }) => {

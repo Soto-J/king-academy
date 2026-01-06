@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
 
-interface PlayersPaginationProps {
+interface RosterPaginationProps {
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
 }
 
-export const PlayersPagination = ({
+export const RosterPagination = ({
   page,
   totalPages,
   onPageChange,
-}: PlayersPaginationProps) => {
+}: RosterPaginationProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="text-muted-foreground flex-1 text-sm">
