@@ -5,7 +5,7 @@ import { User, Award, Calendar } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { GetPlayers } from "@/modules/players/types";
+import { GetRoster } from "@/modules/roster/types";
 
 import { TableActions } from "./table-actions";
 
@@ -21,12 +21,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface PlayersTableProps {
+interface RosterTableProps {
   isAdmin: boolean;
-  data: GetPlayers;
+  data: GetRoster;
 }
 
-export const PlayersTable = ({ isAdmin, data }: PlayersTableProps) => {
+export const RosterTable = ({ isAdmin, data }: RosterTableProps) => {
   const calculateAge = (dob: Date | null) => {
     if (!dob) return "N/A";
 

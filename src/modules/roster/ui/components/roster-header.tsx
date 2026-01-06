@@ -1,6 +1,6 @@
-import { PlayersSearchFilter } from "./players-search-filter";
+import { RosterSearchFilter } from "./roster-search-filter";
 
-export const PlayersHeader = () => {
+export const RosterHeader = () => {
   return (
     <div className="space-y-8 pb-6">
       <div>
@@ -10,7 +10,7 @@ export const PlayersHeader = () => {
         </p>
       </div>
 
-      <PlayersSearchFilter />
+      <RosterSearchFilter />
     </div>
   );
 };

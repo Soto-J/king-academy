@@ -11,13 +11,13 @@ import { cn } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-import type { GetPlayer } from "@/modules/players/types";
+import type { GetPlayer } from "@/modules/roster/types";
 
-import { usePlayersFilters } from "@/modules/players/hooks/use-players-filter";
+import { useRosterFilters } from "@/modules/roster/hooks/use-roster-filter";
 
-import { EditPlayerSchema } from "@/modules/players/schema";
+import { EditPlayerSchema } from "@/modules/roster/schema";
 
-import { FormActions } from "@/modules/players/ui/components/form-actions";
+import { FormActions } from "@/modules/roster/ui/components/form-actions";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -46,7 +46,7 @@ export const EditPlayerDialog = ({
   onCloseDialog,
   initialValues,
 }: EditProfileDialogProps) => {
-  const [filters, _] = usePlayersFilters();
+  const [filters, _] = useRosterFilters();
 
   const form = useForm<z.infer<typeof EditPlayerSchema>>({
     resolver: zodResolver(EditPlayerSchema),
@@ -60,10 +60,10 @@ export const EditPlayerDialog = ({
   const queryClient = useQueryClient();
 
   const editProfile = useMutation(
-    trpc.players.edit.mutationOptions({
+    trpc.roster.edit.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.players.getMany.queryOptions({
+          trpc.roster.getMany.queryOptions({
             ...filters,
           }),
         );
@@ -95,9 +95,9 @@ export const EditPlayerDialog = ({
     >
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="h-full"
+        className="flex h-full flex-col"
       >
-        <div className="space-y-6 p-6">
+        <div className="flex-1 space-y-6 overflow-y-auto p-6">
           <Controller
             name="isActive"
             control={form.control}

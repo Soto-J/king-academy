@@ -4,12 +4,12 @@ import { SearchIcon } from "lucide-react";
 
 import { useDebounceSearch } from "@/hooks/use-debounce-search";
 
-import { usePlayersFilters } from "@/modules/players/hooks/use-players-filter";
+import { useRosterFilters } from "@/modules/roster/hooks/use-roster-filter";
 
 import { Input } from "@/components/ui/input";
 
-export const PlayersSearchFilter = () => {
-  const [filters, setFilters] = usePlayersFilters();
+export const RosterSearchFilter = () => {
+  const [filters, setFilters] = useRosterFilters();
   const { searchValue, setSearchValue } = useDebounceSearch(
     filters,
     setFilters,

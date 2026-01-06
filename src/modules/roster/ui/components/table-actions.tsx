@@ -9,14 +9,14 @@ import { Ellipsis, Edit, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-import type { GetPlayer } from "@/modules/players/types";
+import type { GetPlayer } from "@/modules/roster/types";
 
 import { authClient } from "@/lib/auth/auth-client";
 
 import { useConfirm } from "@/hooks/use-confirm";
-import { usePlayersFilters } from "@/modules/players/hooks/use-players-filter";
+import { useRosterFilters } from "@/modules/roster/hooks/use-roster-filter";
 
-import { EditPlayerDialog } from "@/modules/players/ui/components/edit-player-dialog";
+import { EditPlayerDialog } from "@/modules/roster/ui/components/edit-player-dialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -40,7 +40,7 @@ export const TableActions = ({ player }: TableActionsProps) => {
 
   const [openDialog, setOpenDialog] = useState(false);
   const router = useRouter();
-  const [filters, setFilters] = usePlayersFilters();
+  const [filters, setFilters] = useRosterFilters();
 
   const { data } = authClient.useSession();
 
@@ -48,10 +48,10 @@ export const TableActions = ({ player }: TableActionsProps) => {
   const queryClient = useQueryClient();
 
   const deleteUser = useMutation(
-    trpc.players.delete.mutationOptions({
+    trpc.roster.delete.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.players.getMany.queryOptions({ ...filters }),
+          trpc.roster.getMany.queryOptions({ ...filters }),
         );
       },
       onError: (error) => console.error(error.message),
