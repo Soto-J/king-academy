@@ -1,5 +1,6 @@
 "use client";
 
+import { Activity } from "react";
 import { User, Award, Calendar } from "lucide-react";
 
 import { GetPlayers } from "@/modules/players/types";
@@ -17,7 +18,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Activity } from "react";
 
 interface PlayersTableProps {
   isAdmin: boolean;

@@ -7,7 +7,7 @@ import { formatDate, formatPhoneNumber } from "@/lib/utils";
 
 interface PersonalDetailsProps {
   profile: ProfileGetOne["profile"];
-  email: string;
+  email?: string;
 }
 
 export const PersonalDetails = ({ profile, email }: PersonalDetailsProps) => {
@@ -47,7 +47,7 @@ export const PersonalDetails = ({ profile, email }: PersonalDetailsProps) => {
           </div>
         </Activity>
 
-        <Activity mode={profile?.phoneNumber ? "visible" : "hidden"}>
+        <Activity mode={email ? "visible" : "hidden"}>
           <div className="border-border/20 bg-card/50 rounded-lg border p-3 backdrop-blur-sm">
             <div className="text-primary mb-1 flex items-center gap-2">
               <Mail className="text-primary h-4 w-4" />
