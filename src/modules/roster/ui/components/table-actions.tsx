@@ -58,6 +58,7 @@ export const TableActions = ({ player }: TableActionsProps) => {
     }),
   );
 
+
   const onDelete = async (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
@@ -71,10 +72,6 @@ export const TableActions = ({ player }: TableActionsProps) => {
     deleteUser.mutate({ userId: player.id });
   };
 
-  const onEdit = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setOpenDialog(true);
-  };
 
   const routeTo =
     data?.session.userId === player.id ? `/profile` : `/profile/${player.id}`;
@@ -121,7 +118,7 @@ export const TableActions = ({ player }: TableActionsProps) => {
 
           <DropdownMenuGroup>
             <DropdownMenuItem
-              onClick={onEdit}
+              onClick={() => setOpenDialog(true)}
               className="group z-99 cursor-pointer text-zinc-300 focus:bg-zinc-800"
             >
               <Edit className="mr-2 h-4 w-4 group-focus:text-zinc-300" />

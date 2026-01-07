@@ -15,9 +15,11 @@ import type { RosterGetOne } from "@/modules/roster/types";
 
 import { useRosterFilters } from "@/modules/roster/hooks/use-roster-filter";
 
-import { EditPlayerSchema } from "@/modules/roster/schema";
+import { RosterEditOneInputSchema } from "@/modules/roster/schema";
 
 import { FormActions } from "@/modules/roster/ui/components/form-actions";
+
+import { FormErrorMessage } from "@/components/form-error-message";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -28,12 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 
 interface EditProfileDialogProps {
   onOpenDialog: boolean;
@@ -48,8 +45,8 @@ export const EditPlayerDialog = ({
 }: EditProfileDialogProps) => {
   const [filters, _] = useRosterFilters();
 
-  const form = useForm<z.infer<typeof EditPlayerSchema>>({
-    resolver: zodResolver(EditPlayerSchema),
+  const form = useForm<z.infer<typeof RosterEditOneInputSchema>>({
+    resolver: zodResolver(RosterEditOneInputSchema),
     defaultValues: {
       isActive: initialValues.isActive,
       role: initialValues.role,
@@ -73,13 +70,14 @@ export const EditPlayerDialog = ({
       },
 
       onError: (error) => {
-        console.error(error);
-        toast.error(error.message);
+        console.error("Edit profile error:", error);
+        toast.error(error.message || "Failed to update profile");
       },
     }),
   );
 
-  const onSubmit = (values: z.infer<typeof EditPlayerSchema>) => {
+  const onSubmit = (values: z.infer<typeof RosterEditOneInputSchema>) => {
+    console.log("Submitting form with values:", values);
     editProfile.mutate({
       ...values,
       userId: initialValues.id,
@@ -94,7 +92,8 @@ export const EditPlayerDialog = ({
       onOpenChange={onCloseDialog}
     >
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        id="edit-player-form"
+        onSubmit={form.handleSubmit(onSubmit, (e) => console.log(e))}
         className="flex h-full flex-col"
       >
         <div className="flex-1 space-y-6 overflow-y-auto p-6">
@@ -138,9 +137,7 @@ export const EditPlayerDialog = ({
                   </div>
                 </div>
 
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} className="text-xs" />
-                )}
+                <FormErrorMessage error={fieldState.error} />
               </Field>
             )}
           />
@@ -180,7 +177,7 @@ export const EditPlayerDialog = ({
                             </div>
                           </SelectItem>
 
-                          <SelectItem
+                          {/* <SelectItem
                             value="staff"
                             className="cursor-pointer px-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                           >
@@ -190,7 +187,7 @@ export const EditPlayerDialog = ({
                                 Limited Access
                               </span>
                             </div>
-                          </SelectItem>
+                          </SelectItem> */}
 
                           <SelectItem
                             value="user"
@@ -204,7 +201,7 @@ export const EditPlayerDialog = ({
                             </div>
                           </SelectItem>
 
-                          <SelectItem
+                          {/* <SelectItem
                             value="guest"
                             className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                           >
@@ -214,16 +211,14 @@ export const EditPlayerDialog = ({
                                 Minimum Access
                               </span>
                             </div>
-                          </SelectItem>
+                          </SelectItem> */}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
 
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} className="text-xs" />
-                )}
+                <FormErrorMessage error={fieldState.error} />
               </Field>
             )}
           />
@@ -232,6 +227,7 @@ export const EditPlayerDialog = ({
         <FormActions
           isPending={editProfile.isPending}
           onCloseDialog={onCloseDialog}
+          formId="edit-player-form"
         />
       </form>
     </ResponsiveDialog>

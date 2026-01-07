@@ -15,12 +15,12 @@ const EnvSchema = z.object({
   NEXT_PUBLIC_BETTER_AUTH_URL: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
-
-  // DB_MIGRATION: stringBoolean,
-  // DB_SEEDING: stringBoolean,
+  CLOUDINARY_CLOUD_NAME: z.string(),
+  CLOUDINARY_API_KEY: z.string(),
+  CLOUDINARY_API_SECRET: z.string(),
 });
 
-export type EnvSchema = z.infer<typeof EnvSchema>;
+export type Env = z.infer<typeof EnvSchema>;
 
 // expand reads your loaded .env object and replaces variable references (${VAR}) with their actual values.
 expand(config());

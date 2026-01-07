@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 interface FormActionsProps {
   isPending: boolean;
   onCloseDialog: () => void;
+  formId?: string;
 }
 
-export const FormActions = ({ isPending, onCloseDialog }: FormActionsProps) => {
+export const FormActions = ({ isPending, onCloseDialog, formId }: FormActionsProps) => {
   return (
     <div className="flex items-center justify-between gap-3 p-6 pt-4 dark:border-gray-700 dark:bg-gray-800/50">
       <Button
@@ -19,6 +20,7 @@ export const FormActions = ({ isPending, onCloseDialog }: FormActionsProps) => {
       </Button>
       <Button
         type="submit"
+        form={formId}
         size="lg"
         disabled={isPending}
         className="bg-blue-600 px-8 py-2 font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
