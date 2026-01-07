@@ -77,7 +77,6 @@ export const EditPlayerDialog = ({
   );
 
   const onSubmit = (values: z.infer<typeof RosterEditOneInputSchema>) => {
-    console.log("Submitting form with values:", values);
     editProfile.mutate({
       ...values,
       userId: initialValues.id,
@@ -93,7 +92,7 @@ export const EditPlayerDialog = ({
     >
       <form
         id="edit-player-form"
-        onSubmit={form.handleSubmit(onSubmit, (e) => console.log(e))}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex h-full flex-col"
       >
         <div className="flex-1 space-y-6 overflow-y-auto p-6">

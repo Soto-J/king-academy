@@ -9,8 +9,9 @@ export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
    */
-  const session = await getCurrentSession();
-  return { userId: session?.user?.id ?? null };
+  // const session = await getCurrentSession();
+  // return { userId: session?.user?.id ?? null };
+  return { userId: "user_123" };
 });
 
 // Avoid exporting the entire t-object
