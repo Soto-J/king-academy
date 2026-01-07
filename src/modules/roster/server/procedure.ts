@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { eq, and, count } from "drizzle-orm";
 
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
@@ -112,11 +111,12 @@ export const rosterRouter = createTRPCRouter({
         totalPages,
       };
     }),
-    
+
   editOne: protectedProcedure
     .input(RosterEditOneInputSchema)
     .mutation(async ({ input }) => {
-      return await db.delete(user).where(eq(user.id, input.userId));
+      return;
+      // return await db.delete(user).where(eq(user.id, input.userId));
     }),
 
   deleteOne: protectedProcedure

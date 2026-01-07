@@ -1,9 +1,9 @@
 import { Activity } from "react";
 
-import { calculateAge, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 
-import { TableActions } from "../table-actions";
+import { TableActions } from "@/modules/roster/ui/components/table-actions";
 import { RosterGetMany } from "@/modules/roster/types";
 
 interface RosterTableBodyProps {
@@ -19,7 +19,7 @@ export const RosterTableBody = ({ roster, isAdmin }: RosterTableBodyProps) => {
           key={player.id}
           className={cn(
             "border-border/10 hover:bg-muted/20",
-            i % 2 == 0 && "bg-muted/40",
+            i % 2 === 0 && "bg-muted/40",
           )}
         >
           <TableCell className="text-foreground font-medium">
