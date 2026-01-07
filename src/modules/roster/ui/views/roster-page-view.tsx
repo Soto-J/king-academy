@@ -10,9 +10,13 @@ import { RosterPagination } from "@/modules/roster/ui/components/roster-paginati
 
 interface RosterPageViewProps {
   isAdmin: boolean;
+  currentUserId: string;
 }
 
-export const RosterPageView = ({ isAdmin }: RosterPageViewProps) => {
+export const RosterPageView = ({
+  isAdmin,
+  currentUserId,
+}: RosterPageViewProps) => {
   const [filters, setFilters] = useRosterFilters();
 
   const trpc = useTRPC();
@@ -22,7 +26,11 @@ export const RosterPageView = ({ isAdmin }: RosterPageViewProps) => {
 
   return (
     <>
-      <RosterTable isAdmin={isAdmin} data={data} />
+      <RosterTable
+        isAdmin={isAdmin}
+        data={data}
+        currentUserId={currentUserId}
+      />
 
       <RosterPagination
         page={filters.page}

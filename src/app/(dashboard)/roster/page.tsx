@@ -46,7 +46,7 @@ const RosterPage = async ({ searchParams }: RosterPageProps) => {
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<p>Loading...</p>}>
           <ErrorBoundary fallback={<p>Error...</p>}>
-            <RosterPageView isAdmin={isAdmin} />
+            <RosterPageView isAdmin={isAdmin} currentUserId={session.user.id} />
           </ErrorBoundary>
         </Suspense>
       </HydrationBoundary>

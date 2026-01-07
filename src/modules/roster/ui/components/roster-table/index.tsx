@@ -14,9 +14,14 @@ import { Table, TableCaption } from "@/components/ui/table";
 interface RosterTableProps {
   isAdmin: boolean;
   data: RosterGetMany;
+  currentUserId: string;
 }
 
-export const RosterTable = ({ isAdmin, data }: RosterTableProps) => {
+export const RosterTable = ({
+  isAdmin,
+  data,
+  currentUserId,
+}: RosterTableProps) => {
   const players = data.players.map((player) => ({
     ...player,
     position: player.position || "N/A",
@@ -36,7 +41,11 @@ export const RosterTable = ({ isAdmin, data }: RosterTableProps) => {
         <CardContent>
           <Table>
             <RosterTableHeader isAdmin={isAdmin} />
-            <RosterTableBody roster={data.players} isAdmin={isAdmin} />
+            <RosterTableBody
+              roster={data.players}
+              isAdmin={isAdmin}
+              currentUserId={currentUserId}
+            />
             <RosterTableFooter
               isAdmin={isAdmin}
               totalPlayers={data.totalPlayers}

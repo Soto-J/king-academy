@@ -1,3 +1,5 @@
+"use client";
+
 import { Activity } from "react";
 
 import { cn } from "@/lib/utils";
@@ -5,20 +7,33 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 import { TableActions } from "@/modules/roster/ui/components/table-actions";
 import { RosterGetMany } from "@/modules/roster/types";
+import { useRouter } from "next/navigation";
 
 interface RosterTableBodyProps {
   roster: RosterGetMany["players"];
   isAdmin: boolean;
+  currentUserId: string;
 }
 
-export const RosterTableBody = ({ roster, isAdmin }: RosterTableBodyProps) => {
+export const RosterTableBody = ({
+  roster,
+  isAdmin,
+  currentUserId,
+}: RosterTableBodyProps) => {
+  const router = useRouter();
+
   return (
     <TableBody>
       {roster.map((player, i) => (
         <TableRow
           key={player.id}
+          onClick={() => {
+            const path = currentUserId === player.id ? "" : player.id;
+
+            router.push(`/profile/${path}`);
+          }}
           className={cn(
-            "border-border/10 hover:bg-muted/20",
+            "border-border/10 hover:bg-muted/20 cursor-pointer",
             i % 2 === 0 && "bg-muted/40",
           )}
         >
