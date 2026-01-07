@@ -7,11 +7,12 @@ import { SearchParams } from "nuqs";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient, trpc } from "@/trpc/server";
 
+import { getCurrentSession } from "@/lib/get-session";
+
 import { loadSearchParams } from "@/modules/roster/params";
 
 import { RosterPageView } from "@/modules/roster/ui/views/roster-page-view";
-import { RosterHeader } from "@/modules/roster/ui/components/roster-header";
-import { getCurrentSession } from "@/lib/get-session";
+import { RosterPageSearchFilter } from "@/modules/roster/ui/components/roster-page-search-filter";
 
 interface RosterPageProps {
   searchParams: Promise<SearchParams>;
@@ -31,7 +32,16 @@ const RosterPage = async ({ searchParams }: RosterPageProps) => {
 
   return (
     <>
-      <RosterHeader />
+      <div className="space-y-8 pb-6">
+        <div>
+          <h1 className="text-foreground text-3xl font-bold">Players</h1>
+          <p className="text-muted-foreground mt-2">
+            Manage and track all players in the King Academy program
+          </p>
+        </div>
+
+        <RosterPageSearchFilter />
+      </div>
 
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<p>Loading...</p>}>

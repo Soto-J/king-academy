@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-import type { GetPlayer } from "@/modules/roster/types";
+import type { RosterGetOne } from "@/modules/roster/types";
 
 import { useRosterFilters } from "@/modules/roster/hooks/use-roster-filter";
 
@@ -38,7 +38,7 @@ import {
 interface EditProfileDialogProps {
   onOpenDialog: boolean;
   onCloseDialog: () => void;
-  initialValues: GetPlayer;
+  initialValues: RosterGetOne;
 }
 
 export const EditPlayerDialog = ({
@@ -60,7 +60,7 @@ export const EditPlayerDialog = ({
   const queryClient = useQueryClient();
 
   const editProfile = useMutation(
-    trpc.roster.edit.mutationOptions({
+    trpc.roster.editOne.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
           trpc.roster.getMany.queryOptions({
