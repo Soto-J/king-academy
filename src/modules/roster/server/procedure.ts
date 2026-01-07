@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import { eq, and, count } from "drizzle-orm";
 
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
@@ -12,11 +11,16 @@ import {
   user,
 } from "@/db/schema";
 
-import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "../params";
+import {
+  RosterDeleteOneInputSchema,
+  RosterEditOneInputSchema,
+  RosterGetManyInputSchema,
+  RosterGetOneInputSchema,
+} from "@/modules/roster/schema";
 
 export const rosterRouter = createTRPCRouter({
   getOne: protectedProcedure
-    .input(z.object({ userId: z.string().min(1, "User ID required") }))
+    .input(RosterGetOneInputSchema)
     .query(async ({ input }) => {
       const [data] = await db
         .select({
@@ -51,17 +55,7 @@ export const rosterRouter = createTRPCRouter({
     }),
 
   getMany: protectedProcedure
-    .input(
-      z.object({
-        page: z.number().min(1).default(1),
-        pageSize: z
-          .number()
-          .min(MIN_PAGE_SIZE)
-          .max(MAX_PAGE_SIZE)
-          .default(DEFAULT_PAGE_SIZE),
-        search: z.string().nullish(),
-      }),
-    )
+    .input(RosterGetManyInputSchema)
     .query(async ({ input }) => {
       const [playersData, [{ totalPlayers }], [{ totalActive }]] =
         await Promise.all([
@@ -118,22 +112,15 @@ export const rosterRouter = createTRPCRouter({
         totalPages,
       };
     }),
-  edit: protectedProcedure
-    .input(
-      z.object({
-        userId: z.string().min(1, "User ID required."),
-      }),
-    )
+    
+  editOne: protectedProcedure
+    .input(RosterEditOneInputSchema)
     .mutation(async ({ input }) => {
       return await db.delete(user).where(eq(user.id, input.userId));
     }),
 
-  delete: protectedProcedure
-    .input(
-      z.object({
-        userId: z.string().min(1, "User ID required."),
-      }),
-    )
+  deleteOne: protectedProcedure
+    .input(RosterDeleteOneInputSchema)
     .mutation(async ({ input }) => {
       return await db.delete(user).where(eq(user.id, input.userId));
     }),

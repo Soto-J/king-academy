@@ -9,7 +9,7 @@ import { Ellipsis, Edit, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-import type { GetPlayer } from "@/modules/roster/types";
+import type { RosterGetOne } from "@/modules/roster/types";
 
 import { authClient } from "@/lib/auth/auth-client";
 
@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 interface TableActionsProps {
-  player: GetPlayer;
+  player: RosterGetOne;
 }
 
 export const TableActions = ({ player }: TableActionsProps) => {
@@ -48,7 +48,7 @@ export const TableActions = ({ player }: TableActionsProps) => {
   const queryClient = useQueryClient();
 
   const deleteUser = useMutation(
-    trpc.roster.delete.mutationOptions({
+    trpc.roster.deleteOne.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
           trpc.roster.getMany.queryOptions({ ...filters }),

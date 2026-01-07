@@ -8,7 +8,7 @@ import { useRosterFilters } from "@/modules/roster/hooks/use-roster-filter";
 
 import { Input } from "@/components/ui/input";
 
-export const RosterSearchFilter = () => {
+export const RosterPageSearchFilter = () => {
   const [filters, setFilters] = useRosterFilters();
   const { searchValue, setSearchValue } = useDebounceSearch(
     filters,

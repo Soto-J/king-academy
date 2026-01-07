@@ -28,7 +28,7 @@ export const navigationItemsConfig = [
     icon: Users,
     label: "Roster",
     href: "/roster",
-    roles: ["admin"],
+    roles: ["user", "admin"],
   },
 ] as const;
 
