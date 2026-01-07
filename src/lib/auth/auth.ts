@@ -1,8 +1,8 @@
+import { betterAuth } from "better-auth";
 import {
   admin as adminPlugin,
   createAuthMiddleware,
 } from "better-auth/plugins";
-import { betterAuth } from "better-auth";
 
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { sql, eq } from "drizzle-orm";

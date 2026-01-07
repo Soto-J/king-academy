@@ -27,18 +27,22 @@ export const RosterTableBody = ({
       {roster.map((player, i) => (
         <TableRow
           key={player.id}
-          onClick={() => {
-            const path = currentUserId === player.id ? "" : player.id;
-
-            router.push(`/profile/${path}`);
-          }}
           className={cn(
-            "border-border/10 hover:bg-muted/20 cursor-pointer",
+            "border-border/10 hover:bg-muted/20",
             i % 2 === 0 && "bg-muted/40",
           )}
         >
           <TableCell className="text-foreground font-medium">
-            {player.name}
+            <span
+              onClick={() => {
+                const path = currentUserId === player.id ? "" : player.id;
+
+                router.push(`/profile/${path}`);
+              }}
+              className="hover:text-primary cursor-pointer"
+            >
+              {player.name}
+            </span>
           </TableCell>
           <TableCell className="text-muted-foreground text-center">
             {player.position}

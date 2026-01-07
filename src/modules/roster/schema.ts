@@ -3,9 +3,11 @@ import { z } from "zod";
 import { ROLES } from "@/db/schema";
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "./params";
 
-export const RosterGetOneInputSchema = z.object({
+export const RosterIdentitySchema = z.object({
   userId: z.string().min(1, "User ID required"),
 });
+
+export const RosterGetOneInputSchema = RosterIdentitySchema;
 
 export const RosterGetManyInputSchema = z.object({
   page: z.number().min(1).default(1),
@@ -17,10 +19,13 @@ export const RosterGetManyInputSchema = z.object({
   search: z.string().nullish(),
 });
 
-export const RosterEditOneInputSchema = RosterGetOneInputSchema;
-export const RosterDeleteOneInputSchema = RosterGetOneInputSchema;
-
-export const EditPlayerSchema = z.object({
+export const RosterEditOneInputSchema = z.object({
   isActive: z.boolean(),
   role: z.enum(ROLES),
 });
+
+export const RosterEditOneMutationSchema = RosterEditOneInputSchema.extend(
+  RosterIdentitySchema.shape,
+);
+
+export const RosterDeleteOneInputSchema = RosterIdentitySchema;

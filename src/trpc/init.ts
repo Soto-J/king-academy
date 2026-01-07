@@ -1,15 +1,16 @@
 import { cache } from "react";
-import { headers } from "next/headers";
 import superjson from "superjson";
 
 import { initTRPC, TRPCError } from "@trpc/server";
 
-import { auth } from "@/lib/auth/auth";
+import { getCurrentSession } from "@/lib/get-session";
 
 export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
    */
+  // const session = await getCurrentSession();
+  // return { userId: session?.user?.id ?? null };
   return { userId: "user_123" };
 });
 
@@ -30,11 +31,19 @@ export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
 
 export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await getCurrentSession();
 
   if (!session) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
   }
 
   return next({ ctx: { ...ctx, auth: session } });
+});
+
+export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+  if (ctx.auth.user?.role !== "admin") {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+  }
+
+  return next({ ctx });
 });

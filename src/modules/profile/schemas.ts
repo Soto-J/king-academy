@@ -36,6 +36,6 @@ export const ProfileFormSchema = z
     },
   );
 
-export const ProfileEditSchema = ProfileFormSchema.safeExtend({
+export const ProfileEditMutationSchema = ProfileFormSchema.safeExtend({
   userId: z.string(),
 });

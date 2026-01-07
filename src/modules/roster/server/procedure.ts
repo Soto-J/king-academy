@@ -1,6 +1,10 @@
 import { eq, and, count } from "drizzle-orm";
 
-import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import {
+  adminProcedure,
+  createTRPCRouter,
+  protectedProcedure,
+} from "@/trpc/init";
 
 import { db } from "@/db";
 import {
@@ -12,7 +16,7 @@ import {
 
 import {
   RosterDeleteOneInputSchema,
-  RosterEditOneInputSchema,
+  RosterEditOneMutationSchema,
   RosterGetManyInputSchema,
   RosterGetOneInputSchema,
 } from "@/modules/roster/schema";
@@ -112,11 +116,18 @@ export const rosterRouter = createTRPCRouter({
       };
     }),
 
-  editOne: protectedProcedure
-    .input(RosterEditOneInputSchema)
+  editOne: adminProcedure
+    .input(RosterEditOneMutationSchema)
     .mutation(async ({ input }) => {
+      const { userId, isActive, role } = input;
+
+      await db.update(user).set({ role }).where(eq(user.id, userId));
+      await db
+        .update(profileTable)
+        .set({ isActive })
+        .where(eq(profileTable.userId, userId));
+
       return;
-      // return await db.delete(user).where(eq(user.id, input.userId));
     }),
 
   deleteOne: protectedProcedure
