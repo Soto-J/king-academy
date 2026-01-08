@@ -1,18 +1,13 @@
 import { z } from "zod";
-import { Control } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 import { Trophy } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { FormErrorMessage } from "@/components/form-error-message";
 
 interface GameInfoProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
@@ -30,48 +25,42 @@ export const GameInfo = ({ control }: GameInfoProps) => {
 
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
-          <FormField
+          <Controller
             name="gameNumber"
             control={control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Game #</FormLabel>
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>Game #</FieldLabel>
 
-                <FormControl>
-                  <Input
-                    placeholder="1"
-                    type="number"
-                    {...field}
-                    className="text-center font-medium"
-                  />
-                </FormControl>
+                <Input
+                  {...field}
+                  id={field.name}
+                  placeholder="1"
+                  type="number"
+                  className="text-center font-medium"
+                />
 
-                <div className="min-h-[1.25rem]">
-                  <FormMessage className="text-xs" />
-                </div>
-              </FormItem>
+                <FormErrorMessage error={fieldState.error} />
+              </Field>
             )}
           />
 
-          <FormField
+          <Controller
             name="division"
             control={control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Division</FormLabel>
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>Division</FieldLabel>
 
-                <FormControl>
-                  <Input
-                    placeholder="A"
-                    {...field}
-                    className="text-center font-medium"
-                  />
-                </FormControl>
+                <Input
+                  {...field}
+                  id={field.name}
+                  placeholder="A"
+                  className="text-center font-medium"
+                />
 
-                <div className="min-h-[1.25rem]">
-                  <FormMessage className="text-xs" />
-                </div>
-              </FormItem>
+                <FormErrorMessage error={fieldState.error} />
+              </Field>
             )}
           />
         </div>

@@ -1,18 +1,13 @@
 import { z } from "zod";
-import { Control } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 import { Calendar, Clock } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { FormErrorMessage } from "@/components/form-error-message";
 
 interface DateSectionProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
@@ -29,78 +24,78 @@ export const DateSection = ({ control }: DateSectionProps) => {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <FormField
+        <Controller
           name="date"
           control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex items-center gap-2">
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel
+                htmlFor={field.name}
+                className="flex items-center gap-2"
+              >
                 <Calendar className="h-4 w-4" />
                 Game Date
-              </FormLabel>
+              </FieldLabel>
 
-              <FormControl>
-                <Input
-                  {...field}
-                  type="date"
-                  className="w-fit text-center font-medium"
-                />
-              </FormControl>
-              <div className="min-h-3">
-                <FormMessage className="text-xs" />
-              </div>
-            </FormItem>
+              <Input
+                {...field}
+                type="date"
+                className="w-fit text-center font-medium"
+              />
+
+              <FormErrorMessage error={fieldState.error} />
+            </Field>
           )}
         />
 
         <div className="grid grid-cols-2">
-          <FormField
+          <Controller
             name="startTime"
             control={control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="flex items-center gap-2">
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel
+                  htmlFor={field.name}
+                  className="flex items-center gap-2"
+                >
                   <Clock className="h-4 w-4 text-green-600" />
                   Start Time
-                </FormLabel>
+                </FieldLabel>
 
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="time"
-                    className="w-fit text-center font-medium"
-                  />
-                </FormControl>
+                <Input
+                  {...field}
+                  id={field.name}
+                  type="time"
+                  className="w-fit text-center font-medium"
+                />
 
-                <div className="min-h-[1.25rem]">
-                  <FormMessage className="text-xs" />
-                </div>
-              </FormItem>
+                <FormErrorMessage error={fieldState.error} />
+              </Field>
             )}
           />
 
-          <FormField
+          <Controller
             name="endTime"
             control={control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="flex items-center gap-2">
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel
+                  htmlFor={field.name}
+                  className="flex items-center gap-2"
+                >
                   <Clock className="h-4 w-4 text-red-600" />
                   End Time
-                </FormLabel>
+                </FieldLabel>
 
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="time"
-                    className="w-fit text-center font-medium"
-                  />
-                </FormControl>
+                <Input
+                  {...field}
+                  id={field.name}
+                  type="time"
+                  className="w-fit text-center font-medium"
+                />
 
-                <div className="min-h-[1.25rem]">
-                  <FormMessage className="text-xs" />
-                </div>
-              </FormItem>
+                <FormErrorMessage error={fieldState.error} />
+              </Field>
             )}
           />
         </div>
