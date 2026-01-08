@@ -2,6 +2,10 @@ import { z } from "zod";
 
 import { BATTING_STANCE, POSITIONS, THROWING_ARM } from "@/db/schema";
 
+export const ProfileIdentitySchema = z.object({
+  userId: z.string().min(1, "User ID required"),
+});
+
 export const ProfileFormSchema = z
   .object({
     firstName: z.string().min(1, "First name required."),
@@ -36,6 +40,8 @@ export const ProfileFormSchema = z
     },
   );
 
-export const ProfileEditMutationSchema = ProfileFormSchema.safeExtend({
-  userId: z.string(),
-});
+export const ProfileEditOneMutationSchema = ProfileFormSchema.safeExtend(
+  ProfileIdentitySchema.shape,
+);
+
+export const ProfileDeleteOneMutationSchema = ProfileIdentitySchema;

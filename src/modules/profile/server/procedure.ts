@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { and, eq, getTableColumns } from "drizzle-orm";
 
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
@@ -13,9 +14,7 @@ import {
   user,
 } from "@/db/schema";
 
-import { and, eq, getTableColumns } from "drizzle-orm";
-
-import { ProfileEditMutationSchema } from "@/modules/profile/schemas";
+import { ProfileEditOneMutationSchema } from "@/modules/profile/schemas";
 
 export const profileRouter = createTRPCRouter({
   getOne: protectedProcedure
@@ -81,7 +80,7 @@ export const profileRouter = createTRPCRouter({
     }),
 
   edit: protectedProcedure
-    .input(ProfileEditMutationSchema)
+    .input(ProfileEditOneMutationSchema)
     .mutation(async ({ ctx, input }) => {
       const { userId } = input;
 

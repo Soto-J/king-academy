@@ -28,4 +28,4 @@ export const RosterEditOneMutationSchema = RosterEditOneInputSchema.extend(
   RosterIdentitySchema.shape,
 );
 
-export const RosterDeleteOneInputSchema = RosterIdentitySchema;
+export const RosterDeleteOneMutationSchema = RosterIdentitySchema;

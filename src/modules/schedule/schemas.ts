@@ -1,8 +1,10 @@
 import { z } from "zod";
 
-export const ScheduleGetOneSchema = z.object({
+export const ScheduleIdentitySchema = z.object({
   scheduleId: z.string().min(1, "Schedule ID required"),
 });
+
+export const ScheduleGetOneSchema = ScheduleIdentitySchema;
 
 export const ScheduleFormSchema = z.object({
   gameNumber: z.string().min(1, "Game # required."),
@@ -15,6 +17,6 @@ export const ScheduleFormSchema = z.object({
   endTime: z.string().min(1, "End time is required."),
 });
 
-export const ScheduleEditSchema = ScheduleFormSchema.extend({
+export const ScheduleEditOneMutationSchema = ScheduleFormSchema.extend({
   scheduleId: z.string().nullish(),
 });

@@ -15,7 +15,7 @@ import {
 } from "@/db/schema";
 
 import {
-  RosterDeleteOneInputSchema,
+  RosterDeleteOneMutationSchema,
   RosterEditOneMutationSchema,
   RosterGetManyInputSchema,
   RosterGetOneInputSchema,
@@ -131,7 +131,7 @@ export const rosterRouter = createTRPCRouter({
     }),
 
   deleteOne: protectedProcedure
-    .input(RosterDeleteOneInputSchema)
+    .input(RosterDeleteOneMutationSchema)
     .mutation(async ({ input }) => {
       return await db.delete(user).where(eq(user.id, input.userId));
     }),

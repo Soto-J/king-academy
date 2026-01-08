@@ -6,7 +6,7 @@ import { db } from "@/db";
 import { scheduleTable } from "@/db/schema";
 
 import {
-  ScheduleEditSchema,
+  ScheduleEditOneMutationSchema,
   ScheduleGetOneSchema,
 } from "@/modules/schedule/schemas";
 
@@ -14,11 +14,12 @@ export const scheduleRouter = createTRPCRouter({
   getOne: protectedProcedure
     .input(ScheduleGetOneSchema)
     .query(async ({ input }) => {
-      return await db
+      const [data] = await db
         .select()
         .from(scheduleTable)
-        .where(eq(scheduleTable.id, input.scheduleId))
-        .then((row) => row[0]);
+        .where(eq(scheduleTable.id, input.scheduleId));
+
+      return data;
     }),
 
   getMany: protectedProcedure.query(async () => {
@@ -26,7 +27,7 @@ export const scheduleRouter = createTRPCRouter({
   }),
 
   insert: protectedProcedure
-    .input(ScheduleEditSchema)
+    .input(ScheduleEditOneMutationSchema)
     .mutation(async ({ input }) => {
       const {
         scheduleId,
