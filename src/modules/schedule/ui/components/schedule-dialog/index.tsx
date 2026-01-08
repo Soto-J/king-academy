@@ -9,10 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
 import { ScheduleGetOne } from "@/modules/schedule/types";
-import {
-  ScheduleEditSchema,
-  ScheduleFormSchema,
-} from "@/modules/schedule/schemas";
+import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
 import { LocationSection } from "./location-section";
 import { GameInfo } from "./game-info";
@@ -22,7 +19,6 @@ import { TeamsSection } from "./teams-section";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
 
 const getLabels = (mode: "Create" | "Edit", isPending: boolean) => {
   if (mode === "Edit") {
@@ -115,42 +111,38 @@ export const ScheduleDialog = ({
       isOpen={onOpenDialog}
       onOpenChange={onCloseDialog}
     >
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit, (error) =>
-            console.error(error),
-          )}
-          className="space-y-6"
-        >
-          <ScrollArea className="h-[500px] pr-4">
-            <div className="space-y-6">
-              <GameInfo control={form.control} />
-              <DateSection control={form.control} />
-              <TeamsSection control={form.control} />
-              <LocationSection control={form.control} />
-            </div>
-          </ScrollArea>
-
-          <div className="flex items-center justify-between border-t pt-6">
-            <Button
-              type="button"
-              variant="outline"
-              disabled={insertSchedule.isPending}
-              onClick={onCloseDialog}
-            >
-              Cancel
-            </Button>
-
-            <Button
-              type="submit"
-              disabled={insertSchedule.isPending}
-              className="bg-primary hover:bg-primary/90"
-            >
-              {buttonLabel}
-            </Button>
+      <form
+        onSubmit={form.handleSubmit(onSubmit, (error) => console.error(error))}
+        className="space-y-6"
+      >
+        <ScrollArea className="h-[500px] pr-4">
+          <div className="space-y-6">
+            <GameInfo control={form.control} />
+            <DateSection control={form.control} />
+            <TeamsSection control={form.control} />
+            <LocationSection control={form.control} />
           </div>
-        </form>
-      </Form>
+        </ScrollArea>
+
+        <div className="flex items-center justify-between border-t pt-6">
+          <Button
+            type="button"
+            variant="outline"
+            disabled={insertSchedule.isPending}
+            onClick={onCloseDialog}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            type="submit"
+            disabled={insertSchedule.isPending}
+            className="bg-primary hover:bg-primary/90"
+          >
+            {buttonLabel}
+          </Button>
+        </div>
+      </form>
     </ResponsiveDialog>
   );
 };

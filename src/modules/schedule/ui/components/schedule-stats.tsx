@@ -1,6 +1,7 @@
 import { Clock, Home, MapPin, Trophy } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface ScheduleStatsProps {
   totalGames: number;
@@ -15,65 +16,60 @@ export const ScheduleStats = ({
   awayGames,
   upcomingGames,
 }: ScheduleStatsProps) => {
+  const content = [
+    {
+      title: "Total Games",
+      value: totalGames,
+      icon: Trophy,
+      iconColor: "text-primary",
+      bgColor: "from-primary/20 to-primary/5",
+    },
+    {
+      title: "Home Games",
+      value: homeGames,
+      icon: Home,
+      iconColor: "text-green-600",
+      bgColor: "from-green-500/10 to-green-500/5",
+    },
+    {
+      title: "Away Games",
+      value: awayGames,
+      icon: MapPin,
+      iconColor: "text-blue-600",
+      bgColor: "from-blue-500/10 to-blue-500/5",
+    },
+    {
+      title: "Upcoming",
+      value: upcomingGames,
+      icon: Clock,
+      iconColor: "text-orange-600",
+      bgColor: "from-orange-500/10 to-orange-500/5",
+    },
+  ] as const;
+
   return (
     <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-      <Card className="from-primary/10 to-primary/5 border-border/20 bg-gradient-to-br">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-muted-foreground text-sm font-medium">
-            Total Games
-          </CardTitle>
+      {content.map(({ title, value, icon: Icon, iconColor, bgColor }) => (
+        <div
+          key={title}
+          className={cn(
+            "border-border/20 rounded bg-gradient-to-br p-2",
+            bgColor,
+          )}
+        >
+          <div className="flex flex-row items-center justify-between space-y-0">
+            <div className="text-muted-foreground text-sm font-medium">
+              {title}
+            </div>
 
-          <Trophy className="text-primary h-4 w-4" />
-        </CardHeader>
-
-        <CardContent>
-          <div className="text-foreground text-2xl font-bold">{totalGames}</div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-border/20 bg-gradient-to-br from-green-500/10 to-green-500/5">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-muted-foreground text-sm font-medium">
-            Home Games
-          </CardTitle>
-
-          <Home className="h-4 w-4 text-green-600" />
-        </CardHeader>
-
-        <CardContent>
-          <div className="text-foreground text-2xl font-bold">{homeGames}</div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-border/20 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-muted-foreground text-sm font-medium">
-            Away Games
-          </CardTitle>
-
-          <MapPin className="h-4 w-4 text-blue-600" />
-        </CardHeader>
-
-        <CardContent>
-          <div className="text-foreground text-2xl font-bold">{awayGames}</div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-border/20 bg-gradient-to-br from-orange-500/10 to-orange-500/5">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-muted-foreground text-sm font-medium">
-            Upcoming
-          </CardTitle>
-
-          <Clock className="h-4 w-4 text-orange-600" />
-        </CardHeader>
-
-        <CardContent>
-          <div className="text-foreground text-2xl font-bold">
-            {upcomingGames}
+            <Icon className={cn("h-4 w-4", iconColor)} />
           </div>
-        </CardContent>
-      </Card>
+
+          <div>
+            <div className="text-foreground text-xl font-bold">{value}</div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
