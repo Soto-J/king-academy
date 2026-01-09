@@ -5,8 +5,8 @@ interface FormActionsProps {
   isPending: boolean;
   onCloseDialog: () => void;
 
-  submitLabel?: string;
-  pendingLabel?: string;
+  submitLabel: string;
+  pendingLabel: string;
 }
 
 export const FormActions = ({
