@@ -17,7 +17,7 @@ import { useRosterFilters } from "@/modules/roster/hooks/use-roster-filter";
 
 import { RosterEditOneInputSchema } from "@/modules/roster/schema";
 
-import { FormActions } from "@/modules/roster/ui/components/form-actions";
+import { FormActions } from "@/components/form-actions";
 
 import { FormErrorMessage } from "@/components/form-error-message";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
@@ -226,7 +226,8 @@ export const EditPlayerDialog = ({
         <FormActions
           isPending={editProfile.isPending}
           onCloseDialog={onCloseDialog}
-          formId="edit-player-form"
+          submitLabel="Update"
+          pendingLabel="Updating..."
         />
       </form>
     </ResponsiveDialog>

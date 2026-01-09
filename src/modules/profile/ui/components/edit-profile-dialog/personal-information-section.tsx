@@ -8,9 +8,14 @@ import { formatPhoneNumber } from "@/lib/utils";
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { FormErrorMessage } from "@/components/form-error-message";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 
 interface PersonalInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -20,55 +25,51 @@ export const PersonalInformationSection = ({
   control,
 }: PersonalInformationSectionProps) => {
   return (
-    <Card>
-      <FieldSet>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <User className="text-primary h-5 w-5" />
-            Personal Information
-          </CardTitle>
-        </CardHeader>
+    <FieldSet>
+      <FieldLegend className="flex items-center gap-2 text-lg">
+        <User className="text-primary h-5 w-5" />
+        <h2>Personal Information</h2>
+      </FieldLegend>
 
-        <CardContent className="space-y-4">
-          <FieldGroup className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Controller
-              name="firstName"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>First Name</FieldLabel>
+      <FieldGroup className="rounded-lg border p-4">
+        <FieldGroup className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Controller
+            name="firstName"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>First Name</FieldLabel>
 
-                  <Input
-                    {...field}
-                    id={field.name}
-                    placeholder="John"
-                    autoComplete="given-name"
-                  />
+                <Input
+                  {...field}
+                  id={field.name}
+                  placeholder="John"
+                  autoComplete="given-name"
+                />
 
-                  <FormErrorMessage error={fieldState.error} />
-                </Field>
-              )}
-            />
+                <FormErrorMessage error={fieldState.error} />
+              </Field>
+            )}
+          />
 
-            <Controller
-              name="lastName"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Last Name</FieldLabel>
+          <Controller
+            name="lastName"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>Last Name</FieldLabel>
 
-                  <Input
-                    id={field.name}
-                    placeholder="Smith"
-                    autoComplete="family-name"
-                    {...field}
-                  />
+                <Input
+                  id={field.name}
+                  placeholder="Smith"
+                  autoComplete="family-name"
+                  {...field}
+                />
 
-                  <FormErrorMessage error={fieldState.error} />
-                </Field>
-              )}
-            />
-          </FieldGroup>
+                <FormErrorMessage error={fieldState.error} />
+              </Field>
+            )}
+          />
 
           <Controller
             name="dateOfBirth"
@@ -102,84 +103,84 @@ export const PersonalInformationSection = ({
               );
             }}
           />
-
-          <FieldGroup className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Controller
-              name="phoneNumber"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
-
-                  <Input
-                    {...field}
-                    id={field.name}
-                    placeholder="(555) 123-4567"
-                    inputMode="tel"
-                    autoComplete="tel"
-                    value={formatPhoneNumber(field.value ?? "")}
-                    onChange={(e) => {
-                      const digits = e.target.value.replace(/\D/g, "");
-                      field.onChange(digits);
-                    }}
-                  />
-
-                  <FormErrorMessage error={fieldState.error} />
-                </Field>
-              )}
-            />
-
-            <Controller
-              name="emergencyNumber"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Emergency Number</FieldLabel>
-
-                  <Input
-                    {...field}
-                    id={field.name}
-                    placeholder="(555) 123-4567"
-                    inputMode="tel"
-                    autoComplete="tel"
-                    value={formatPhoneNumber(field.value ?? "")}
-                    onChange={(e) => {
-                      const digits = e.target.value.replace(/\D/g, "");
-                      field.onChange(digits);
-                    }}
-                  />
-
-                  <FormErrorMessage error={fieldState.error} />
-                </Field>
-              )}
-            />
-          </FieldGroup>
-
+        </FieldGroup>
+        
+        <div className="flex gap-x-4">
           <Controller
-            name="school"
+            name="phoneNumber"
             control={control}
             render={({ field, fieldState }) => (
               <Field>
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="flex items-center gap-2"
-                >
-                  <GraduationCap className="h-4 w-4" />
-                  School
-                </FieldLabel>
+                <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
 
                 <Input
                   {...field}
                   id={field.name}
-                  placeholder="Your school or university"
+                  placeholder="(555) 123-4567"
+                  inputMode="tel"
+                  autoComplete="tel-national"
+                  value={formatPhoneNumber(field.value ?? "")}
+                  onChange={(e) => {
+                    const digits = e.target.value.replace(/\D/g, "");
+                    field.onChange(digits);
+                  }}
                 />
 
                 <FormErrorMessage error={fieldState.error} />
               </Field>
             )}
           />
-        </CardContent>
-      </FieldSet>
-    </Card>
+          
+          <Controller
+            name="emergencyNumber"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>Emergency Number</FieldLabel>
+
+                <Input
+                  {...field}
+                  id={field.name}
+                  placeholder="(555) 123-4567"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  value={formatPhoneNumber(field.value ?? "")}
+                  onChange={(e) => {
+                    const digits = e.target.value.replace(/\D/g, "");
+                    field.onChange(digits);
+                  }}
+                />
+
+                <FormErrorMessage error={fieldState.error} />
+              </Field>
+            )}
+          />
+        </div>
+
+        <Controller
+          name="school"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel
+                htmlFor={field.name}
+                className="flex items-center gap-2"
+              >
+                <GraduationCap className="h-4 w-4" />
+                School
+              </FieldLabel>
+
+              <Input
+                {...field}
+                id={field.name}
+                placeholder="Your school or university"
+              />
+
+              <FormErrorMessage error={fieldState.error} />
+            </Field>
+          )}
+        />
+      </FieldGroup>
+    </FieldSet>
   );
 };

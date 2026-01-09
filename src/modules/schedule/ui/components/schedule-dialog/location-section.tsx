@@ -4,10 +4,15 @@ import { MapPin } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Field, FieldLabel } from "@/components/ui/field";
 import { FormErrorMessage } from "@/components/form-error-message";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 
 interface LocationSectionProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
@@ -15,27 +20,29 @@ interface LocationSectionProps {
 
 export const LocationSection = ({ control }: LocationSectionProps) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <MapPin className="text-primary h-5 w-5" />
-          Location
-        </CardTitle>
-      </CardHeader>
+    <FieldSet>
+      <FieldLegend className="flex items-center gap-2 text-lg">
+        <MapPin className="text-primary h-5 w-5" />
+        <h2>Location</h2>
+      </FieldLegend>
 
-      <CardContent>
+      <FieldGroup className="rounded-lg border p-4">
         <Controller
           name="location"
           control={control}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel className="flex items-center gap-2">
+              <FieldLabel
+                htmlFor={field.name}
+                className="flex items-center gap-2"
+              >
                 <MapPin className="h-4 w-4" />
                 Game Location
               </FieldLabel>
 
               <Input
                 {...field}
+                id={field.name}
                 placeholder="Enter field or venue name"
                 className="pl-10"
                 style={{
@@ -50,7 +57,7 @@ export const LocationSection = ({ control }: LocationSectionProps) => {
             </Field>
           )}
         />
-      </CardContent>
-    </Card>
+      </FieldGroup>
+    </FieldSet>
   );
 };

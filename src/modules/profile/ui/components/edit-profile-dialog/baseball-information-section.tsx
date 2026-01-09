@@ -11,8 +11,13 @@ import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { FormErrorMessage } from "@/components/form-error-message";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -29,24 +34,19 @@ export const BaseballInformationSection = ({
   control,
 }: BaseballInformationSectionProps) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Trophy className="text-primary h-5 w-5" />
+    <FieldSet>
+      <FieldLegend className="flex items-center gap-2 text-lg">
+        <Trophy className="text-primary h-5 w-5" />
+        <h2>Baseball Information</h2>
+      </FieldLegend>
 
-          <span>Baseball Information</span>
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="space-y-4">
+      <FieldGroup className="rounded-lg border p-4">
         <Controller
           name="primaryPosition"
           control={control}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor="primaryPosition">
-                Primary Position
-              </FieldLabel>
+              <FieldLabel htmlFor={field.name}>Primary Position</FieldLabel>
 
               <Select
                 onValueChange={field.onChange}
@@ -54,7 +54,7 @@ export const BaseballInformationSection = ({
               >
                 <SelectTrigger>
                   <SelectValue
-                    id="primaryPosition"
+                    id={field.name}
                     placeholder="Select primary position"
                   />
                 </SelectTrigger>
@@ -80,7 +80,7 @@ export const BaseballInformationSection = ({
             <Field>
               <FieldLabel>Positions (check all that apply)</FieldLabel>
 
-              <div className="mt-2 grid grid-cols-2 gap-3">
+              <FieldGroup className="mt-2 grid grid-cols-2 gap-3">
                 {POSITIONS.map((position) => (
                   <div key={position} className="flex items-center space-x-2">
                     <Input
@@ -110,7 +110,7 @@ export const BaseballInformationSection = ({
                     </label>
                   </div>
                 ))}
-              </div>
+              </FieldGroup>
 
               <FormErrorMessage error={fieldState.error} />
             </Field>
@@ -181,7 +181,7 @@ export const BaseballInformationSection = ({
             )}
           />
         </FieldGroup>
-      </CardContent>
-    </Card>
+      </FieldGroup>
+    </FieldSet>
   );
 };

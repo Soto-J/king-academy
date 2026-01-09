@@ -12,12 +12,13 @@ import { ProfileGetOne } from "@/modules/profile/types";
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { ResponsiveDialog } from "@/components/responsive-dialog";
-import { Button } from "@/components/ui/button";
 
 import { PersonalInformationSection } from "./personal-information-section";
 import { AddressSection } from "./address-section";
 import { BaseballInformationSection } from "./baseball-information-section";
 import { BioSection } from "./bio-section";
+import { FieldGroup } from "@/components/ui/field";
+import { FormActions } from "@/components/form-actions";
 
 interface EditProfileDialogProps {
   isOpen: boolean;
@@ -115,31 +116,19 @@ export const EditProfileDialog = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex h-full min-h-0 flex-col"
       >
-        <div className="min-h-0 flex-1 space-y-6 overflow-y-auto pr-2 pb-4">
+        <FieldGroup className="min-h-0 flex-1 overflow-y-auto pr-2 pb-4">
           <PersonalInformationSection control={form.control} />
           <AddressSection control={form.control} />
           <BaseballInformationSection control={form.control} />
           <BioSection control={form.control} />
-        </div>
+        </FieldGroup>
 
-        <div className="flex w-full shrink-0 items-center justify-between border-t pt-4 mt-4">
-          <Button
-            type="button"
-            variant="outline"
-            disabled={editProfile.isPending}
-            onClick={onCloseDialog}
-          >
-            Cancel
-          </Button>
-
-          <Button
-            type="submit"
-            disabled={editProfile.isPending}
-            className="bg-primary hover:bg-primary/90"
-          >
-            {editProfile.isPending ? "Updating..." : "Update Profile"}
-          </Button>
-        </div>
+        <FormActions
+          isPending={editProfile.isPending}
+          onCloseDialog={onCloseDialog}
+          submitLabel="Update"
+          pendingLabel="Updating"
+        />
       </form>
     </ResponsiveDialog>
   );

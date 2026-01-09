@@ -6,9 +6,14 @@ import { FileText } from "lucide-react";
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { FormErrorMessage } from "@/components/form-error-message";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Field, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 
 interface BioSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
@@ -16,15 +21,13 @@ interface BioSectionProps {
 
 export const BioSection = ({ control }: BioSectionProps) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <FileText className="text-primary h-5 w-5" />
-          About You
-        </CardTitle>
-      </CardHeader>
+    <FieldSet>
+      <FieldLegend className="flex items-center gap-2 text-lg">
+        <FileText className="text-primary h-5 w-5" />
+        <h2>About You</h2>
+      </FieldLegend>
 
-      <CardContent>
+      <FieldGroup className="rounded-lg border p-4">
         <Controller
           name="bio"
           control={control}
@@ -43,7 +46,7 @@ export const BioSection = ({ control }: BioSectionProps) => {
             </Field>
           )}
         />
-      </CardContent>
-    </Card>
+      </FieldGroup>
+    </FieldSet>
   );
 };

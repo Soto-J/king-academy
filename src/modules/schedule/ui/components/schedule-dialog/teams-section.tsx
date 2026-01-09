@@ -4,10 +4,15 @@ import { Users, Home, Plane } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Field, FieldLabel } from "@/components/ui/field";
 import { FormErrorMessage } from "@/components/form-error-message";
+import { Input } from "@/components/ui/input";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 
 interface TeamsSectionProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
@@ -15,15 +20,13 @@ interface TeamsSectionProps {
 
 export const TeamsSection = ({ control }: TeamsSectionProps) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Users className="text-primary h-5 w-5" />
-          Teams
-        </CardTitle>
-      </CardHeader>
+    <FieldSet>
+      <FieldLegend className="flex items-center gap-2 text-lg">
+        <Users className="text-primary h-5 w-5" />
+        <h2>Teams</h2>
+      </FieldLegend>
 
-      <CardContent className="space-y-4">
+      <FieldGroup className="rounded-lg border p-4">
         <Controller
           name="homeTeam"
           control={control}
@@ -85,7 +88,7 @@ export const TeamsSection = ({ control }: TeamsSectionProps) => {
             </Field>
           )}
         />
-      </CardContent>
-    </Card>
+      </FieldGroup>
+    </FieldSet>
   );
 };

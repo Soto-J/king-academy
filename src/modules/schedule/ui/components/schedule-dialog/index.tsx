@@ -17,10 +17,12 @@ import { DateSection } from "./date-section";
 import { TeamsSection } from "./teams-section";
 
 import { ResponsiveDialog } from "@/components/responsive-dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
+import { FormActions } from "@/components/form-actions";
+import { FieldGroup } from "@/components/ui/field";
 
-const getLabels = (mode: "Create" | "Edit", isPending: boolean) => {
+type ScheduleDialogMode = "Create" | "Edit";
+
+const getLabels = (mode: ScheduleDialogMode, isPending: boolean) => {
   if (mode === "Edit") {
     return {
       titleLabel: "Edit Schedule",
@@ -40,7 +42,7 @@ interface ScheduleDialogProps {
   onOpenDialog: boolean;
   onCloseDialog: () => void;
   initialValues: ScheduleGetOne | null;
-  mode: "Create" | "Edit";
+  mode: ScheduleDialogMode;
 }
 
 export const ScheduleDialog = ({
@@ -112,36 +114,22 @@ export const ScheduleDialog = ({
       onOpenChange={onCloseDialog}
     >
       <form
-        onSubmit={form.handleSubmit(onSubmit, (error) => console.error(error))}
-        className="space-y-6"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex h-full min-h-0 flex-col"
       >
-        <ScrollArea className="h-[500px] pr-4">
-          <div className="space-y-6">
-            <GameInfo control={form.control} />
-            <DateSection control={form.control} />
-            <TeamsSection control={form.control} />
-            <LocationSection control={form.control} />
-          </div>
-        </ScrollArea>
+        <FieldGroup className="min-h-0 flex-1 overflow-y-auto pr-2 pb-4">
+          <GameInfo control={form.control} />
+          <DateSection control={form.control} />
+          <TeamsSection control={form.control} />
+          <LocationSection control={form.control} />
+        </FieldGroup>
 
-        <div className="flex items-center justify-between border-t pt-6">
-          <Button
-            type="button"
-            variant="outline"
-            disabled={insertSchedule.isPending}
-            onClick={onCloseDialog}
-          >
-            Cancel
-          </Button>
-
-          <Button
-            type="submit"
-            disabled={insertSchedule.isPending}
-            className="bg-primary hover:bg-primary/90"
-          >
-            {buttonLabel}
-          </Button>
-        </div>
+        <FormActions
+          isPending={insertSchedule.isPending}
+          onCloseDialog={onCloseDialog}
+          submitLabel="Update"
+          pendingLabel="Updating"
+        />
       </form>
     </ResponsiveDialog>
   );
