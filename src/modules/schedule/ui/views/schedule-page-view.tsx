@@ -36,7 +36,7 @@ export const SchedulePageView = ({ isAdmin }: SchedulePageViewProps) => {
   return (
     <>
       <ScheduleDialog
-        onOpenDialog={isOpen}
+        isOpen={isOpen}
         onCloseDialog={() => {
           setIsOpen(false);
           setSelectedSchedule(null);

@@ -20,33 +20,30 @@ import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { FormActions } from "@/components/form-actions";
 import { FieldGroup } from "@/components/ui/field";
 
-type ScheduleDialogMode = "Create" | "Edit";
-
-const getLabels = (mode: ScheduleDialogMode, isPending: boolean) => {
-  if (mode === "Edit") {
-    return {
-      titleLabel: "Edit Schedule",
-      descriptionLabel: "Edit an existing schedule.",
-      buttonLabel: isPending ? "Updating..." : "Update Schedule",
-    };
-  }
-
-  return {
+const LABELS = {
+  Create: {
     titleLabel: "Create Schedule",
     descriptionLabel: "Create a new schedule.",
-    buttonLabel: isPending ? "Creating..." : "Create Schedule",
-  };
-};
+    submitLabel: "Create Schedule",
+    pendingLabel: "Creating",
+  },
+  Edit: {
+    titleLabel: "Edit Schedule",
+    descriptionLabel: "Edit an existing schedule.",
+    submitLabel: "Update",
+    pendingLabel: "Updating",
+  },
+} as const;
 
 interface ScheduleDialogProps {
-  onOpenDialog: boolean;
+  isOpen: boolean;
   onCloseDialog: () => void;
   initialValues: ScheduleGetOne | null;
-  mode: ScheduleDialogMode;
+  mode: "Create" | "Edit";
 }
 
 export const ScheduleDialog = ({
-  onOpenDialog,
+  isOpen,
   onCloseDialog,
   initialValues,
   mode,
@@ -90,27 +87,20 @@ export const ScheduleDialog = ({
   );
 
   const onSubmit = (values: z.infer<typeof ScheduleFormSchema>) => {
-    try {
-      insertSchedule.mutate({
-        scheduleId: initialValues?.id,
-        ...values,
-      });
-    } catch (error) {
-      console.error("Error during form submission:", error);
-      toast.error("Failed to submit form");
-    }
+    insertSchedule.mutate({
+      scheduleId: initialValues?.id,
+      ...values,
+    });
   };
 
-  const { titleLabel, descriptionLabel, buttonLabel } = getLabels(
-    mode,
-    insertSchedule.isPending,
-  );
+  const { titleLabel, descriptionLabel, submitLabel, pendingLabel } =
+    LABELS[mode];
 
   return (
     <ResponsiveDialog
       title={titleLabel}
       description={descriptionLabel}
-      isOpen={onOpenDialog}
+      isOpen={isOpen}
       onOpenChange={onCloseDialog}
     >
       <form
@@ -127,8 +117,8 @@ export const ScheduleDialog = ({
         <FormActions
           isPending={insertSchedule.isPending}
           onCloseDialog={onCloseDialog}
-          submitLabel="Update"
-          pendingLabel="Updating"
+          submitLabel={submitLabel}
+          pendingLabel={pendingLabel}
         />
       </form>
     </ResponsiveDialog>
