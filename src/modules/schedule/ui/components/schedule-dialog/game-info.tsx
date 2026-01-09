@@ -27,20 +27,22 @@ export const GameInfo = ({ control }: GameInfoProps) => {
         <h2>Game Information</h2>
       </FieldLegend>
 
-      <FieldGroup className="grid grid-cols-2 gap-4 space-y-4">
+      <FieldGroup className="grid grid-cols-2 gap-4 rounded-lg border p-4">
         <Controller
           name="gameNumber"
           control={control}
           render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>Game #</FieldLabel>
+            <Field className="items-center gap-1.5">
+              <FieldLabel htmlFor={field.name} className="justify-center gap-1.5">
+                Game #
+              </FieldLabel>
 
               <Input
                 {...field}
                 id={field.name}
                 placeholder="1"
                 type="number"
-                className="text-center font-medium"
+                className="h-8 max-w-24 px-2 py-1 text-center text-sm"
               />
 
               <FormErrorMessage error={fieldState.error} />
@@ -52,14 +54,16 @@ export const GameInfo = ({ control }: GameInfoProps) => {
           name="division"
           control={control}
           render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>Division</FieldLabel>
+            <Field className="items-center gap-1.5">
+              <FieldLabel htmlFor={field.name} className="justify-center gap-1.5">
+                Division
+              </FieldLabel>
 
               <Input
                 {...field}
                 id={field.name}
                 placeholder="A"
-                className="text-center font-medium"
+                className="h-8 max-w-24 px-2 py-1 text-center text-sm"
               />
 
               <FormErrorMessage error={fieldState.error} />

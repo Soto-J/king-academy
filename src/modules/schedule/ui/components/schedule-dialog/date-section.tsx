@@ -26,50 +26,22 @@ export const DateSection = ({ control }: DateSectionProps) => {
         <h2>Schedule</h2>
       </FieldLegend>
 
-      <FieldGroup className="rounded-lg border p-4">
-        <Controller
-          name="date"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel
-                htmlFor={field.name}
-                className="flex items-center gap-2"
-              >
-                <Calendar className="h-4 w-4" />
-                Game Date
-              </FieldLabel>
-
-              <Input
-                {...field}
-                type="date"
-                className="w-fit text-center font-medium"
-              />
-
-              <FormErrorMessage error={fieldState.error} />
-            </Field>
-          )}
-        />
-
-        <div className="grid grid-cols-2">
+      <FieldGroup className="flex items-center rounded-lg border p-4">
+        <div className="flex flex-col items-center justify-center gap-6">
           <Controller
-            name="startTime"
+            name="date"
             control={control}
             render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="flex items-center gap-2"
-                >
-                  <Clock className="h-4 w-4 text-green-600" />
-                  Start Time
+              <Field className="gap-1.5">
+                <FieldLabel htmlFor={field.name} className="gap-1.5">
+                  <Calendar className="h-4 w-4" />
+                  <span>Game Date</span>
                 </FieldLabel>
 
                 <Input
                   {...field}
-                  id={field.name}
-                  type="time"
-                  className="w-fit text-center font-medium"
+                  type="date"
+                  className="h-8 max-w-40 px-2 py-1 text-sm"
                 />
 
                 <FormErrorMessage error={fieldState.error} />
@@ -77,30 +49,51 @@ export const DateSection = ({ control }: DateSectionProps) => {
             )}
           />
 
-          <Controller
-            name="endTime"
-            control={control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="flex items-center gap-2"
-                >
-                  <Clock className="h-4 w-4 text-red-600" />
-                  End Time
-                </FieldLabel>
+          <div className="grid grid-cols-2 gap-4">
+            <Controller
+              name="startTime"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field className="gap-1.5">
+                  <FieldLabel htmlFor={field.name} className="gap-1.5">
+                    <Clock className="h-4 w-4 text-green-600" />
+                    <span>Start Time</span>
+                  </FieldLabel>
 
-                <Input
-                  {...field}
-                  id={field.name}
-                  type="time"
-                  className="w-fit text-center font-medium"
-                />
+                  <Input
+                    {...field}
+                    id={field.name}
+                    type="time"
+                    className="h-8 max-w-32 px-2 py-1 text-sm"
+                  />
 
-                <FormErrorMessage error={fieldState.error} />
-              </Field>
-            )}
-          />
+                  <FormErrorMessage error={fieldState.error} />
+                </Field>
+              )}
+            />
+
+            <Controller
+              name="endTime"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field className="gap-1.5">
+                  <FieldLabel htmlFor={field.name} className="gap-1.5">
+                    <Clock className="h-4 w-4 text-red-600" />
+                    <span>End Time</span>
+                  </FieldLabel>
+
+                  <Input
+                    {...field}
+                    id={field.name}
+                    type="time"
+                    className="h-8 max-w-32 px-2 py-1 text-sm"
+                  />
+
+                  <FormErrorMessage error={fieldState.error} />
+                </Field>
+              )}
+            />
+          </div>
         </div>
       </FieldGroup>
     </FieldSet>
