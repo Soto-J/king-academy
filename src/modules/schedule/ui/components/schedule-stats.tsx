@@ -62,7 +62,7 @@ export const ScheduleStats = ({
               {title}
             </div>
 
-            <div className="text-foreground font-semi-bold">
+            <div className="text-foreground font-semibold">
               {value}
             </div>
           </div>

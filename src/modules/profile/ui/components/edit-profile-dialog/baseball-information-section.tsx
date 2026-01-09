@@ -52,11 +52,8 @@ export const BaseballInformationSection = ({
                 onValueChange={field.onChange}
                 value={field.value || undefined}
               >
-                <SelectTrigger>
-                  <SelectValue
-                    id={field.name}
-                    placeholder="Select primary position"
-                  />
+                <SelectTrigger id={field.name}>
+                  <SelectValue placeholder="Select primary position" />
                 </SelectTrigger>
 
                 <SelectContent>
