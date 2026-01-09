@@ -4,10 +4,15 @@ import { Calendar, Clock } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Field, FieldLabel } from "@/components/ui/field";
 import { FormErrorMessage } from "@/components/form-error-message";
+import { Input } from "@/components/ui/input";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 
 interface DateSectionProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
@@ -15,15 +20,13 @@ interface DateSectionProps {
 
 export const DateSection = ({ control }: DateSectionProps) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Calendar className="text-primary h-5 w-5" />
-          Schedule
-        </CardTitle>
-      </CardHeader>
+    <FieldSet>
+      <FieldLegend className="flex items-center gap-2 text-lg">
+        <Calendar className="text-primary h-5 w-5" />
+        <h2>Schedule</h2>
+      </FieldLegend>
 
-      <CardContent className="space-y-6">
+      <FieldGroup className="rounded-lg border p-4">
         <Controller
           name="date"
           control={control}
@@ -99,7 +102,7 @@ export const DateSection = ({ control }: DateSectionProps) => {
             )}
           />
         </div>
-      </CardContent>
-    </Card>
+      </FieldGroup>
+    </FieldSet>
   );
 };
