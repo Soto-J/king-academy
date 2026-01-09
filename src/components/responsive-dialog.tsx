@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
@@ -32,12 +34,25 @@ export const ResponsiveDialog = ({
   isOpen,
   onOpenChange,
 }: ResponsiveDialogProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
-      <Drawer open={isOpen} onOpenChange={onOpenChange} autoFocus>
-        <DrawerContent className="flex max-h-[90vh] w-full max-w-full flex-col p-4">
+      <Drawer open={isOpen} onOpenChange={onOpenChange}>
+        <DrawerContent
+          ref={contentRef}
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+
+            // Move focus to the drawer content container
+            requestAnimationFrame(() => {
+              contentRef.current?.focus();
+            });
+          }}
+          className="flex max-h-[90vh] w-full max-w-full flex-col p-4"
+          tabIndex={-1}
+        >
           <DrawerHeader>
             <DrawerTitle>{title}</DrawerTitle>
             <DrawerDescription>{description}</DrawerDescription>
