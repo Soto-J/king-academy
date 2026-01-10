@@ -52,19 +52,17 @@ export const ScheduleStats = ({
         <div
           key={title}
           className={cn(
-            "border-border/20 rounded-lg bg-gradient-to-br p-2",
+            "border-border/20 rounded-lg bg-gradient-to-br p-4 py-3",
             bgColor,
           )}
         >
-          <div className="flex flex-row items-center justify-between space-y-0">
+          <div className="flex flex-row items-center justify-between">
             <div className="text-muted-foreground text-sm font-medium">
-              <Icon className={cn("h-4 w-4", iconColor)} />
-              {title}
+              <Icon className={cn("mb-1.5 h-4 w-4", iconColor)} />
+              <span>{title}</span>
             </div>
 
-            <div className="text-foreground font-semibold">
-              {value}
-            </div>
+            <div className="text-foreground font-semibold">{value}</div>
           </div>
         </div>
       ))}

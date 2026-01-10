@@ -8,7 +8,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { ScheduleGetOne } from "@/modules/schedule/types";
 
 import { ScheduleHeader } from "@/modules/schedule/ui/components/schedule-header";
-import { ScheduleStats } from "@/modules/schedule/ui/components/schedule-stats";
+import { ScheduleStats } from "@/modules/schedule/ui/components/schedule-table/schedule-stats";
 import { ScheduleTable } from "@/modules/schedule/ui/components/schedule-table";
 import { ScheduleDialog } from "@/modules/schedule/ui/components/schedule-dialog";
 
