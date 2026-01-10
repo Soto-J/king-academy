@@ -11,7 +11,9 @@ interface BaseballProfileProps {
   baseballProfile: ProfileGetOne["baseballProfile"];
 }
 
-export const BaseballProfile = ({ baseballProfile }: BaseballProfileProps) => {
+export default function BaseballProfile({
+  baseballProfile,
+}: BaseballProfileProps) {
   return (
     <Card className="from-muted/50 to-primary/10 border-border/20 bg-gradient-to-br shadow-md backdrop-blur-sm">
       <CardHeader className="from-primary/5 to-primary/10 bg-gradient-to-r">
@@ -61,4 +63,4 @@ export const BaseballProfile = ({ baseballProfile }: BaseballProfileProps) => {
       </CardContent>
     </Card>
   );
-};
+}

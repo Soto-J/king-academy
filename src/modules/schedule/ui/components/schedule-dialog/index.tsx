@@ -11,13 +11,13 @@ import { useTRPC } from "@/trpc/client";
 import { ScheduleGetOne } from "@/modules/schedule/types";
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
-import { LocationSection } from "./location-section";
-import { GameInfo } from "./game-info";
-import { DateSection } from "./date-section";
-import { TeamsSection } from "./teams-section";
+import ResponsiveDialog from "@/components/responsive-dialog";
+import LocationSection from "./location-section";
+import GameInfo from "./game-info";
+import DateSection from "./date-section";
+import TeamsSection from "./teams-section";
+import FormActions from "@/components/form-actions";
 
-import { ResponsiveDialog } from "@/components/responsive-dialog";
-import { FormActions } from "@/components/form-actions";
 import { FieldGroup } from "@/components/ui/field";
 
 const LABELS = {
@@ -42,12 +42,12 @@ interface ScheduleDialogProps {
   mode: "Create" | "Edit";
 }
 
-export const ScheduleDialog = ({
+export default function ScheduleDialog({
   isOpen,
   onCloseDialog,
   initialValues,
   mode,
-}: ScheduleDialogProps) => {
+}: ScheduleDialogProps) {
   const form = useForm<z.infer<typeof ScheduleFormSchema>>({
     resolver: zodResolver(ScheduleFormSchema),
     values: {
@@ -123,4 +123,4 @@ export const ScheduleDialog = ({
       </form>
     </ResponsiveDialog>
   );
-};
+}

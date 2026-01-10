@@ -12,7 +12,10 @@ interface DashboardCommandProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const DashboardCommand = ({ open, setOpen }: DashboardCommandProps) => {
+export default function DashboardCommand({
+  open,
+  setOpen,
+}: DashboardCommandProps) {
   return (
     <CommandResponsiveDialog open={open} onOpenChange={setOpen}>
       <CommandInput placeholder="" />
@@ -22,4 +25,4 @@ export const DashboardCommand = ({ open, setOpen }: DashboardCommandProps) => {
       </CommandList>
     </CommandResponsiveDialog>
   );
-};
+}

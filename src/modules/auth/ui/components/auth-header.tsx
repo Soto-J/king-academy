@@ -1,10 +1,11 @@
 import { Crown } from "lucide-react";
+
 interface AuthHeaderProps {
   title: string;
   description: string;
 }
 
-export const AuthHeader = ({ title, description }: AuthHeaderProps) => {
+export default function AuthHeader({ title, description }: AuthHeaderProps) {
   return (
     <div className="pb-2 text-center">
       <Crown className="text-primary mx-auto h-8 w-8" />
@@ -15,4 +16,4 @@ export const AuthHeader = ({ title, description }: AuthHeaderProps) => {
       <p className="text-muted-foreground text-lg">{description}</p>
     </div>
   );
-};
+}

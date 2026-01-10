@@ -7,10 +7,10 @@ interface DashboardHeaderProps {
   description: string;
 }
 
-export const DashboardHeader = ({
+export default function DashboardHeader({
   title,
   description,
-}: DashboardHeaderProps) => {
+}: DashboardHeaderProps) {
   return (
     <SidebarHeader className="p-6 pt-10">
       <Link href="/" className="group flex gap-x-3">
@@ -30,4 +30,4 @@ export const DashboardHeader = ({
       </Link>
     </SidebarHeader>
   );
-};
+}

@@ -10,16 +10,16 @@ import { Controller, useForm } from "react-hook-form";
 
 import { CircleDot, OctagonAlertIcon } from "lucide-react";
 
-import { AuthHeader } from "@/modules/auth/ui/components/auth-header";
 import { FaGoogle } from "react-icons/fa";
+
+import AuthHeader from "@/modules/auth/ui/components/auth-header";
+import AuthBrandPannel from "@/modules/auth/ui/components/auth-brand-pannel";
 
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/auth-client";
-
-import { AuthBrandPannel } from "@/modules/auth/ui/components/auth-brand-pannel";
 
 import {
   Field,
@@ -38,7 +38,7 @@ const formSchema = z.object({
     .min(8, { message: "Password must be at least 8 characters." }),
 });
 
-export const SignUpView = () => {
+export default function SignUpView() {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
@@ -324,4 +324,4 @@ export const SignUpView = () => {
       </div>
     </>
   );
-};
+}

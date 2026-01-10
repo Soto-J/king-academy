@@ -7,9 +7,9 @@ import { getQueryClient, trpc } from "@/trpc/server";
 
 import { getCurrentSession } from "@/lib/get-session";
 
-import { ProfilePageView } from "@/modules/profile/ui/views/profile-page-view";
+import ProfilePageView from "@/modules/profile/ui/views/profile-page-view";
 
-const ProfilePage = async () => {
+export default async function ProfilePage() {
   const session = await getCurrentSession();
   if (!session) redirect("/sign-in");
 
@@ -25,6 +25,4 @@ const ProfilePage = async () => {
       </Suspense>
     </HydrationBoundary>
   );
-};
-
-export default ProfilePage;
+}

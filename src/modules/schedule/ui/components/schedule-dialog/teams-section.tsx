@@ -4,7 +4,7 @@ import { Users, Home, Plane } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
-import { FormErrorMessage } from "@/components/form-error-message";
+import FormErrorMessage from "@/components/form-error-message";
 import { Input } from "@/components/ui/input";
 import {
   Field,
@@ -18,7 +18,7 @@ interface TeamsSectionProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
 }
 
-export const TeamsSection = ({ control }: TeamsSectionProps) => {
+export default function TeamsSection({ control }: TeamsSectionProps) {
   return (
     <FieldSet>
       <FieldLegend className="flex items-center gap-2 text-lg">
@@ -91,4 +91,4 @@ export const TeamsSection = ({ control }: TeamsSectionProps) => {
       </FieldGroup>
     </FieldSet>
   );
-};
+}

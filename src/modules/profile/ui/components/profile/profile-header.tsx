@@ -17,11 +17,11 @@ interface ProfileHeaderProps {
   isOwnProfile?: boolean;
 }
 
-export const ProfileHeader = ({
+export default function ProfileHeader({
   data,
   onEditClick,
   isOwnProfile = false,
-}: ProfileHeaderProps) => {
+}: ProfileHeaderProps) {
   return (
     <Card className="from-primary/15 via-secondary/5 to-primary/15 border-border/20 relative overflow-hidden border bg-gradient-to-br shadow-xl backdrop-blur-sm">
       <div className="from-brand-red via-primary to-brand-red absolute top-0 left-0 h-1 w-full bg-gradient-to-r" />
@@ -82,4 +82,4 @@ export const ProfileHeader = ({
       </CardContent>
     </Card>
   );
-};
+}

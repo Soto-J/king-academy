@@ -11,14 +11,14 @@ import { useTRPC } from "@/trpc/client";
 import { ProfileGetOne } from "@/modules/profile/types";
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
-import { ResponsiveDialog } from "@/components/responsive-dialog";
+import ResponsiveDialog from "@/components/responsive-dialog";
+import PersonalInformationSection from "./personal-information-section";
+import AddressSection from "./address-section";
+import BaseballInformationSection from "./baseball-information-section";
+import BioSection from "./bio-section";
 
-import { PersonalInformationSection } from "./personal-information-section";
-import { AddressSection } from "./address-section";
-import { BaseballInformationSection } from "./baseball-information-section";
-import { BioSection } from "./bio-section";
+import FormActions from "@/components/form-actions";
 import { FieldGroup } from "@/components/ui/field";
-import { FormActions } from "@/components/form-actions";
 
 interface EditProfileDialogProps {
   isOpen: boolean;
@@ -26,11 +26,11 @@ interface EditProfileDialogProps {
   initialValues: ProfileGetOne;
 }
 
-export const EditProfileDialog = ({
+export default function EditProfileDialog({
   isOpen,
   onCloseDialog,
   initialValues,
-}: EditProfileDialogProps) => {
+}: EditProfileDialogProps) {
   const [firstName, lastName] = initialValues?.user?.name?.split(" ") || [
     "",
     "",
@@ -132,4 +132,4 @@ export const EditProfileDialog = ({
       </form>
     </ResponsiveDialog>
   );
-};
+}

@@ -5,7 +5,7 @@ import { FileText } from "lucide-react";
 
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
-import { FormErrorMessage } from "@/components/form-error-message";
+import  FormErrorMessage  from "@/components/form-error-message";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Field,
@@ -19,7 +19,7 @@ interface BioSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
 }
 
-export const BioSection = ({ control }: BioSectionProps) => {
+export default function BioSection({ control }: BioSectionProps) {
   return (
     <FieldSet>
       <FieldLegend className="flex items-center gap-2 text-lg">
@@ -49,4 +49,4 @@ export const BioSection = ({ control }: BioSectionProps) => {
       </FieldGroup>
     </FieldSet>
   );
-};
+}

@@ -15,12 +15,12 @@ interface ScheduleTableBodyProps {
   onDelete: (scheduleId: string) => void;
 }
 
-export const ScheduleTableBody = ({
+export default function ScheduleTableBody({
   isAdmin,
   schedules,
   onEdit,
   onDelete,
-}: ScheduleTableBodyProps) => {
+}: ScheduleTableBodyProps) {
   return (
     <TableBody>
       {schedules?.map((schedule, index) => {
@@ -42,50 +42,44 @@ export const ScheduleTableBody = ({
             <TableCell className="text-foreground pl-6 font-medium">
               {schedule.gameNumber}
             </TableCell>
-            <TableCell className="text-foreground font-medium">
+            <TableCell className="text-foreground">
               {format(schedule.date, "MM/dd/yy")}
             </TableCell>
-            <TableCell className="text-muted-foreground">
+            <TableCell className="text-foregound text-center">
               {format(
                 parse(schedule.startTime, "HH:mm:ss", new Date()),
                 "h:mm a",
               )}
             </TableCell>
-            <TableCell className="text-muted-foreground">
-              {format(
-                parse(schedule.endTime, "HH:mm:ss", new Date()),
-                "h:mm a",
-              )}
-            </TableCell>
-            <TableCell className="text-muted-foreground">
-              {schedule.division}
-            </TableCell>
+
             <TableCell
               className={cn(
+                "text-center",
                 schedule.visitingTeam === "King Academy"
                   ? "text-primary font-semibold"
-                  : "text-muted-foreground",
+                  : "text-foregound",
               )}
             >
               {schedule.visitingTeam}
             </TableCell>
             <TableCell
               className={cn(
+                "text-center",
                 schedule.homeTeam === "King Academy"
                   ? "text-primary font-semibold"
-                  : "text-muted-foreground",
+                  : "text-foregound",
               )}
             >
               {schedule.homeTeam}
             </TableCell>
 
-            <TableCell className="text-muted-foreground">
+            <TableCell className="text-foregound text-center">
               <div className="flex items-center gap-1">
                 <MapPin className="h-3 w-3" />
                 <span>{schedule.location}</span>
               </div>
             </TableCell>
-
+            {/* 
             <TableCell>
               <div className="flex flex-col items-start gap-1">
                 <span
@@ -105,7 +99,7 @@ export const ScheduleTableBody = ({
                   </span>
                 )}
               </div>
-            </TableCell>
+            </TableCell> */}
 
             <Activity mode={isAdmin ? "visible" : "hidden"}>
               <TableCell className="pr-4 text-right">
@@ -135,4 +129,4 @@ export const ScheduleTableBody = ({
       })}
     </TableBody>
   );
-};
+}

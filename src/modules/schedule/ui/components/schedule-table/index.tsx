@@ -9,12 +9,12 @@ import { useTRPC } from "@/trpc/client";
 
 import { ScheduleGetMany, ScheduleGetOne } from "@/modules/schedule/types";
 
-import { ScheduleTableHeader } from "./schedule-table-header";
-import { ScheduleTableBody } from "./schedule-table-body";
+import ScheduleTableHeader from "./schedule-table-header";
+import ScheduleTableBody from "./schedule-table-body";
+import ScheduleTableFooter from "./schedule-table-footer";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableCaption } from "@/components/ui/table";
-import { ScheduleTableFooter } from "./schedule-table-footer";
 
 interface ScheduleTableProps {
   isAdmin: boolean;
@@ -23,12 +23,12 @@ interface ScheduleTableProps {
   onOpenDialog: () => void;
 }
 
-export const ScheduleTable = ({
+export default function ScheduleTable({
   isAdmin,
   schedules,
   setSelectedSchedule,
   onOpenDialog,
-}: ScheduleTableProps) => {
+}: ScheduleTableProps) {
   const [ConfirmationDialog, confirmDelete] = useConfirm({
     title: "Delete Schedule",
     description: "Are you sure? This action can't be undone.",
@@ -96,4 +96,4 @@ export const ScheduleTable = ({
       </Card>
     </>
   );
-};
+}

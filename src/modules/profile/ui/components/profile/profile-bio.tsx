@@ -6,7 +6,7 @@ interface ProfileBioProps {
   bio: string | null;
 }
 
-export const ProfileBio = ({ bio }: ProfileBioProps) => {
+export default function ProfileBio({ bio }: ProfileBioProps) {
   if (!bio) return null;
 
   return (
@@ -23,4 +23,4 @@ export const ProfileBio = ({ bio }: ProfileBioProps) => {
       </CardContent>
     </Card>
   );
-};
+}

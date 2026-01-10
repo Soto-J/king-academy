@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { CircleDot, Crown, Users } from "lucide-react";
 
-export const AuthBrandPannel = () => {
+export default function AuthBrandPannel() {
   return (
     <div className="from-primary via-primary/90 to-primary/80 relative hidden flex-col justify-center overflow-hidden bg-gradient-to-br text-white md:flex">
       {/* Background Pattern */}
@@ -82,4 +82,4 @@ export const AuthBrandPannel = () => {
       </div>
     </div>
   );
-};
+}

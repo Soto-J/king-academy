@@ -8,7 +8,7 @@ interface ProfileLocationProps {
   address: ProfileGetOne["profile"]["address"];
 }
 
-export const ProfileLocation = ({ address }: ProfileLocationProps) => {
+export default function ProfileLocation({ address }: ProfileLocationProps) {
   const hasAddress = address?.street || address?.city || address?.state;
 
   if (!hasAddress) {
@@ -41,4 +41,4 @@ export const ProfileLocation = ({ address }: ProfileLocationProps) => {
       </CardContent>
     </Card>
   );
-};
+}

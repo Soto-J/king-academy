@@ -2,12 +2,13 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 
-import { SignInView } from "../sign-in-view";
 import { db } from "@/db";
 import { user } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { mockUser } from "./sign-up-intergration.test";
 import { auth } from "@/lib/auth/auth";
+
+import SignInView from "../sign-in-view";
 
 // vi.mock("next/navigation", () => ({
 //   useRouter: () => ({

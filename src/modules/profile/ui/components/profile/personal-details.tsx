@@ -10,7 +10,10 @@ interface PersonalDetailsProps {
   email?: string;
 }
 
-export const PersonalDetails = ({ profile, email }: PersonalDetailsProps) => {
+export default function PersonalDetails({
+  profile,
+  email,
+}: PersonalDetailsProps) {
   return (
     <Card className="from-muted/50 to-primary/10 border-border/20 bg-gradient-to-br shadow-md backdrop-blur-sm">
       <CardHeader className="from-primary/5 to-primary/10 bg-gradient-to-r">
@@ -74,4 +77,4 @@ export const PersonalDetails = ({ profile, email }: PersonalDetailsProps) => {
       </CardContent>
     </Card>
   );
-};
+}

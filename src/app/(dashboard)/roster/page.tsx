@@ -18,7 +18,7 @@ interface RosterPageProps {
   searchParams: Promise<SearchParams>;
 }
 
-const RosterPage = async ({ searchParams }: RosterPageProps) => {
+export default async function RosterPage({ searchParams }: RosterPageProps) {
   const session = await getCurrentSession();
   if (!session) redirect("/sign-in");
 
@@ -52,6 +52,4 @@ const RosterPage = async ({ searchParams }: RosterPageProps) => {
       </HydrationBoundary>
     </>
   );
-};
-
-export default RosterPage;
+}

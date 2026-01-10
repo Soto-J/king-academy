@@ -20,7 +20,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 
-const HeroCarousel = () => {
+export default function HeroCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -104,6 +104,4 @@ const HeroCarousel = () => {
       </div>
     </div>
   );
-};
-
-export default HeroCarousel;
+}

@@ -6,10 +6,10 @@ interface RosterPageBannersProps {
   totalPlayers: number;
 }
 
-export const RosterPageBanners = ({
+export default function RosterPageBanners ({
   totalActive,
   totalPlayers,
-}: RosterPageBannersProps) => {
+}: RosterPageBannersProps)  {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
       <Card className="from-primary/10 to-primary/5 border-border/20 bg-gradient-to-br">

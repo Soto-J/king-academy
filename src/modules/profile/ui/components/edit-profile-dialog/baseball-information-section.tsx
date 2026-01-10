@@ -9,7 +9,7 @@ import { formatPositionLabel, formatStanceLabel } from "@/lib/utils";
 
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
-import { FormErrorMessage } from "@/components/form-error-message";
+import FormErrorMessage from "@/components/form-error-message";
 import { Input } from "@/components/ui/input";
 import {
   Field,
@@ -30,9 +30,9 @@ interface BaseballInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
 }
 
-export const BaseballInformationSection = ({
+export default function BaseballInformationSection({
   control,
-}: BaseballInformationSectionProps) => {
+}: BaseballInformationSectionProps) {
   return (
     <FieldSet>
       <FieldLegend className="flex items-center gap-2 text-lg">
@@ -181,4 +181,4 @@ export const BaseballInformationSection = ({
       </FieldGroup>
     </FieldSet>
   );
-};
+}

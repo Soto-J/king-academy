@@ -5,14 +5,14 @@ interface ScheduleTableFooter {
   totalGames: number;
 }
 
-export const ScheduleTableFooter = ({
+export default function ScheduleTableFooter({
   isAdmin,
   totalGames,
-}: ScheduleTableFooter) => {
+}: ScheduleTableFooter) {
   return (
     <TableFooter>
       <TableRow className="border-border/20">
-        <TableCell colSpan={isAdmin ? 9 : 8} className="text-muted-foreground">
+        <TableCell colSpan={isAdmin ? 6 : 5} className="text-muted-foreground">
           Total Season Games
         </TableCell>
 
@@ -22,4 +22,4 @@ export const ScheduleTableFooter = ({
       </TableRow>
     </TableFooter>
   );
-};
+}

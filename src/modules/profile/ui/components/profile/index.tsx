@@ -1,10 +1,10 @@
 import { ProfileGetOne } from "@/modules/profile/types";
 
-import { ProfileHeader } from "./profile-header";
-import { ProfileBio } from "./profile-bio";
-import { BaseballProfile } from "./baseball-profile";
-import { PersonalDetails } from "./personal-details";
-import { ProfileLocation } from "./profile-location";
+import ProfileHeader from "./profile-header";
+import ProfileBio from "./profile-bio";
+import BaseballProfile from "./baseball-profile";
+import PersonalDetails from "./personal-details";
+import ProfileLocation from "./profile-location";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -14,11 +14,11 @@ interface ProfileProps {
   isOwnProfile?: boolean;
 }
 
-export const Profile = ({
+export default function Profile({
   data,
   onEditClick,
   isOwnProfile = false,
-}: ProfileProps) => {
+}: ProfileProps) {
   if (!data?.user) {
     return (
       <Card className="w-full">
@@ -50,4 +50,4 @@ export const Profile = ({
       </div>
     </div>
   );
-};
+}

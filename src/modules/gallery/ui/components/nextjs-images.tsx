@@ -24,7 +24,7 @@ interface LightBoxProps {
   rect: ContainerRect;
 }
 
-export const NextJsImages = ({ slide, offset, rect }: LightBoxProps) => {
+export default function NextJsImages({ slide, offset, rect }: LightBoxProps) {
   const {
     on: { click },
     carousel: { imageFit },
@@ -75,4 +75,4 @@ export const NextJsImages = ({ slide, offset, rect }: LightBoxProps) => {
       />
     </div>
   );
-};
+}

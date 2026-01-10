@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 import HeroCarousel from "@/modules/home/ui/components/hero-carousel";
 
-export const HomePageView = () => {
+export default function HomePageView() {
   const { data: session } = authClient.useSession();
 
   return (
@@ -164,4 +164,4 @@ export const HomePageView = () => {
       </div>
     </div>
   );
-};
+}

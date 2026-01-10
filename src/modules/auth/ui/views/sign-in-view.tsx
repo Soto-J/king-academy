@@ -10,8 +10,8 @@ import { Controller, useForm } from "react-hook-form";
 import { CircleDot, OctagonAlertIcon } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
 
-import { AuthHeader } from "@/modules/auth/ui/components/auth-header";
-import { AuthBrandPannel } from "@/modules/auth/ui/components/auth-brand-pannel";
+import AuthHeader from "@/modules/auth/ui/components/auth-header";
+import AuthBrandPannel from "@/modules/auth/ui/components/auth-brand-pannel";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,7 +32,7 @@ const formSchema = z.object({
   password: z.string().min(1, { message: "Password is required" }),
 });
 
-export const SignInView = () => {
+export default function SignInView() {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
 
@@ -243,4 +243,4 @@ export const SignInView = () => {
       </div>
     </>
   );
-};
+}

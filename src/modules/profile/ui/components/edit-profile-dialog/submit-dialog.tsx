@@ -5,7 +5,10 @@ interface SubmitDialogProps {
   onClose: () => void;
 }
 
-export const SubmitDialog = ({ isPending, onClose }: SubmitDialogProps) => {
+export default function SubmitDialog({
+  isPending,
+  onClose,
+}: SubmitDialogProps) {
   return (
     <div className="flex w-full items-center justify-between border-t pt-8">
       <Button
@@ -26,4 +29,4 @@ export const SubmitDialog = ({ isPending, onClose }: SubmitDialogProps) => {
       </Button>
     </div>
   );
-};
+}

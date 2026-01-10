@@ -7,16 +7,16 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { ScheduleGetOne } from "@/modules/schedule/types";
 
-import { ScheduleHeader } from "@/modules/schedule/ui/components/schedule-header";
-import { ScheduleStats } from "@/modules/schedule/ui/components/schedule-table/schedule-stats";
-import { ScheduleTable } from "@/modules/schedule/ui/components/schedule-table";
-import { ScheduleDialog } from "@/modules/schedule/ui/components/schedule-dialog";
+import ScheduleHeader from "@/modules/schedule/ui/components/schedule-header";
+import ScheduleStats from "@/modules/schedule/ui/components/schedule-table/schedule-stats";
+import ScheduleTable from "@/modules/schedule/ui/components/schedule-table";
+import ScheduleDialog from "@/modules/schedule/ui/components/schedule-dialog";
 
 interface SchedulePageViewProps {
   isAdmin: boolean;
 }
 
-export const SchedulePageView = ({ isAdmin }: SchedulePageViewProps) => {
+export default function SchedulePageView({ isAdmin }: SchedulePageViewProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSchedule, setSelectedSchedule] =
     useState<ScheduleGetOne | null>(null);
@@ -67,4 +67,4 @@ export const SchedulePageView = ({ isAdmin }: SchedulePageViewProps) => {
       </div>
     </>
   );
-};
+}

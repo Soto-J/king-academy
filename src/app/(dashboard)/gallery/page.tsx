@@ -9,7 +9,7 @@ import {
   GalleryPageViewSkeleton,
 } from "@/modules/gallery/ui/views/gallery-page-view";
 
-const GalleryPage = () => {
+export default function GalleryPage() {
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(trpc.gallery.loadImages.queryOptions({}));
 
@@ -22,6 +22,4 @@ const GalleryPage = () => {
       </Suspense>
     </HydrationBoundary>
   );
-};
-
-export default GalleryPage;
+}

@@ -27,13 +27,13 @@ interface ResponsiveDialogProps {
   onOpenChange: (isOpen: boolean) => void;
 }
 
-export const ResponsiveDialog = ({
+export default function ResponsiveDialog({
   children,
   title,
   description,
   isOpen,
   onOpenChange,
-}: ResponsiveDialogProps) => {
+}: ResponsiveDialogProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
@@ -76,4 +76,4 @@ export const ResponsiveDialog = ({
       </DialogContent>
     </Dialog>
   );
-};
+}

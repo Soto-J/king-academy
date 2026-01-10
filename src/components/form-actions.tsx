@@ -9,12 +9,12 @@ interface FormActionsProps {
   pendingLabel: string;
 }
 
-export const FormActions = ({
+export default function FormActions({
   isPending,
   onCloseDialog,
   submitLabel = "Update",
   pendingLabel,
-}: FormActionsProps) => {
+}: FormActionsProps) {
   return (
     <FieldSet>
       <div className="mt-6 flex items-center justify-between gap-3 p-2 dark:border-gray-700 dark:bg-gray-800/50">
@@ -45,4 +45,4 @@ export const FormActions = ({
       </div>
     </FieldSet>
   );
-};
+}

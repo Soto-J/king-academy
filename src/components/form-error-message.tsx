@@ -4,7 +4,7 @@ import { FieldError } from "@/components/ui/field";
 interface FormErrorMessageProps {
   error?: FieldErrorType;
 }
-export const FormErrorMessage = ({ error }: FormErrorMessageProps) => {
+export default function FormErrorMessage({ error }: FormErrorMessageProps) {
   if (!error) return null;
 
   return (
@@ -12,4 +12,4 @@ export const FormErrorMessage = ({ error }: FormErrorMessageProps) => {
       <FieldError errors={[error]} className="text-xs" />
     </div>
   );
-};
+}

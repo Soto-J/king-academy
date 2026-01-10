@@ -4,7 +4,7 @@ import { Trophy } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
-import { FormErrorMessage } from "@/components/form-error-message";
+import FormErrorMessage from "@/components/form-error-message";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -19,7 +19,7 @@ interface GameInfoProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
 }
 
-export const GameInfo = ({ control }: GameInfoProps) => {
+export default function GameInfo({ control }: GameInfoProps) {
   return (
     <FieldSet>
       <FieldLegend className="flex items-center gap-2 text-lg">
@@ -33,7 +33,10 @@ export const GameInfo = ({ control }: GameInfoProps) => {
           control={control}
           render={({ field, fieldState }) => (
             <Field className="items-center gap-1.5">
-              <FieldLabel htmlFor={field.name} className="justify-center gap-1.5">
+              <FieldLabel
+                htmlFor={field.name}
+                className="justify-center gap-1.5"
+              >
                 Game #
               </FieldLabel>
 
@@ -55,7 +58,10 @@ export const GameInfo = ({ control }: GameInfoProps) => {
           control={control}
           render={({ field, fieldState }) => (
             <Field className="items-center gap-1.5">
-              <FieldLabel htmlFor={field.name} className="justify-center gap-1.5">
+              <FieldLabel
+                htmlFor={field.name}
+                className="justify-center gap-1.5"
+              >
                 Division
               </FieldLabel>
 
@@ -73,4 +79,4 @@ export const GameInfo = ({ control }: GameInfoProps) => {
       </FieldGroup>
     </FieldSet>
   );
-};
+}

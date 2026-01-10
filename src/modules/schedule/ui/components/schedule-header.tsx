@@ -7,10 +7,10 @@ interface ScheduleHeaderProps {
   onOpenDialog: () => void;
 }
 
-export const ScheduleHeader = ({
+export default function ScheduleHeader({
   isAdmin,
   onOpenDialog,
-}: ScheduleHeaderProps) => {
+}: ScheduleHeaderProps) {
   return (
     <div className="relative">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -34,4 +34,4 @@ export const ScheduleHeader = ({
       </div>
     </div>
   );
-};
+}

@@ -7,9 +7,9 @@ import { getQueryClient, trpc } from "@/trpc/server";
 
 import { getCurrentSession } from "@/lib/get-session";
 
-import { SchedulePageView } from "@/modules/schedule/ui/views/schedule-page-view";
+import SchedulePageView from "@/modules/schedule/ui/views/schedule-page-view";
 
-const SchedulePage = async () => {
+export default async function SchedulePage() {
   const session = await getCurrentSession();
   if (!session) redirect("/sign-in");
 
@@ -26,6 +26,4 @@ const SchedulePage = async () => {
       </Suspense>
     </HydrationBoundary>
   );
-};
-
-export default SchedulePage;
+}

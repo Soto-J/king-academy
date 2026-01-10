@@ -15,7 +15,7 @@ import {
   personalItemsConfig,
 } from "@/modules/dashboard/ui/navigation-items";
 
-import { DashboardHeader } from "@/modules/dashboard/ui/components/dashboard-header";
+import DashboardHeader from "@/modules/dashboard/ui/components/dashboard-header";
 import { Separator } from "@/components/ui/separator";
 import { UserSettingsMenu } from "./user-settings-menu";
 import {

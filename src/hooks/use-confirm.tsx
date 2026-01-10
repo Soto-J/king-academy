@@ -2,7 +2,7 @@
 
 import { useState, JSX } from "react";
 
-import { ResponsiveDialog } from "@/components/responsive-dialog";
+import ResponsiveDialog from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
 
 interface UseConfirmProps {

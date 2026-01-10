@@ -7,7 +7,7 @@ import { formatPhoneNumber } from "@/lib/utils";
 
 import { ProfileFormSchema } from "@/modules/profile/schemas";
 
-import { FormErrorMessage } from "@/components/form-error-message";
+import FormErrorMessage from "@/components/form-error-message";
 import { Input } from "@/components/ui/input";
 import {
   Field,
@@ -21,9 +21,9 @@ interface PersonalInformationSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
 }
 
-export const PersonalInformationSection = ({
+export default function PersonalInformationSection({
   control,
-}: PersonalInformationSectionProps) => {
+}: PersonalInformationSectionProps) {
   return (
     <FieldSet>
       <FieldLegend className="flex items-center gap-2 text-lg">
@@ -104,7 +104,7 @@ export const PersonalInformationSection = ({
             }}
           />
         </FieldGroup>
-        
+
         <div className="flex gap-x-4">
           <Controller
             name="phoneNumber"
@@ -130,7 +130,7 @@ export const PersonalInformationSection = ({
               </Field>
             )}
           />
-          
+
           <Controller
             name="emergencyNumber"
             control={control}
@@ -183,4 +183,4 @@ export const PersonalInformationSection = ({
       </FieldGroup>
     </FieldSet>
   );
-};
+}

@@ -9,12 +9,12 @@ interface ScheduleStatsProps {
   upcomingGames: number;
 }
 
-export const ScheduleStats = ({
+export default function ScheduleStats({
   totalGames,
   homeGames,
   awayGames,
   upcomingGames,
-}: ScheduleStatsProps) => {
+}: ScheduleStatsProps) {
   const content = [
     {
       title: "Total Games",
@@ -68,4 +68,4 @@ export const ScheduleStats = ({
       ))}
     </div>
   );
-};
+}

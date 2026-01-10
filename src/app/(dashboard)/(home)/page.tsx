@@ -1,7 +1,5 @@
-import { HomePageView } from "@/modules/home/ui/views/home-page-view";
+import HomePageView from "@/modules/home/ui/views/home-page-view";
 
-const HomePage = () => {
+export default function HomePage() {
   return <HomePageView />;
-};
-
-export default HomePage;
+}

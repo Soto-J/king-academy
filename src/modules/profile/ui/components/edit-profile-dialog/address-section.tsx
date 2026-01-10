@@ -7,7 +7,7 @@ import { ProfileFormSchema } from "@/modules/profile/schemas";
 
 import { US_STATES } from "@/modules/profile/constants";
 
-import { FormErrorMessage } from "@/components/form-error-message";
+import  FormErrorMessage  from "@/components/form-error-message";
 import { Input } from "@/components/ui/input";
 import {
   Field,
@@ -28,7 +28,7 @@ interface AddressSectionProps {
   control: Control<z.infer<typeof ProfileFormSchema>>;
 }
 
-export const AddressSection = ({ control }: AddressSectionProps) => {
+export default function AddressSection({ control }: AddressSectionProps) {
   return (
     <FieldSet>
       <FieldLegend className="flex items-center gap-2 text-lg">
@@ -117,4 +117,4 @@ export const AddressSection = ({ control }: AddressSectionProps) => {
       </FieldGroup>
     </FieldSet>
   );
-};
+}

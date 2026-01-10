@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-import { NextJsImages } from "../components/nextjs-images";
+import NextJsImages from "../components/nextjs-images";
 
 import { Photo, RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";

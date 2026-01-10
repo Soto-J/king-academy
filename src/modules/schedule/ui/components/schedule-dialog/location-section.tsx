@@ -4,8 +4,9 @@ import { MapPin } from "lucide-react";
 
 import { ScheduleFormSchema } from "@/modules/schedule/schemas";
 
+import FormErrorMessage from "@/components/form-error-message";
+
 import { Input } from "@/components/ui/input";
-import { FormErrorMessage } from "@/components/form-error-message";
 import {
   Field,
   FieldGroup,
@@ -18,7 +19,7 @@ interface LocationSectionProps {
   control: Control<z.infer<typeof ScheduleFormSchema>>;
 }
 
-export const LocationSection = ({ control }: LocationSectionProps) => {
+export default function LocationSection({ control }: LocationSectionProps) {
   return (
     <FieldSet>
       <FieldLegend className="flex items-center gap-2 text-lg">
@@ -60,4 +61,4 @@ export const LocationSection = ({ control }: LocationSectionProps) => {
       </FieldGroup>
     </FieldSet>
   );
-};
+}

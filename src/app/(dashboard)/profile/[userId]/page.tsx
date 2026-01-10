@@ -1,15 +1,16 @@
-import { ProfileIdPageView } from "@/modules/profile/ui/views/profile-id-page-view";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+
+import ProfileIdPageView from "@/modules/profile/ui/views/profile-id-page-view";
 
 interface ProfileIdPageProps {
   params: Promise<{ userId: string }>;
 }
 
-const ProfileIdPage = async ({ params }: ProfileIdPageProps) => {
+export default async function ProfileIdPage({ params }: ProfileIdPageProps) {
   const { userId } = await params;
 
   const queryClient = getQueryClient();
@@ -24,6 +25,4 @@ const ProfileIdPage = async ({ params }: ProfileIdPageProps) => {
       </Suspense>
     </HydrationBoundary>
   );
-};
-
-export default ProfileIdPage;
+}
