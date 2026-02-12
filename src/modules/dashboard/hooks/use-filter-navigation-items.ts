@@ -1,8 +1,9 @@
+import type { ComponentType } from "react";
+
 import { UserTable } from "@/db/types";
-import { LucideIcon } from "lucide-react";
 
 export type NavigationItem = {
-  icon: LucideIcon;
+  icon: ComponentType<{ className?: string }>;
   label: string;
   href: `/${string}`;
   roles?: readonly UserTable["role"][];
